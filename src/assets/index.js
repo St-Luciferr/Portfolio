@@ -17,7 +17,7 @@ import csharp from "./tech/csharp.png";
 import dotNet from "./tech/dotNet.png";
 import nodejs from "./tech/nodejs.png";
 import flutter from "./tech/flutter.png";
-import python from "./tech/python.png";
+import python from "./tech/python.webp";
 import pytorch from "./tech/pytorch.png";
 import reactjs from "./tech/reactjs.png";
 import tailwind from "./tech/tailwind.png";

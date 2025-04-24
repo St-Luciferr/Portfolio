@@ -51540,7 +51540,7 @@
   ],
   "images": [
     {
-      "uri": "textures/Material_baseColor.jpeg"
+      "uri": "textures/Material_baseColor.webp"
     },
     {
       "uri": "textures/Material_metallicRoughness.png"
@@ -51642,7 +51642,7 @@
       "uri": "textures/Material.074_24_emissive.png"
     },
     {
-      "uri": "textures/Material.074_25_baseColor.jpeg"
+      "uri": "textures/Material.074_25_baseColor.webp"
     },
     {
       "uri": "textures/Material.074_26_baseColor.png"
