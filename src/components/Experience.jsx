@@ -48,7 +48,8 @@ const ExperienceCard = ({ experience }) => (
 const Experience = () => {
   return (
     <>
-      <motion.div variants={textVariant()}>
+      <motion.div variants={textVariant()}
+        className={`${styles.paddingX} mx-auto`}>
         <p className={styles.sectionSubText}>
           What I Have Done So Far
         </p>

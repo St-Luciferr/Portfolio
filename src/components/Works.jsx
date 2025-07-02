@@ -1,5 +1,6 @@
 import Tilt from 'react-parallax-tilt';
 import { motion } from 'framer-motion';
+import { useState } from "react";
 
 import { styles } from '../styles';
 import { github } from '../assets';
@@ -8,67 +9,99 @@ import { projects } from '../constants';
 import { fadeIn, textVariant } from '../utils/motion';
 
 const ProjectCard = ({ index, name, description, tags, image, source_code_link }) => {
+  const [readMore, setReadMore] = useState(false);
+  const maxDescriptionLength = 120; // adjust as needed
+
+  const truncatedDescription = description.length > maxDescriptionLength
+    ? description.slice(0, maxDescriptionLength) + "..."
+    : description;
+
   return (
-    // index * 0.5 represents the 'motion' of each project coming in 0.5s after the previous one
-    <motion.dv variants={fadeIn("up", "spring", index * 0.5, 0.75)}>
+    <motion.div
+      variants={fadeIn("up", "spring", index * 0.5, 0.75)}
+      className="sm:w-[360px] w-full"
+      style={{ minHeight: "480px" }} // ensure consistent card height
+    >
       <Tilt
         options={{
           max: 45,
           scale: 1,
-          speed: 450
+          speed: 450,
         }}
-        className='bg-tertiary p-5 rounded-2xl sm:w-[360px] w-full'
+        className="bg-tertiary p-5 rounded-3xl shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out cursor-pointer flex flex-col h-full"
       >
-        <div className='relative w-full h-[230px]'>
-          <img 
-            src={image} 
-            alt={name} 
-            className='w-full h-full object-cover rounded-2xl'
+        <div className="relative w-full h-56 sm:h-60 md:h-64 lg:h-72 xl:h-80 rounded-3xl overflow-hidden flex-shrink-0">
+          <img
+            src={image}
+            alt={name}
+            className="w-full h-full object-cover rounded-3xl"
           />
 
-          <div className='absolute inset-0 flex justify-end m-3 card-img_hover'>
+          <div className="absolute inset-0 flex justify-end items-start p-4">
             <div
-              // Opens link to Github repository when card is clicked
-              onClick={() => window.open (source_code_link, "_blank")}
-              className='black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer'
+              onClick={(e) => {
+                e.stopPropagation();
+                window.open(source_code_link, "_blank");
+              }}
+              className="black-gradient w-12 h-12 rounded-full flex justify-center items-center cursor-pointer hover:bg-gray-800/70 transition-colors duration-200"
+              title="View Source Code"
             >
-              {/* Github Icon */}
-              <img 
+              <img
                 src={github}
                 alt="github"
-                className='w-1/2 h-1/2 object-contain'
+                className="w-6 h-6 object-contain"
               />
             </div>
           </div>
         </div>
 
-        {/* Project name and description */}
-        <div className='mt-5'>
-          <h3 className='text-white font-bold text-[24px]'>
+        {/* Content container to fill height */}
+        <div className="mt-6 flex flex-col flex-grow">
+          <h3 className="text-white font-semibold text-xl sm:text-2xl truncate" title={name}>
             {name}
           </h3>
-          <p className='mt-2 text-secondary text-[14px]'>
-            {description}
-          </p>
-        </div>
 
-        <div className='mt-4 flex flex-wrap gap-2'>
-          {tags.map((tag) => (
-            <p key={tag.name} className={`text-[14px] ${tag.color}`}>
-              #{tag.name}
-            </p>
-          ))}
+          <p
+            className="mt-3 text-secondary text-sm sm:text-base leading-relaxed"
+            style={{ textAlign: "justify" }}
+          >
+            {readMore ? description : truncatedDescription}
+            {description.length > maxDescriptionLength && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setReadMore(!readMore);
+                }}
+                className="ml-2 text-blue-400 hover:underline focus:outline-none"
+              >
+                {readMore ? "Read less" : "Read more"}
+              </button>
+            )}
+          </p>
+
+          {/* Tags aligned at bottom */}
+          <div className="mt-auto flex flex-wrap gap-3 pt-5">
+            {tags.map((tag) => (
+              <p
+                key={tag.name}
+                className={`text-[13px] sm:text-sm ${tag.color} bg-gray-800/30 px-3 py-1 rounded-full select-none`}
+              >
+                #{tag.name}
+              </p>
+            ))}
+          </div>
         </div>
       </Tilt>
-    </motion.dv>
-  )
-}
+    </motion.div>
+  );
+};
 
 const Works = () => {
   return (
     <>
-      <motion.div variants={textVariant()}>
-        <p className={styles.sectionSubText}>
+      <motion.div variants={textVariant()}
+        className={`${styles.paddingX} mx-auto`}>
+        <p className={`${styles.sectionSubText} `}>
           My Work
         </p>
         <h2 className={styles.sectionHeadText}>
@@ -76,8 +109,8 @@ const Works = () => {
         </h2>
       </motion.div>
 
-      <div className='w-full flex'>
-        <motion.p 
+      <div className={`${styles.paddingX} w-full flex `}>
+        <motion.p
           variants={fadeIn("", "", 0.1)}
           className='mt-3 text-secondary text-[17px] max-w-3xl leading-[30px]'
         >
@@ -88,13 +121,13 @@ const Works = () => {
         </motion.p>
       </div>
 
-      <div className='mt-20 flex flex-wrap gap-7'>
+      <div className={`${styles.paddingX} mt-10 flex flex-wrap gap-7`}>
         {projects.map((project, index) => (
-          <ProjectCard 
+          <ProjectCard
             key={`project-${index}`}
             index={index}
             {...project}
-           /> 
+          />
         ))}
       </div>
     </>

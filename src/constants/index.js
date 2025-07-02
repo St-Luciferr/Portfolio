@@ -66,18 +66,18 @@ const services = [
 ];
 
 const technologies = [
-  {
-    name: "HTML 5",
-    icon: html,
-  },
-  {
-    name: "CSS 3",
-    icon: css,
-  },
-  {
-    name: "JavaScript",
-    icon: javascript,
-  },
+  // {
+  //   name: "HTML 5",
+  //   icon: html,
+  // },
+  // {
+  //   name: "CSS 3",
+  //   icon: css,
+  // },
+  // {
+  //   name: "JavaScript",
+  //   icon: javascript,
+  // },
   {
     name: "Python",
     icon: python,
@@ -94,10 +94,10 @@ const technologies = [
     name: "Node JS",
     icon: nodejs,
   },
-  // {
-  //   name: "TypeScript",
-  //   icon: typescript,
-  // },
+  {
+    name: "TypeScript",
+    icon: typescript,
+  },
   {
     name: "Firebase",
     icon: firebase,
@@ -113,28 +113,15 @@ const technologies = [
   {
     name: "Pytorch",
     icon: pytorch,
-  },
-  {
-    name: "figma",
-    icon: figma,
   }
+  // {
+  //   name: "figma",
+  //   icon: figma,
+  // }
 ];
 
 const experiences = [
-  {
-    title: "Flutter Developer",
-    company_name: "NAAMII",
-    icon: naami_logo,
-    iconBg: "#FFFFFF",
-    date: "may-2023 - july 2023",
-    points: [
-      "Developing 'PestPAD', an Android application for detecting pesticide concentrations in vegetable samples.",
-      "Implementing advanced image processing algorithms to analyze sample images efficiently.",
-      "Exhibiting teamwork and communication skills during the collaborative 'PestPAD' project.",
-      "Actively engaging in internal and external communication, incorporating valuable feedback and ensuring project success.",
-     
-    ],
-  },
+
   {
     title: "Automation and ML Engineer",
     company_name: "QuickFox Consulting",
@@ -149,7 +136,20 @@ const experiences = [
       "Creating robust APIs for seamless communication and data exchange across diverse components and services.",
     ],
   },
-  
+    {
+    title: "Flutter Developer",
+    company_name: "NAAMII",
+    icon: naami_logo,
+    iconBg: "#FFFFFF",
+    date: "may-2023 - july 2023",
+    points: [
+      "Developing 'PestPAD', an Android application for detecting pesticide concentrations in vegetable samples.",
+      "Implementing advanced image processing algorithms to analyze sample images efficiently.",
+      "Exhibiting teamwork and communication skills during the collaborative 'PestPAD' project.",
+      "Actively engaging in internal and external communication, incorporating valuable feedback and ensuring project success.",
+     
+    ],
+  },
 ];
 
 const testimonials = [
