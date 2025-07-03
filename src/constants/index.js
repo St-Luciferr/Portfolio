@@ -33,6 +33,8 @@ import {
   whatsApp,
   trekpal,
   continualmonuments,
+  automateboring,
+  freelance_icon,
 } from "../assets";
 
 export const navLinks = [
@@ -125,36 +127,44 @@ const technologies = [
 ];
 
 const experiences = [
-
   {
-    title: "Automation and ML Engineer",
+    title: "Software Engineer",
     company_name: "QuickFox Consulting",
     icon: quickfox,
     iconBg: "#E6DEDD",
-    date: "Jan 2024 - Present",
+    date: "Jan 2024 – Present",
     points: [
-      "Developed and implemented automation solutions.",
-      "Applying machine learning models to automate tasks, enhancing operational workflows.",
-      "Leveraging advanced image processing algorithms and computer vision for valuable insights.",
-      "Collaborating in cross-functional teams, ensuring seamless automation integration and fostering innovation.",
-      "Creating robust APIs for seamless communication and data exchange across diverse components and services.",
+      "Built Quick CCA – an OCR-based cheque processing and clearing system deployed at Global IME Bank using Django REST Framework and ReactJS.",
+      "Developed intelligent automation solutions using Robocorp RPA, streamlining business processes.",
+      "Implemented a Siamese network-based signature verification system to detect forgery and enhance fraud prevention.",
+      "Created QuickRef, a chatbot application using RAG and LLaMA 3 for internal knowledge assistance in the banking domain.",
     ],
   },
   {
-    title: "Flutter Developer",
-    company_name: "NAAMII",
-    icon: naami_logo,
-    iconBg: "#FFFFFF",
-    date: "may-2023 - july 2023",
+    title: "Software Engineer (Remote)",
+    company_name: "AutomateBoring, USA",
+    icon: automateboring, // replace with appropriate logo if available
+    iconBg: "#F0F0F0",
+    date: "May 2024 – Aug 2024",
     points: [
-      "Developing 'PestPAD', an Android application for detecting pesticide concentrations in vegetable samples.",
-      "Implementing advanced image processing algorithms to analyze sample images efficiently.",
-      "Exhibiting teamwork and communication skills during the collaborative 'PestPAD' project.",
-      "Actively engaging in internal and external communication, incorporating valuable feedback and ensuring project success.",
-
+      "Designed and developed a secure, scalable Learning Management System (LMS) with video streaming, user authentication, and interactive quizzes.",
+      "Built a robust PDF and web data extraction pipeline using Python and RPA tools to automate information retrieval.",
+    ],
+  },
+  {
+    title: "Contract Developer",
+    company_name: "Self-Employed",
+    icon: freelance_icon, 
+    iconBg: "#DFF6FF",
+    date: "Open to Freelance Projects",
+    points: [
+      "Developed Raid Sentinel – a Django + Celery based backend system to monitor ARK game accounts and notify users of potential raids.",
+      "Built BhasaSanjal – a FastAPI + ReactJS language learning platform with MongoDB, focused on multilingual education.",
+      "Created Trekpal Nepal – a tourism-focused site with booking features and PACO payment integration, using ReactJS and Django.",
     ],
   },
 ];
+
 
 const testimonials = [
   {

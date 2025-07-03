@@ -36,9 +36,12 @@ import ragbot from "./ragbot.webp";
 import whatsApp from "./whatsapp.svg";
 import trekpal from "./trekpal.webp";
 import continualmonuments from "./continualmonuments.webp";
+import freelance_icon from "./freelance_icon.png";
+import automateboring from "./automateboring.png";
 
 export {
   amid,
+  automateboring,
   logo,
   backend,
   creator,
@@ -75,5 +78,6 @@ export {
   ragbot,
   whatsApp,
   trekpal,
-  continualmonuments
+  continualmonuments,
+  freelance_icon
 };
