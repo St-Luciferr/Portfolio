@@ -3,12 +3,12 @@ import { motion } from 'framer-motion';
 import { useState } from "react";
 
 import { styles } from '../styles';
-import { github } from '../assets';
+import { github, web } from '../assets';
 import { SectionWrapper } from '../hoc';
 import { projects } from '../constants';
 import { fadeIn, textVariant } from '../utils/motion';
 
-const ProjectCard = ({ index, name, description, tags, image, source_code_link }) => {
+const ProjectCard = ({ index, name, description, tags, image, source_code_link, demo_url }) => {
   const [readMore, setReadMore] = useState(false);
   const maxDescriptionLength = 120; // adjust as needed
 
@@ -20,7 +20,7 @@ const ProjectCard = ({ index, name, description, tags, image, source_code_link }
     <motion.div
       variants={fadeIn("up", "spring", index * 0.5, 0.75)}
       className="sm:w-[360px] w-full"
-      style={{ minHeight: "480px" }} // ensure consistent card height
+      style={{ minHeight: "480px" }}
     >
       <Tilt
         options={{
@@ -30,11 +30,11 @@ const ProjectCard = ({ index, name, description, tags, image, source_code_link }
         }}
         className="bg-tertiary p-5 rounded-3xl shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out cursor-pointer flex flex-col h-full"
       >
-        <div className="relative w-full h-56 sm:h-60 md:h-64 lg:h-72 xl:h-80 rounded-3xl overflow-hidden flex-shrink-0">
+        <div className="relative w-full h-48 sm:h-54 md:h-62 lg:h-68 xl:h-76 rounded-3xl overflow-hidden flex-shrink-0">
           <img
             src={image}
             alt={name}
-            className="w-full h-full object-cover rounded-3xl"
+            className="w-full h-full object-fill rounded-3xl"
           />
 
           <div className="absolute inset-0 flex justify-end items-start p-4">
@@ -47,7 +47,7 @@ const ProjectCard = ({ index, name, description, tags, image, source_code_link }
               title="View Source Code"
             >
               <img
-                src={github}
+                src={demo_url ? web : github}
                 alt="github"
                 className="w-6 h-6 object-contain"
               />
@@ -80,13 +80,13 @@ const ProjectCard = ({ index, name, description, tags, image, source_code_link }
           </p>
 
           {/* Tags aligned at bottom */}
-          <div className="mt-auto flex flex-wrap gap-3 pt-5">
+          <div className="mt-auto flex flex-wrap pt-5">
             {tags.map((tag) => (
               <p
                 key={tag.name}
-                className={`text-[13px] sm:text-sm ${tag.color} bg-gray-800/30 px-3 py-1 rounded-full select-none`}
+                className={`text-[13px] sm:text-sm ${tag.color} bg-gray-800/30 px-2 py-1 rounded-full select-none`}
               >
-                #{tag.name}
+                {tag.name}
               </p>
             ))}
           </div>
@@ -121,7 +121,7 @@ const Works = () => {
         </motion.p>
       </div>
 
-      <div className={`${styles.paddingX} mt-10 flex flex-wrap gap-7`}>
+      <div className={`${styles.paddingX} mt-10 flex flex-wrap items-center justify-center gap-7`}>
         {projects.map((project, index) => (
           <ProjectCard
             key={`project-${index}`}

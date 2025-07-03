@@ -32,6 +32,10 @@ import masterycoding from "./company/masterycoding.svg";
 import savvycoders from "./company/savvycoders.jpg";
 import pestpad from "./pestpad.jpg";
 import amid from "./amid.jpg";
+import ragbot from "./ragbot.webp";
+import whatsApp from "./whatsapp.svg";
+import trekpal from "./trekpal.webp";
+import continualmonuments from "./continualmonuments.webp";
 
 export {
   amid,
@@ -68,4 +72,8 @@ export {
   masterycoding,
   savvycoders,
   pestpad,
+  ragbot,
+  whatsApp,
+  trekpal,
+  continualmonuments
 };

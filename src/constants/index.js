@@ -29,6 +29,10 @@ import {
   expressjs,
   pestpad,
   amid,
+  ragbot,
+  whatsApp,
+  trekpal,
+  continualmonuments,
 } from "../assets";
 
 export const navLinks = [
@@ -136,7 +140,7 @@ const experiences = [
       "Creating robust APIs for seamless communication and data exchange across diverse components and services.",
     ],
   },
-    {
+  {
     title: "Flutter Developer",
     company_name: "NAAMII",
     icon: naami_logo,
@@ -147,7 +151,7 @@ const experiences = [
       "Implementing advanced image processing algorithms to analyze sample images efficiently.",
       "Exhibiting teamwork and communication skills during the collaborative 'PestPAD' project.",
       "Actively engaging in internal and external communication, incorporating valuable feedback and ensuring project success.",
-     
+
     ],
   },
 ];
@@ -181,9 +185,59 @@ const testimonials = [
 
 const projects = [
   {
+    name: "Medical Q/A Chatbot (RAG)",
+    description:
+      "A context-aware medical chatbot using Retrieval-Augmented Generation (RAG) to answer questions with cited information from ingested PDFs using OpenAI, LlamaIndex, and Pinecone and embedding model fined tuned for medical documents.",
+    tags: [
+      { name: "Python", color: "orange-text-gradient" },
+      { name: "Chatbot", color: "green-text-gradient" },
+      { name: "RAG", color: "blue-text-gradient" },
+      { name: "Streamlit", color: "pink-text-gradient" },
+    ],
+    image: ragbot,
+    source_code_link: "https://github.com/St-Luciferr/Q-A-Chatbot",
+  },
+  {
+    name: "WhatsApp Chatbot with Function Calling",
+    description:
+      "AI chat agent on WhatsApp Business using OpenAI and function calling. Capable of handling user queries and triggering backend logic on demand.",
+    tags: [
+      { name: "Django", color: "green-text-gradient" },
+      { name: "OpenAI", color: "pink-text-gradient" },
+      { name: "WhatsApp API", color: "blue-text-gradient" },
+    ],
+    image: whatsApp,
+    source_code_link: "https://github.com/St-Luciferr/Whatsapp-Agent",
+  },
+  {
+    name: "Trek Pal Nepal",
+    description:
+      "A trekking platform with 30+ destinations, booking features, admin dashboard, and PACO payment integration. Built using React and Django.",
+    tags: [
+      { name: "React", color: "blue-text-gradient" },
+      { name: "Django", color: "green-text-gradient" },
+      { name: "MongoDB", color: "pink-text-gradient" },
+    ],
+    image: trekpal,
+    source_code_link: "https://trekpalnepal.com",
+    demo_url: true
+  },
+  {
+    name: "Continual Monument Detection",
+    description:
+      "Applied knowledge distillation and meta-learning techniques with Faster R-CNN for continual learning in object detection tasks.",
+    tags: [
+      { name: "PyTorch", color: "green-text-gradient" },
+      { name: "Computer Vision", color: "blue-text-gradient" },
+      { name: "R-CNN", color: "pink-text-gradient" },
+    ],
+    image: continualmonuments,
+    source_code_link: "https://github.com/St-Luciferr/Continual-Monument-Detection",
+  },
+  {
     name: "PestPAD",
     description:
-    "PestPAD, an Android software designed to optimize pesticide detection processes, users can quickly and effectively determine the presence of pesticides in vegetable samples.",
+      "PestPAD, an Android software designed to optimize pesticide detection processes, users can quickly and effectively determine the presence of pesticides in vegetable samples.",
     tags: [
       {
         name: "Flutter",
@@ -193,7 +247,7 @@ const projects = [
         name: "Firebase",
         color: "pink-text-gradient",
       },
-   
+
     ],
     image: pestpad,
     source_code_link: "#",
@@ -201,8 +255,8 @@ const projects = [
   {
     name: "AMID",
     description:
-      "Mobile app which simplifies exploration of historical landmarks, using advanced object detection for easy identification. Enhances connection with cultural heritage and streamlines the journey of discovering iconic monuments.",    
-      tags: [
+      "Mobile app which simplifies exploration of historical landmarks, using advanced object detection for easy identification. Enhances connection with cultural heritage and streamlines the journey of discovering iconic monuments.",
+    tags: [
       {
         name: "Tensorflow",
         color: "green-text-gradient",
@@ -220,5 +274,6 @@ const projects = [
     source_code_link: "https://github.com/St-Luciferr/Flutter_App",
   },
 ];
+
 
 export { services, technologies, experiences, testimonials, projects };
