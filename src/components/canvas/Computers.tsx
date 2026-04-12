@@ -12,7 +12,7 @@ interface ComputersProps {
 }
 
 const Computers = ({ isMobile }: ComputersProps) => {
-  const computer = useGLTF('/models/desktop_pc/scene.gltf');
+  const computer = useGLTF('/models/desktop_pc/scene.glb');
 
   return (
     <mesh>
@@ -99,6 +99,6 @@ const ComputersCanvas = () => {
 };
 
 // Preload the model
-useGLTF.preload('/models/desktop_pc/scene.gltf');
+useGLTF.preload('/models/desktop_pc/scene.glb');
 
 export default ComputersCanvas;
