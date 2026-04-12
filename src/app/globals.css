@@ -24,7 +24,7 @@
 .button-resume {
   --b: 3px;
   --s: 0.45em;
-  --color: #4a42ea;
+  --color: transparent;
 
   padding: calc(0.3em + var(--s)) calc(0.9em + var(--s));
   --_p: var(--s);
@@ -46,12 +46,13 @@
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  outline-color: var(--color);
+  outline-color: #4a42ea;
 }
 
 .button-resume:hover,
 .button-resume:focus-visible {
   --_p: 0px;
+  --color: #4a42ea;
   outline-color: var(--color);
   outline-offset: 0.05em;
 }
