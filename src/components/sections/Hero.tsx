@@ -1,27 +1,13 @@
-'use client';
-
-import { motion } from 'framer-motion';
 import { FaFileDownload } from 'react-icons/fa';
-import dynamic from 'next/dynamic';
 
 import { styles } from '@/lib/styles';
-
-// Dynamic import for 3D canvas with SSR disabled
-const ComputersCanvas = dynamic(
-  () => import('@/components/canvas/Computers'),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="w-full h-[350px] flex items-center justify-center">
-        <div className="canvas-loader" />
-      </div>
-    ),
-  }
-);
+import HeroAnimation from '@/components/sections/HeroAnimation';
+import Lazy3DCanvas from '@/components/canvas/Lazy3DCanvas';
 
 const Hero = () => {
   return (
     <section className="relative w-full h-screen mx-auto">
+      {/* Static content - renders immediately for LCP */}
       <div
         className={`${styles.paddingX} absolute inset-0 top-[120px] max-w-7xl mx-auto flex flex-row items-start gap-5`}
         style={{ zIndex: 2 }}
@@ -32,6 +18,7 @@ const Hero = () => {
         </div>
 
         <div>
+          {/* LCP element - critical for performance */}
           <h1 className={`${styles.heroHeadText} text-white`}>
             Hi, I&apos;m <span className="text-[#915eff]">Santosh</span>
           </h1>
@@ -59,25 +46,11 @@ const Hero = () => {
         </div>
       </div>
 
-      <ComputersCanvas />
+      {/* 3D Canvas - loads only when visible */}
+      <Lazy3DCanvas type="computer" />
 
-      <div className="absolute xs:bottom-10 bottom-32 w-full flex justify-center items-center">
-        <a href="#about">
-          <div className="w-[35px] h-[64px] rounded-3xl border-4 border-secondary flex justify-center items-start p-2">
-            <motion.div
-              animate={{
-                y: [0, 24, 0],
-              }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                repeatType: 'loop',
-              }}
-              className="w-3 h-3 rounded-full bg-secondary mb-1"
-            />
-          </div>
-        </a>
-      </div>
+      {/* Animated scroll indicator - client component */}
+      <HeroAnimation />
     </section>
   );
 };

@@ -10,18 +10,19 @@
   },
   "dependencies": {
     "@emailjs/browser": "^3.11.0",
-    "@react-three/drei": "^9.122.0",
-    "@react-three/fiber": "^8.18.0",
-    "framer-motion": "^10.12.18",
+    "@react-three/drei": "^10.1.4",
+    "@react-three/fiber": "^9.5.0",
+    "framer-motion": "^12.38.0",
     "maath": "^0.7.0",
-    "next": "^14.2.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "next": "^16.2.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "react-icons": "^5.0.1",
     "react-intersection-observer": "^10.0.3",
     "react-parallax-tilt": "^1.7.152",
     "react-vertical-timeline-component": "^3.6.0",
-    "three": "^0.160.1"
+    "sharp": "^0.34.5",
+    "three": "^0.183.0"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
@@ -29,8 +30,8 @@
     "@types/react-dom": "^18.2.6",
     "@types/three": "^0.160.0",
     "autoprefixer": "^10.4.14",
-    "eslint": "^8.44.0",
-    "eslint-config-next": "^14.2.0",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "^16.2.3",
     "postcss": "^8.4.25",
     "tailwindcss": "^3.3.2",
     "typescript": "^5.3.0"

@@ -1,12 +1,26 @@
+'use client';
+
 import dynamic from 'next/dynamic';
 
 import Navbar from '@/components/layout/Navbar';
 import Hero from '@/components/sections/Hero';
-import About from '@/components/sections/About';
-import Experience from '@/components/sections/Experience';
-import Tech from '@/components/sections/Tech';
-import Works from '@/components/sections/Works';
-import Contact from '@/components/sections/Contact';
+
+// Lazy load below-the-fold sections for better performance
+const About = dynamic(() => import('@/components/sections/About'), {
+  loading: () => <div className="h-screen" />,
+});
+const Experience = dynamic(() => import('@/components/sections/Experience'), {
+  loading: () => <div className="h-screen" />,
+});
+const Tech = dynamic(() => import('@/components/sections/Tech'), {
+  loading: () => <div className="h-screen" />,
+});
+const Works = dynamic(() => import('@/components/sections/Works'), {
+  loading: () => <div className="h-screen" />,
+});
+const Contact = dynamic(() => import('@/components/sections/Contact'), {
+  loading: () => <div className="h-screen" />,
+});
 
 // Dynamic import for Stars canvas (background)
 const StarsCanvas = dynamic(() => import('@/components/canvas/Stars'), {

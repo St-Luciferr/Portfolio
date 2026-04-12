@@ -3,21 +3,11 @@
 import { useRef, useState, FormEvent, ChangeEvent } from 'react';
 import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
-import dynamic from 'next/dynamic';
 
 import { styles } from '@/lib/styles';
 import SectionWrapper from '@/components/hoc/SectionWrapper';
 import { slideIn } from '@/lib/motion';
-
-// Dynamic import for 3D canvas with SSR disabled
-const EarthCanvas = dynamic(() => import('@/components/canvas/Earth'), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full h-full flex items-center justify-center">
-      <div className="canvas-loader" />
-    </div>
-  ),
-});
+import Lazy3DCanvas from '@/components/canvas/Lazy3DCanvas';
 
 interface FormState {
   name: string;
@@ -144,7 +134,7 @@ const Contact = () => {
         variants={slideIn('right', 'tween', 0.2, 1)}
         className="xl:flex-1 xl:h-auto md:h-[550px] h-[350px]"
       >
-        <EarthCanvas />
+        <Lazy3DCanvas type="earth" />
       </motion.div>
       </div>
     </div>

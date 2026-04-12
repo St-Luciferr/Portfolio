@@ -48,7 +48,7 @@ const About = () => {
       </motion.div>
 
       <motion.div
-        variants={fadeIn('', '', 0.1, 1)}
+        variants={fadeIn('', 'tween', 0.1, 1)}
         className={`mt-8 ${styles.paddingX} text-secondary text-[17px] max-w-5xl leading-[30px]`}
         style={{ textAlign: 'justify' }}
       >

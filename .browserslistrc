@@ -1,0 +1,18 @@
+# Modern browsers only - reduces polyfill size
+# Supports 95%+ of global users (2024+ data)
+
+# Production
+[production]
+>0.2%
+not dead
+not op_mini all
+chrome >= 90
+firefox >= 88
+safari >= 14
+edge >= 90
+
+# Development
+[development]
+last 1 chrome version
+last 1 firefox version
+last 1 safari version
