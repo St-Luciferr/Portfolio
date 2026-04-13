@@ -7,15 +7,15 @@ import Image from 'next/image';
 import { styles } from '@/lib/styles';
 import { fadeIn, textVariant } from '@/lib/motion';
 import SectionWrapper from '@/components/hoc/SectionWrapper';
-import type { DBService } from '@/lib/types';
+import type { Service } from '@/types/frontend';
 
 interface ServiceCardProps {
   index: number;
   title: string;
-  icon_url: string;
+  iconUrl: string;
 }
 
-const ServiceCard = ({ index, title, icon_url }: ServiceCardProps) => {
+const ServiceCard = ({ index, title, iconUrl }: ServiceCardProps) => {
   return (
     <Tilt className="xs:w-[250px] w-full">
       <motion.div
@@ -24,7 +24,7 @@ const ServiceCard = ({ index, title, icon_url }: ServiceCardProps) => {
       >
         <div className="bg-tertiary rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col">
           <Image
-            src={icon_url}
+            src={iconUrl}
             alt={title}
             width={64}
             height={64}
@@ -43,7 +43,7 @@ interface AboutProps {
   data?: {
     paragraphs?: string[];
   };
-  services?: DBService[];
+  services?: Service[];
 }
 
 const About = ({ data, services = [] }: AboutProps) => {
@@ -78,7 +78,7 @@ const About = ({ data, services = [] }: AboutProps) => {
             key={service.id}
             index={index}
             title={service.title}
-            icon_url={service.icon_url}
+            iconUrl={service.iconUrl}
           />
         ))}
       </div>

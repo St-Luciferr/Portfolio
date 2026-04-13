@@ -13,10 +13,10 @@ import 'react-vertical-timeline-component/style.min.css';
 import { styles } from '@/lib/styles';
 import SectionWrapper from '@/components/hoc/SectionWrapper';
 import { textVariant } from '@/lib/motion';
-import type { DBExperience, DBExperiencePoint } from '@/lib/types';
+import type { Experience } from '@/types/frontend';
 
 interface ExperienceCardProps {
-  experience: DBExperience & { points: DBExperiencePoint[] };
+  experience: Experience;
   index: number;
 }
 
@@ -34,12 +34,12 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
         contentStyle={{ background: '#1d1836', color: '#fff' }}
         contentArrowStyle={{ borderRight: '7px solid #232631' }}
         date={experience.date}
-        iconStyle={{ background: experience.icon_bg_color }}
+        iconStyle={{ background: experience.iconBgColor }}
         icon={
           <div className="flex justify-center items-center w-full h-full">
             <Image
-              src={experience.icon_url}
-              alt={experience.company_name}
+              src={experience.iconUrl}
+              alt={experience.companyName}
               width={36}
               height={36}
               className="object-contain"
@@ -53,7 +53,7 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
             className="text-secondary text-[16px] font-semibold"
             style={{ margin: 0 }}
           >
-            {experience.company_name}
+            {experience.companyName}
           </p>
         </div>
         <ul className="mt-5 list-disc ml-5 space-y-2">
@@ -62,7 +62,7 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
               key={point.id || `experience-point-${index}`}
               className="text-white-100 text-[14px] pl-1 tracking-wider"
             >
-              {point.point}
+              {point.text}
             </li>
           ))}
         </ul>
@@ -72,7 +72,7 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
 };
 
 interface ExperienceProps {
-  experiences?: (DBExperience & { points: DBExperiencePoint[] })[];
+  experiences?: Experience[];
 }
 
 const Experience = ({ experiences = [] }: ExperienceProps) => {
