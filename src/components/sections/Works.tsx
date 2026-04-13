@@ -7,18 +7,18 @@ import Image from 'next/image';
 
 import { styles } from '@/lib/styles';
 import SectionWrapper from '@/components/hoc/SectionWrapper';
-import { projects } from '@/lib/constants';
 import { fadeIn, textVariant } from '@/lib/motion';
-import type { Project, ProjectTag } from '@/lib/types';
+import type { DBProject, DBProjectTag } from '@/lib/types';
 
 interface ProjectCardProps {
   index: number;
   name: string;
   description: string;
-  tags: ProjectTag[];
-  image: string;
+  tags: DBProjectTag[];
+  image_url: string;
   source_code_link: string;
-  demo_url?: boolean;
+  demo_url: string | null;
+  is_demo: boolean;
 }
 
 const ProjectCard = ({
@@ -26,9 +26,10 @@ const ProjectCard = ({
   name,
   description,
   tags,
-  image,
+  image_url,
   source_code_link,
   demo_url,
+  is_demo,
 }: ProjectCardProps) => {
   const [readMore, setReadMore] = useState(false);
   const maxDescriptionLength = 120;
@@ -37,6 +38,8 @@ const ProjectCard = ({
     description.length > maxDescriptionLength
       ? description.slice(0, maxDescriptionLength) + '...'
       : description;
+
+  const linkUrl = is_demo && demo_url ? demo_url : source_code_link;
 
   return (
     <motion.div
@@ -47,7 +50,7 @@ const ProjectCard = ({
       <Tilt className="bg-tertiary p-5 rounded-3xl shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out cursor-pointer flex flex-col h-full">
         <div className="relative w-full h-48 sm:h-54 md:h-62 lg:h-68 xl:h-76 rounded-3xl overflow-hidden flex-shrink-0">
           <Image
-            src={image}
+            src={image_url}
             alt={name}
             fill
             className="object-cover rounded-3xl"
@@ -57,14 +60,14 @@ const ProjectCard = ({
             <div
               onClick={(e) => {
                 e.stopPropagation();
-                window.open(source_code_link, '_blank');
+                window.open(linkUrl, '_blank');
               }}
               className="black-gradient w-12 h-12 rounded-full flex justify-center items-center cursor-pointer hover:bg-gray-800/70 transition-colors duration-200"
-              title={demo_url ? 'View Demo' : 'View Source Code'}
+              title={is_demo ? 'View Demo' : 'View Source Code'}
             >
               <Image
-                src={demo_url ? '/images/web.png' : '/images/github.png'}
-                alt={demo_url ? 'demo' : 'github'}
+                src={is_demo ? '/images/web.png' : '/images/github.png'}
+                alt={is_demo ? 'demo' : 'github'}
                 width={24}
                 height={24}
                 className="object-contain"
@@ -102,7 +105,7 @@ const ProjectCard = ({
           <div className="mt-auto flex flex-wrap gap-2 pt-5">
             {tags.map((tag) => (
               <span
-                key={tag.name}
+                key={tag.id}
                 className={`text-[13px] sm:text-sm ${tag.color} bg-gray-800/30 px-2 py-1 rounded-full select-none`}
               >
                 {tag.name}
@@ -115,7 +118,11 @@ const ProjectCard = ({
   );
 };
 
-const Works = () => {
+interface WorksProps {
+  projects?: (DBProject & { tags: DBProjectTag[] })[];
+}
+
+const Works = ({ projects = [] }: WorksProps) => {
   return (
     <div className="max-w-7xl mx-auto">
       <motion.div variants={textVariant()} className={styles.paddingX}>
@@ -138,7 +145,7 @@ const Works = () => {
         className={`${styles.paddingX} mt-10 flex flex-wrap items-center justify-center gap-7`}
       >
         {projects.map((project, index) => (
-          <ProjectCard key={`project-${index}`} index={index} {...project} />
+          <ProjectCard key={project.id} index={index} {...project} />
         ))}
       </div>
     </div>

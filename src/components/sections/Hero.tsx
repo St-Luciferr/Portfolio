@@ -4,7 +4,23 @@ import { styles } from '@/lib/styles';
 import HeroAnimation from '@/components/sections/HeroAnimation';
 import Lazy3DCanvas from '@/components/canvas/Lazy3DCanvas';
 
-const Hero = () => {
+interface HeroProps {
+  data?: {
+    name?: string;
+    role?: string;
+    tagline?: string;
+    resume_url?: string;
+  };
+}
+
+const Hero = ({ data }: HeroProps) => {
+  const name = data?.name || 'Santosh';
+  const role = data?.role || 'Machine Learning Engineer';
+  const tagline =
+    data?.tagline ||
+    "a machine learning engineer passionate about building real-world solutions with Generative AI, NLP, and intelligent automation. Let's connect and shape the future of AI together!";
+  const resumeUrl = data?.resume_url || '/cv.pdf';
+
   return (
     <section className="relative w-full h-screen mx-auto">
       {/* Static content - renders immediately for LCP */}
@@ -20,13 +36,10 @@ const Hero = () => {
         <div>
           {/* LCP element - critical for performance */}
           <h1 className={`${styles.heroHeadText} text-white`}>
-            Hi, I&apos;m <span className="text-[#915eff]">Santosh</span>
+            Hi, I&apos;m <span className="text-[#915eff]">{name}</span>
           </h1>
           <p className={`${styles.heroSubText} mt-2 text-white-100`}>
-            a machine learning engineer passionate about building real-world
-            solutions with Generative AI, NLP, and intelligent automation.
-            <br className="sm:block hidden" />
-            Let&apos;s connect and shape the future of AI together!
+            {tagline}
           </p>
         </div>
 
@@ -34,7 +47,7 @@ const Hero = () => {
           <button className="button-resume bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">
             <a
               className="flex items-center justify-center no-underline text-white"
-              href="/cv.pdf"
+              href={resumeUrl}
               download
               target="_blank"
               rel="noreferrer"

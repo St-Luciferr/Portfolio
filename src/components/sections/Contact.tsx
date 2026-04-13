@@ -15,7 +15,14 @@ interface FormState {
   message: string;
 }
 
-const Contact = () => {
+interface ContactProps {
+  data?: {
+    name?: string;
+    email?: string;
+  };
+}
+
+const Contact = ({ data }: ContactProps) => {
   const formRef = useRef<HTMLFormElement>(null);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState<FormState>({
@@ -23,6 +30,9 @@ const Contact = () => {
     email: '',
     message: '',
   });
+
+  const toName = data?.name || 'Santosh';
+  const toEmail = data?.email || 'suntoss.pandey@gmail.com';
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -41,9 +51,9 @@ const Contact = () => {
         process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 'template_epwmplk',
         {
           from_name: form.name,
-          to_name: 'Santosh',
+          to_name: toName,
           from_email: form.email,
-          to_email: 'suntoss.pandey@gmail.com',
+          to_email: toEmail,
           message: form.message,
         },
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || '-OvhlkkzMKUz5pjMs'

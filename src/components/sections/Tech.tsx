@@ -1,10 +1,14 @@
 'use client';
 
 import SectionWrapper from '@/components/hoc/SectionWrapper';
-import { technologies } from '@/lib/constants';
 import LazyBallCanvas from '@/components/canvas/LazyBallCanvas';
+import type { DBTechnology } from '@/lib/types';
 
-const Tech = () => {
+interface TechProps {
+  technologies?: DBTechnology[];
+}
+
+const Tech = ({ technologies = [] }: TechProps) => {
   return (
     <div className="max-w-7xl mx-auto">
       <div className="flex flex-row flex-wrap justify-center gap-10">
@@ -12,9 +16,9 @@ const Tech = () => {
           <div
             title={technology.name}
             className="w-28 h-28"
-            key={technology.name}
+            key={technology.id}
           >
-            <LazyBallCanvas icon={technology.icon} />
+            <LazyBallCanvas icon={technology.icon_url} />
           </div>
         ))}
       </div>
