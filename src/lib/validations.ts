@@ -116,6 +116,7 @@ export const heroSettingsSchema = z.object({
   heading: z.string().min(1, 'Heading is required').max(100, 'Heading too long'),
   name: z.string().min(1, 'Name is required').max(100, 'Name too long'),
   subtitle: z.string().min(10, 'Subtitle must be at least 10 characters').max(1000, 'Subtitle too long'),
+  background_image_url: z.string().url('Invalid background image URL').optional(),
   resume_url: z
     .string()
     .min(1, 'Resume URL is required')

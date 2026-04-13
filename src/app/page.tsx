@@ -14,6 +14,7 @@ import {
   getPublishedExperiences,
   getPublishedTechnologies,
   getPublishedServices,
+  getPublishedNavLinks,
   getAllSiteSettings,
 } from '@/lib/data';
 
@@ -84,20 +85,24 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Home() {
   // Fetch all data in parallel for better performance
-  const [projects, experiences, technologies, services, settings] =
+  const [projects, experiences, technologies, services, navLinks, settings] =
     await Promise.all([
       getPublishedProjects(),
       getPublishedExperiences(),
       getPublishedTechnologies(),
       getPublishedServices(),
+      getPublishedNavLinks(),
       getAllSiteSettings(),
     ]);
 
   // Build JSON-LD structured data from settings
   const heroSettings = settings['hero'] || {};
   const seoSettings = settings['seo'] || {};
-  const socialSettings = settings['social'] || {};
+  const socialSettings = settings['social_links'] || {};
   const bioSettings = settings['bio'] || {};
+  const backgroundImage = heroSettings.background_image_url
+    ? { backgroundImage: `url(${heroSettings.background_image_url})` }
+    : undefined;
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -121,8 +126,11 @@ export default async function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <main className="relative z-0 bg-primary">
-        <div className="bg-hero-pattern bg-cover bg-no-repeat bg-center">
-          <Navbar />
+        <div
+          className="bg-cover bg-no-repeat bg-center"
+          style={backgroundImage}
+        >
+          <Navbar navLinks={navLinks} />
           <Hero data={settings['hero']} />
         </div>
         <About data={settings['bio']} services={services} />

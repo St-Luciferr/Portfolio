@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server';
+import { createClient } from '@supabase/supabase-js';
 import type {
   DBProject,
   DBProjectTag,
@@ -7,7 +7,19 @@ import type {
   DBTechnology,
   DBService,
   DBSiteSettings,
+  DBNavLink,
 } from './types';
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  }
+);
 
 /**
  * Fetch all published projects with their tags
@@ -15,8 +27,6 @@ import type {
 export async function getPublishedProjects(): Promise<
   (DBProject & { tags: DBProjectTag[] })[]
 > {
-  const supabase = await createClient();
-
   const { data: projects, error: projectsError } = await supabase
     .from('projects')
     .select('*')
@@ -64,13 +74,63 @@ export async function getPublishedProjects(): Promise<
 }
 
 /**
+ * Fetch a single published project by slug with its tags
+ */
+export async function getPublishedProjectBySlug(
+  slug: string
+): Promise<(DBProject & { tags: DBProjectTag[] }) | null> {
+  const { data: project, error: projectError } = await supabase
+    .from('projects')
+    .select('*')
+    .eq('slug', slug)
+    .eq('is_published', true)
+    .single();
+
+  if (projectError) {
+    console.error(`Error fetching project ${slug}:`, projectError);
+    return null;
+  }
+
+  const { data: tags, error: tagsError } = await supabase
+    .from('project_tags')
+    .select('*')
+    .eq('project_id', project.id)
+    .order('display_order', { ascending: true });
+
+  if (tagsError) {
+    console.error(`Error fetching tags for project ${slug}:`, tagsError);
+  }
+
+  return {
+    ...project,
+    tags: tags || [],
+  };
+}
+
+/**
+ * Fetch published project slugs for static route generation and sitemaps
+ */
+export async function getPublishedProjectSlugs(): Promise<string[]> {
+  const { data, error } = await supabase
+    .from('projects')
+    .select('slug')
+    .eq('is_published', true)
+    .order('display_order', { ascending: true });
+
+  if (error) {
+    console.error('Error fetching project slugs:', error);
+    return [];
+  }
+
+  return (data || []).map((project) => project.slug);
+}
+
+/**
  * Fetch all published experiences with their points
  */
 export async function getPublishedExperiences(): Promise<
   (DBExperience & { points: DBExperiencePoint[] })[]
 > {
-  const supabase = await createClient();
-
   const { data: experiences, error: experiencesError } = await supabase
     .from('experiences')
     .select('*')
@@ -121,8 +181,6 @@ export async function getPublishedExperiences(): Promise<
  * Fetch all published technologies
  */
 export async function getPublishedTechnologies(): Promise<DBTechnology[]> {
-  const supabase = await createClient();
-
   const { data, error } = await supabase
     .from('technologies')
     .select('*')
@@ -141,8 +199,6 @@ export async function getPublishedTechnologies(): Promise<DBTechnology[]> {
  * Fetch all published services
  */
 export async function getPublishedServices(): Promise<DBService[]> {
-  const supabase = await createClient();
-
   const { data, error } = await supabase
     .from('services')
     .select('*')
@@ -158,11 +214,27 @@ export async function getPublishedServices(): Promise<DBService[]> {
 }
 
 /**
+ * Fetch published navigation links
+ */
+export async function getPublishedNavLinks(): Promise<DBNavLink[]> {
+  const { data, error } = await supabase
+    .from('nav_links')
+    .select('*')
+    .eq('is_published', true)
+    .order('display_order', { ascending: true });
+
+  if (error) {
+    console.error('Error fetching navigation links:', error);
+    return [];
+  }
+
+  return data || [];
+}
+
+/**
  * Fetch a specific site setting by key
  */
 export async function getSiteSetting(key: string): Promise<DBSiteSettings | null> {
-  const supabase = await createClient();
-
   const { data, error } = await supabase
     .from('site_settings')
     .select('*')
@@ -181,12 +253,10 @@ export async function getSiteSetting(key: string): Promise<DBSiteSettings | null
  * Fetch multiple site settings by keys
  */
 export async function getSiteSettings(keys: string[]): Promise<Record<string, any>> {
-  const supabase = await createClient();
-
   const { data, error } = await supabase
     .from('site_settings')
     .select('*')
-    .in('setting_key', keys);
+    .in('key', keys);
 
   if (error) {
     console.error('Error fetching settings:', error);
@@ -207,8 +277,6 @@ export async function getSiteSettings(keys: string[]): Promise<Record<string, an
  * Fetch all site settings
  */
 export async function getAllSiteSettings(): Promise<Record<string, any>> {
-  const supabase = await createClient();
-
   const { data, error } = await supabase.from('site_settings').select('*');
 
   if (error) {

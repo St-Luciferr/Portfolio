@@ -148,6 +148,7 @@ export interface SiteSettings {
     heading: string;
     name: string;
     subtitle: string;
+    background_image_url?: string;
     resume_url: string;
   };
   bio: {

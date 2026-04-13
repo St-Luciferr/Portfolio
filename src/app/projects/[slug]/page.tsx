@@ -3,23 +3,26 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { projects } from '@/lib/constants';
+import {
+  getPublishedProjectBySlug,
+  getPublishedProjectSlugs,
+} from '@/lib/data';
 
 interface ProjectPageProps {
   params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
-  return projects.map((project) => ({
-    slug: project.slug,
-  }));
+  const slugs = await getPublishedProjectSlugs();
+
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
   params,
 }: ProjectPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const project = projects.find((p) => p.slug === slug);
+  const project = await getPublishedProjectBySlug(slug);
 
   if (!project) {
     return {
@@ -33,14 +36,14 @@ export async function generateMetadata({
     openGraph: {
       title: `${project.name} | Santosh Pandey`,
       description: project.description,
-      images: [project.image],
+      images: [project.image_url],
     },
   };
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { slug } = await params;
-  const project = projects.find((p) => p.slug === slug);
+  const project = await getPublishedProjectBySlug(slug);
 
   if (!project) {
     notFound();
@@ -59,7 +62,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         <div className="bg-tertiary rounded-3xl overflow-hidden shadow-card">
           <div className="relative w-full h-64 md:h-96">
             <Image
-              src={project.image}
+              src={project.image_url}
               alt={project.name}
               fill
               className="object-cover"
@@ -88,18 +91,18 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </p>
 
             <a
-              href={project.source_code_link}
+              href={project.is_demo && project.demo_url ? project.demo_url : project.source_code_link}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-[#915eff] hover:bg-[#7a4fd4] text-white px-6 py-3 rounded-xl font-medium transition-colors"
             >
               <Image
-                src={project.demo_url ? '/images/web.png' : '/images/github.png'}
+                src={project.is_demo ? '/images/web.png' : '/images/github.png'}
                 alt=""
                 width={20}
                 height={20}
               />
-              {project.demo_url ? 'View Live Demo' : 'View Source Code'}
+              {project.is_demo ? 'View Live Demo' : 'View Source Code'}
             </a>
           </div>
         </div>

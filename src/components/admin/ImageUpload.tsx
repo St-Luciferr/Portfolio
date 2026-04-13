@@ -14,6 +14,7 @@ interface ImageUploadProps {
   onUpload: (url: string) => void;
   label?: string;
   acceptPdf?: boolean; // Allow PDF files
+  previewLoading?: 'eager' | 'lazy';
 }
 
 export function ImageUpload({
@@ -22,6 +23,7 @@ export function ImageUpload({
   onUpload,
   label = 'Upload Image',
   acceptPdf = false,
+  previewLoading = 'lazy',
 }: ImageUploadProps) {
   const [uploading, setUploading] = useState(false);
   const [preview, setPreview] = useState<string | null>(currentImage || null);
@@ -135,6 +137,8 @@ export function ImageUpload({
               alt="Preview"
               fill
               className="object-cover"
+              loading={previewLoading}
+              sizes="(max-width: 768px) 100vw, 768px"
             />
           )}
           <Button

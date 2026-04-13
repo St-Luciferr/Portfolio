@@ -1,9 +1,11 @@
 import { MetadataRoute } from 'next';
-import { projects } from '@/lib/constants';
+import { getPublishedProjectSlugs } from '@/lib/data';
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const projectUrls = projects.map((project) => ({
-    url: `https://pandeysantosh.com.np/projects/${project.slug}`,
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const projectSlugs = await getPublishedProjectSlugs();
+
+  const projectUrls = projectSlugs.map((slug) => ({
+    url: `https://pandeysantosh.com.np/projects/${slug}`,
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.8,
