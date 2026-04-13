@@ -9,6 +9,23 @@ import type {
   DBSiteSettings,
   DBNavLink,
 } from './types';
+import type {
+  Project,
+  Experience,
+  Technology,
+  Service,
+  NavLink,
+  SiteSettings,
+} from '@/types/frontend';
+import {
+  mapProjects,
+  mapProject,
+  mapExperiences,
+  mapTechnologies,
+  mapServices,
+  mapNavLinks,
+  mapSiteSettings,
+} from '@/mappers';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -23,10 +40,9 @@ const supabase = createClient(
 
 /**
  * Fetch all published projects with their tags
+ * Returns frontend-formatted project data
  */
-export async function getPublishedProjects(): Promise<
-  (DBProject & { tags: DBProjectTag[] })[]
-> {
+export async function getPublishedProjects(): Promise<Project[]> {
   const { data: projects, error: projectsError } = await supabase
     .from('projects')
     .select('*')
@@ -67,18 +83,22 @@ export async function getPublishedProjects(): Promise<
   );
 
   // Combine projects with their tags
-  return projects.map((project) => ({
+  const projectsWithTags = projects.map((project) => ({
     ...project,
     tags: tagsByProject[project.id] || [],
   }));
+
+  // Map to frontend format
+  return mapProjects(projectsWithTags);
 }
 
 /**
  * Fetch a single published project by slug with its tags
+ * Returns frontend-formatted project data
  */
 export async function getPublishedProjectBySlug(
   slug: string
-): Promise<(DBProject & { tags: DBProjectTag[] }) | null> {
+): Promise<Project | null> {
   const { data: project, error: projectError } = await supabase
     .from('projects')
     .select('*')
@@ -101,10 +121,13 @@ export async function getPublishedProjectBySlug(
     console.error(`Error fetching tags for project ${slug}:`, tagsError);
   }
 
-  return {
+  const projectWithTags = {
     ...project,
     tags: tags || [],
   };
+
+  // Map to frontend format
+  return mapProject(projectWithTags);
 }
 
 /**
@@ -127,10 +150,9 @@ export async function getPublishedProjectSlugs(): Promise<string[]> {
 
 /**
  * Fetch all published experiences with their points
+ * Returns frontend-formatted experience data
  */
-export async function getPublishedExperiences(): Promise<
-  (DBExperience & { points: DBExperiencePoint[] })[]
-> {
+export async function getPublishedExperiences(): Promise<Experience[]> {
   const { data: experiences, error: experiencesError } = await supabase
     .from('experiences')
     .select('*')
@@ -171,16 +193,20 @@ export async function getPublishedExperiences(): Promise<
   );
 
   // Combine experiences with their points
-  return experiences.map((experience) => ({
+  const experiencesWithPoints = experiences.map((experience) => ({
     ...experience,
     points: pointsByExperience[experience.id] || [],
   }));
+
+  // Map to frontend format
+  return mapExperiences(experiencesWithPoints);
 }
 
 /**
  * Fetch all published technologies
+ * Returns frontend-formatted technology data
  */
-export async function getPublishedTechnologies(): Promise<DBTechnology[]> {
+export async function getPublishedTechnologies(): Promise<Technology[]> {
   const { data, error } = await supabase
     .from('technologies')
     .select('*')
@@ -192,13 +218,15 @@ export async function getPublishedTechnologies(): Promise<DBTechnology[]> {
     return [];
   }
 
-  return data || [];
+  // Map to frontend format
+  return mapTechnologies(data || []);
 }
 
 /**
  * Fetch all published services
+ * Returns frontend-formatted service data
  */
-export async function getPublishedServices(): Promise<DBService[]> {
+export async function getPublishedServices(): Promise<Service[]> {
   const { data, error } = await supabase
     .from('services')
     .select('*')
@@ -210,13 +238,15 @@ export async function getPublishedServices(): Promise<DBService[]> {
     return [];
   }
 
-  return data || [];
+  // Map to frontend format
+  return mapServices(data || []);
 }
 
 /**
  * Fetch published navigation links
+ * Returns frontend-formatted nav link data
  */
-export async function getPublishedNavLinks(): Promise<DBNavLink[]> {
+export async function getPublishedNavLinks(): Promise<NavLink[]> {
   const { data, error } = await supabase
     .from('nav_links')
     .select('*')
@@ -228,7 +258,8 @@ export async function getPublishedNavLinks(): Promise<DBNavLink[]> {
     return [];
   }
 
-  return data || [];
+  // Map to frontend format
+  return mapNavLinks(data || []);
 }
 
 /**
@@ -275,21 +306,25 @@ export async function getSiteSettings(keys: string[]): Promise<Record<string, an
 
 /**
  * Fetch all site settings
+ * Returns frontend-formatted site settings
  */
-export async function getAllSiteSettings(): Promise<Record<string, any>> {
+export async function getAllSiteSettings(): Promise<SiteSettings> {
   const { data, error } = await supabase.from('site_settings').select('*');
 
   if (error) {
     console.error('Error fetching all settings:', error);
-    return {};
+    return mapSiteSettings({});
   }
 
   // Convert array to key-value object
-  return (data || []).reduce(
+  const settingsMap = (data || []).reduce(
     (acc, setting) => {
       acc[setting.key] = setting.value;
       return acc;
     },
     {} as Record<string, any>
   );
+
+  // Map to frontend format
+  return mapSiteSettings(settingsMap);
 }

@@ -10,6 +10,10 @@ export const projectTagSchema = z.object({
   display_order: z.number().int().min(0).optional(),
 });
 
+export const projectArrayItemSchema = z.object({
+  value: z.string().min(1).max(1000),
+});
+
 export const projectSchema = z.object({
   slug: z
     .string()
@@ -28,6 +32,15 @@ export const projectSchema = z.object({
   is_published: z.boolean().default(true),
   display_order: z.number().int().min(0),
   tags: z.array(projectTagSchema).min(1, 'At least one tag is required'),
+  // Project detail fields
+  eyebrow: z.string().max(100, 'Eyebrow too long').optional(),
+  summary: z.string().max(2000, 'Summary too long').optional(),
+  problem: z.array(projectArrayItemSchema).default([]).transform(arr => arr.map(item => item.value)),
+  solution: z.array(projectArrayItemSchema).default([]).transform(arr => arr.map(item => item.value)),
+  features: z.array(projectArrayItemSchema).default([]).transform(arr => arr.map(item => item.value)),
+  architecture: z.array(projectArrayItemSchema).default([]).transform(arr => arr.map(item => item.value)),
+  results: z.array(projectArrayItemSchema).default([]).transform(arr => arr.map(item => item.value)),
+  stack: z.array(projectArrayItemSchema).default([]).transform(arr => arr.map(item => item.value)),
 });
 
 export const updateProjectSchema = projectSchema.partial().extend({

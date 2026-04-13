@@ -60,6 +60,15 @@ export interface DBProject {
   is_demo: boolean;
   is_published: boolean;
   display_order: number;
+  // Project detail fields
+  eyebrow: string | null;
+  summary: string | null;
+  problem: string[];
+  solution: string[];
+  features: string[];
+  architecture: string[];
+  results: string[];
+  stack: string[];
   created_at: string;
   updated_at: string;
   project_tags?: DBProjectTag[];
