@@ -124,6 +124,7 @@ async function buildSeedData() {
     automateBoringIcon,
     freelanceIcon,
     ragbotImage,
+    contextAwareRagImage,
     whatsappImage,
     trekpalImage,
     monumentsImage,
@@ -150,6 +151,7 @@ async function buildSeedData() {
     uploadAsset('/images/company/automateboring.png', 'companies/automateboring.png'),
     uploadAsset('/images/company/freelance_icon.png', 'companies/freelance_icon.png'),
     uploadAsset('/images/projects/ragbot.webp', 'projects/ragbot.webp'),
+    uploadAsset('/images/projects/context-aware-rag.svg', 'projects/context-aware-rag.svg'),
     uploadAsset('/images/projects/whatsapp.svg', 'projects/whatsapp.svg'),
     uploadAsset('/images/projects/trekpal.webp', 'projects/trekpal.webp'),
     uploadAsset('/images/projects/continualmonuments.webp', 'projects/continualmonuments.webp'),
@@ -220,7 +222,8 @@ async function buildSeedData() {
     navLinks: [
       { link_id: 'about', title: 'About', display_order: 0, is_published: true },
       { link_id: 'work', title: 'Work', display_order: 1, is_published: true },
-      { link_id: 'contact', title: 'Contact', display_order: 2, is_published: true },
+      { link_id: 'projects', title: 'Projects', display_order: 2, is_published: true },
+      { link_id: 'contact', title: 'Contact', display_order: 3, is_published: true },
     ],
     services: [
       { title: 'ML Developer', icon_url: creatorIcon, display_order: 0 },
@@ -299,6 +302,24 @@ async function buildSeedData() {
         display_order: 0,
       },
       {
+        slug: 'context-aware-rag',
+        name: 'Context-Aware RAG Chatbot',
+        description:
+          'A GenAI-powered AI/ML chatbot that delivers accurate, citation-backed answers using Retrieval-Augmented Generation. The system ingests curated Wikipedia articles, applies semantic chunking to preserve topic boundaries, and retrieves context through hybrid search with vector MMR and BM25. It uses LangGraph for structured conversation flow, AutoCut-style context distillation to reduce redundant evidence, SQLite-backed session persistence, and LangSmith tracing for observability. Built with FastAPI, Pydantic, ChromaDB, HuggingFace embeddings, Ollama-hosted LLMs, and a Next.js + TypeScript + Tailwind frontend, with Docker Compose support for deployment.',
+        tags: [
+          { name: 'RAG', color: 'blue-text-gradient' },
+          { name: 'LangGraph', color: 'green-text-gradient' },
+          { name: 'Hybrid Search', color: 'orange-text-gradient' },
+          { name: 'FastAPI', color: 'pink-text-gradient' },
+          { name: 'Next.js', color: 'blue-text-gradient' },
+        ],
+        image_url: contextAwareRagImage,
+        source_code_link: 'https://github.com/St-Luciferr/context-aware-rag',
+        demo_url: null,
+        is_demo: false,
+        display_order: 1,
+      },
+      {
         slug: 'whatsapp-chatbot',
         name: 'WhatsApp Chatbot with Function Calling',
         description:
@@ -312,7 +333,7 @@ async function buildSeedData() {
         source_code_link: 'https://github.com/St-Luciferr/Whatsapp-Agent',
         demo_url: null,
         is_demo: false,
-        display_order: 1,
+        display_order: 2,
       },
       {
         slug: 'trek-pal-nepal',
@@ -328,7 +349,7 @@ async function buildSeedData() {
         source_code_link: 'https://trekpalnepal.com',
         demo_url: 'https://trekpalnepal.com',
         is_demo: true,
-        display_order: 2,
+        display_order: 3,
       },
       {
         slug: 'continual-monument-detection',
@@ -344,7 +365,7 @@ async function buildSeedData() {
         source_code_link: 'https://github.com/St-Luciferr/Continual-Monument-Detection',
         demo_url: null,
         is_demo: false,
-        display_order: 3,
+        display_order: 4,
       },
       {
         slug: 'pestpad',
@@ -359,7 +380,7 @@ async function buildSeedData() {
         source_code_link: 'https://github.com/St-Luciferr',
         demo_url: null,
         is_demo: false,
-        display_order: 4,
+        display_order: 5,
       },
       {
         slug: 'amid',
@@ -375,7 +396,7 @@ async function buildSeedData() {
         source_code_link: 'https://github.com/St-Luciferr/Flutter_App',
         demo_url: null,
         is_demo: false,
-        display_order: 5,
+        display_order: 6,
       },
     ],
     testimonials: [
