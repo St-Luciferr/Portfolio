@@ -34,7 +34,7 @@ export default function AdminLoginPage() {
           title: 'Success',
           description: 'Logged in successfully',
         });
-        router.push('/admin/dashboard/overview');
+        router.push('/admin/overview');
         router.refresh();
       }
     } catch (error: any) {

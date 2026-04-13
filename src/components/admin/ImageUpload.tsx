@@ -13,6 +13,7 @@ interface ImageUploadProps {
   currentImage?: string;
   onUpload: (url: string) => void;
   label?: string;
+  acceptPdf?: boolean; // Allow PDF files
 }
 
 export function ImageUpload({
@@ -20,10 +21,14 @@ export function ImageUpload({
   currentImage,
   onUpload,
   label = 'Upload Image',
+  acceptPdf = false,
 }: ImageUploadProps) {
   const [uploading, setUploading] = useState(false);
   const [preview, setPreview] = useState<string | null>(currentImage || null);
   const { toast } = useToast();
+
+  // Check if current file is a PDF
+  const isPdf = preview?.toLowerCase().endsWith('.pdf');
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

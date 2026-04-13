@@ -44,11 +44,11 @@ export function AdminHeader({ user }: AdminHeaderProps) {
   };
 
   return (
-    <header className="bg-white border-b border-gray-200 px-6 py-4">
+    <header className="bg-white border-b border-gray-200 px-6 py-4 shadow-sm">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-semibold text-gray-800">Dashboard</h2>
-          <p className="text-sm text-gray-500">Manage your portfolio content</p>
+          <h2 className="text-xl font-semibold text-gray-900">Dashboard</h2>
+          <p className="text-sm text-gray-600">Manage your portfolio content</p>
         </div>
 
         <DropdownMenu>

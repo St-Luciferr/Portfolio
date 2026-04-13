@@ -9,7 +9,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Github, Linkedin, Twitter } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
+import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 
 export function SocialSettings() {
   const [loading, setLoading] = useState(false);
@@ -103,7 +104,7 @@ export function SocialSettings() {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-2">
             <Label htmlFor="github" className="flex items-center gap-2">
-              <Github className="w-4 h-4" />
+              <FaGithub className="w-4 h-4" />
               GitHub
             </Label>
             <Input
@@ -118,7 +119,7 @@ export function SocialSettings() {
 
           <div className="space-y-2">
             <Label htmlFor="linkedin" className="flex items-center gap-2">
-              <Linkedin className="w-4 h-4" />
+              <FaLinkedin className="w-4 h-4" />
               LinkedIn
             </Label>
             <Input
@@ -133,7 +134,7 @@ export function SocialSettings() {
 
           <div className="space-y-2">
             <Label htmlFor="twitter" className="flex items-center gap-2">
-              <Twitter className="w-4 h-4" />
+              <FaTwitter className="w-4 h-4" />
               Twitter / X
             </Label>
             <Input
