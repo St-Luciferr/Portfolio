@@ -11,13 +11,12 @@ import Image from 'next/image';
 import 'react-vertical-timeline-component/style.min.css';
 
 import { styles } from '@/lib/styles';
-import { experiences } from '@/lib/constants';
 import SectionWrapper from '@/components/hoc/SectionWrapper';
 import { textVariant } from '@/lib/motion';
-import type { Experience as ExperienceType } from '@/lib/types';
+import type { DBExperience, DBExperiencePoint } from '@/lib/types';
 
 interface ExperienceCardProps {
-  experience: ExperienceType;
+  experience: DBExperience & { points: DBExperiencePoint[] };
   index: number;
 }
 
@@ -35,11 +34,11 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
         contentStyle={{ background: '#1d1836', color: '#fff' }}
         contentArrowStyle={{ borderRight: '7px solid #232631' }}
         date={experience.date}
-        iconStyle={{ background: experience.iconBg }}
+        iconStyle={{ background: experience.icon_bg_color }}
         icon={
           <div className="flex justify-center items-center w-full h-full">
             <Image
-              src={experience.icon}
+              src={experience.icon_url}
               alt={experience.company_name}
               width={36}
               height={36}
@@ -60,10 +59,10 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
         <ul className="mt-5 list-disc ml-5 space-y-2">
           {experience.points.map((point, index) => (
             <li
-              key={`experience-point-${index}`}
+              key={point.id || `experience-point-${index}`}
               className="text-white-100 text-[14px] pl-1 tracking-wider"
             >
-              {point}
+              {point.point}
             </li>
           ))}
         </ul>
@@ -72,7 +71,11 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
   );
 };
 
-const Experience = () => {
+interface ExperienceProps {
+  experiences?: (DBExperience & { points: DBExperiencePoint[] })[];
+}
+
+const Experience = ({ experiences = [] }: ExperienceProps) => {
   return (
     <div className="max-w-7xl mx-auto">
       <motion.div variants={textVariant()} className={styles.paddingX}>
@@ -83,7 +86,7 @@ const Experience = () => {
       <div className="mt-20 flex flex-col">
         <VerticalTimeline animate={true} layout="2-columns" lineColor="#232631">
           {experiences.map((experience, index) => (
-            <ExperienceCard key={index} experience={experience} index={index} />
+            <ExperienceCard key={experience.id} experience={experience} index={index} />
           ))}
         </VerticalTimeline>
       </div>

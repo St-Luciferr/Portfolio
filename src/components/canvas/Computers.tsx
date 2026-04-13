@@ -14,6 +14,18 @@ interface ComputersProps {
 const Computers = ({ isMobile }: ComputersProps) => {
   const computer = useGLTF('/models/desktop_pc/scene.glb');
 
+  // Validate and fix geometry on load
+  if (computer.scene) {
+    computer.scene.traverse((child: any) => {
+      if (child.isMesh && child.geometry) {
+        // Force recompute bounding sphere with validation
+        if (child.geometry.attributes.position) {
+          child.geometry.computeBoundingSphere();
+        }
+      }
+    });
+  }
+
   return (
     <mesh>
       <hemisphereLight intensity={0.15} groundColor="black" />

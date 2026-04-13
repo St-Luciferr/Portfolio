@@ -9,6 +9,18 @@ import Loader from '@/components/ui/Loader';
 const Earth = () => {
   const earth = useGLTF('/models/planet/scene.glb');
 
+  // Validate and fix geometry on load
+  if (earth.scene) {
+    earth.scene.traverse((child: any) => {
+      if (child.isMesh && child.geometry) {
+        // Force recompute bounding sphere with validation
+        if (child.geometry.attributes.position) {
+          child.geometry.computeBoundingSphere();
+        }
+      }
+    });
+  }
+
   return (
     <primitive
       object={earth.scene}
