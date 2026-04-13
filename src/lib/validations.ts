@@ -116,7 +116,14 @@ export const heroSettingsSchema = z.object({
   heading: z.string().min(1, 'Heading is required').max(100, 'Heading too long'),
   name: z.string().min(1, 'Name is required').max(100, 'Name too long'),
   subtitle: z.string().min(10, 'Subtitle must be at least 10 characters').max(1000, 'Subtitle too long'),
-  resume_url: z.string().url('Invalid resume URL'),
+  background_image_url: z.string().url('Invalid background image URL').optional(),
+  resume_url: z
+    .string()
+    .min(1, 'Resume URL is required')
+    .refine(
+      (value) => value.startsWith('/') || z.string().url().safeParse(value).success,
+      'Invalid resume URL'
+    ),
 });
 
 export const bioSettingsSchema = z.object({

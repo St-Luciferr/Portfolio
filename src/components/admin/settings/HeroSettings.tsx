@@ -149,10 +149,24 @@ export function HeroSettings() {
           </div>
 
           <ImageUpload
+            bucket="meta"
+            currentImage={watch('background_image_url')}
+            onUpload={(url) => setValue('background_image_url', url)}
+            label="Hero Background Image"
+            previewLoading="eager"
+          />
+          {errors.background_image_url && (
+            <p className="text-sm text-red-500">
+              {errors.background_image_url.message}
+            </p>
+          )}
+
+          <ImageUpload
             bucket="resume"
             currentImage={watch('resume_url')}
             onUpload={(url) => setValue('resume_url', url)}
             label="Resume/CV (PDF or Image)"
+            acceptPdf
           />
           {errors.resume_url && (
             <p className="text-sm text-red-500">{errors.resume_url.message}</p>

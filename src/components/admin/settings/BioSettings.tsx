@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useForm, useFieldArray } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { bioSettingsSchema } from '@/lib/validations';
 import { Button } from '@/components/ui/button';
@@ -17,10 +17,12 @@ export function BioSettings() {
   const { toast } = useToast();
 
   const {
-    control,
+    register,
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
+    watch,
   } = useForm({
     resolver: zodResolver(bioSettingsSchema),
     defaultValues: {
@@ -28,10 +30,19 @@ export function BioSettings() {
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: 'paragraphs',
-  });
+  const paragraphs = watch('paragraphs') ?? [];
+
+  const appendParagraph = () => {
+    setValue('paragraphs', [...paragraphs, ''], { shouldValidate: true });
+  };
+
+  const removeParagraph = (index: number) => {
+    setValue(
+      'paragraphs',
+      paragraphs.filter((_, paragraphIndex) => paragraphIndex !== index),
+      { shouldValidate: true }
+    );
+  };
 
   useEffect(() => {
     fetchSettings();
@@ -113,22 +124,22 @@ export function BioSettings() {
             <Label>
               Paragraphs <span className="text-red-500">*</span>
             </Label>
-            {fields.map((field, index) => (
-              <div key={field.id} className="space-y-2">
+            {paragraphs.map((_, index) => (
+              <div key={index} className="space-y-2">
                 <div className="flex items-start gap-2">
                   <div className="flex-1">
                     <Textarea
-                      {...control.register(`paragraphs.${index}` as const)}
+                      {...register(`paragraphs.${index}` as const)}
                       rows={4}
                       placeholder={`Paragraph ${index + 1}...`}
                     />
                   </div>
-                  {fields.length > 1 && (
+                  {paragraphs.length > 1 && (
                     <Button
                       type="button"
                       variant="ghost"
                       size="sm"
-                      onClick={() => remove(index)}
+                      onClick={() => removeParagraph(index)}
                     >
                       <X className="w-4 h-4" />
                     </Button>
@@ -147,7 +158,7 @@ export function BioSettings() {
             type="button"
             variant="outline"
             size="sm"
-            onClick={() => append('')}
+            onClick={appendParagraph}
           >
             <Plus className="w-4 h-4 mr-2" />
             Add Paragraph

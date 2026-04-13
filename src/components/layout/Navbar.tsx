@@ -5,11 +5,22 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 import { styles } from '@/lib/styles';
-import { navLinks } from '@/lib/constants';
+import type { DBNavLink } from '@/lib/types';
 
-const Navbar = () => {
+interface NavbarProps {
+  navLinks?: DBNavLink[];
+}
+
+const fallbackNavLinks: Pick<DBNavLink, 'link_id' | 'title'>[] = [
+  { link_id: 'about', title: 'About' },
+  { link_id: 'work', title: 'Work' },
+  { link_id: 'contact', title: 'Contact' },
+];
+
+const Navbar = ({ navLinks = [] }: NavbarProps) => {
   const [active, setActive] = useState('');
   const [toggle, setToggle] = useState(false);
+  const links = navLinks.length > 0 ? navLinks : fallbackNavLinks;
 
   return (
     <nav
@@ -39,15 +50,15 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <ul className="list-none hidden sm:flex flex-row gap-10">
-          {navLinks.map((link) => (
+          {links.map((link) => (
             <li
-              key={link.id}
+              key={link.link_id}
               className={`${
                 active === link.title ? 'text-white' : 'text-secondary'
               } hover:text-white text-[18px] font-medium cursor-pointer`}
               onClick={() => setActive(link.title)}
             >
-              <a href={`#${link.id}`}>{link.title}</a>
+              <a href={`#${link.link_id}`}>{link.title}</a>
             </li>
           ))}
         </ul>
@@ -69,9 +80,9 @@ const Navbar = () => {
             } p-6 black-gradient absolute top-20 right-0 mx-4 my-2 min-w-[140px] z-10 rounded-xl`}
           >
             <ul className="list-none flex justify-end items-start flex-col gap-4">
-              {navLinks.map((link) => (
+              {links.map((link) => (
                 <li
-                  key={link.id}
+                  key={link.link_id}
                   className={`${
                     active === link.title ? 'text-white' : 'text-secondary'
                   } font-poppins font-medium cursor-pointer text-[16px]`}
@@ -80,7 +91,7 @@ const Navbar = () => {
                     setActive(link.title);
                   }}
                 >
-                  <a href={`#${link.id}`}>{link.title}</a>
+                  <a href={`#${link.link_id}`}>{link.title}</a>
                 </li>
               ))}
             </ul>
