@@ -153,6 +153,7 @@ export function HeroSettings() {
             currentImage={watch('resume_url')}
             onUpload={(url) => setValue('resume_url', url)}
             label="Resume/CV (PDF or Image)"
+            acceptPdf
           />
           {errors.resume_url && (
             <p className="text-sm text-red-500">{errors.resume_url.message}</p>

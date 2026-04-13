@@ -166,7 +166,7 @@ export async function getSiteSetting(key: string): Promise<DBSiteSettings | null
   const { data, error } = await supabase
     .from('site_settings')
     .select('*')
-    .eq('setting_key', key)
+    .eq('key', key)
     .single();
 
   if (error) {
@@ -196,7 +196,7 @@ export async function getSiteSettings(keys: string[]): Promise<Record<string, an
   // Convert array to key-value object
   return (data || []).reduce(
     (acc, setting) => {
-      acc[setting.setting_key] = setting.value;
+      acc[setting.key] = setting.value;
       return acc;
     },
     {} as Record<string, any>
@@ -219,7 +219,7 @@ export async function getAllSiteSettings(): Promise<Record<string, any>> {
   // Convert array to key-value object
   return (data || []).reduce(
     (acc, setting) => {
-      acc[setting.setting_key] = setting.value;
+      acc[setting.key] = setting.value;
       return acc;
     },
     {} as Record<string, any>

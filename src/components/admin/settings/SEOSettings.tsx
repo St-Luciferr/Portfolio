@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useForm, useFieldArray } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { seoSettingsSchema } from '@/lib/validations';
 import { Button } from '@/components/ui/button';
@@ -20,7 +20,6 @@ export function SEOSettings() {
 
   const {
     register,
-    control,
     handleSubmit,
     formState: { errors },
     reset,
@@ -33,10 +32,19 @@ export function SEOSettings() {
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: 'keywords',
-  });
+  const keywords = watch('keywords') ?? [];
+
+  const appendKeyword = () => {
+    setValue('keywords', [...keywords, ''], { shouldValidate: true });
+  };
+
+  const removeKeyword = (index: number) => {
+    setValue(
+      'keywords',
+      keywords.filter((_, keywordIndex) => keywordIndex !== index),
+      { shouldValidate: true }
+    );
+  };
 
   useEffect(() => {
     fetchSettings();
@@ -148,18 +156,18 @@ export function SEOSettings() {
               Keywords <span className="text-red-500">*</span>
             </Label>
             <div className="space-y-2">
-              {fields.map((field, index) => (
-                <div key={field.id} className="flex gap-2">
+              {keywords.map((_, index) => (
+                <div key={index} className="flex gap-2">
                   <Input
                     {...register(`keywords.${index}` as const)}
                     placeholder="e.g., Machine Learning"
                   />
-                  {fields.length > 1 && (
+                  {keywords.length > 1 && (
                     <Button
                       type="button"
                       variant="ghost"
                       size="sm"
-                      onClick={() => remove(index)}
+                      onClick={() => removeKeyword(index)}
                     >
                       <X className="w-4 h-4" />
                     </Button>
@@ -171,7 +179,7 @@ export function SEOSettings() {
               type="button"
               variant="outline"
               size="sm"
-              onClick={() => append('')}
+              onClick={appendKeyword}
             >
               <Plus className="w-4 h-4 mr-2" />
               Add Keyword

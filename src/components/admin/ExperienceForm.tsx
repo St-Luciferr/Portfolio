@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useForm, useFieldArray } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { experienceSchema } from '@/lib/validations';
 import type { DBExperience, DBExperiencePoint } from '@/lib/types';
@@ -20,7 +20,6 @@ interface ExperienceFormProps {
 
 export function ExperienceForm({ experience, onSuccess, onCancel }: ExperienceFormProps) {
   const [loading, setLoading] = useState(false);
-  const [points, setPoints] = useState<DBExperiencePoint[]>([]);
   const { toast } = useToast();
 
   const {
@@ -29,7 +28,6 @@ export function ExperienceForm({ experience, onSuccess, onCancel }: ExperienceFo
     formState: { errors },
     setValue,
     watch,
-    control,
   } = useForm({
     resolver: zodResolver(experienceSchema),
     defaultValues: {
@@ -44,10 +42,19 @@ export function ExperienceForm({ experience, onSuccess, onCancel }: ExperienceFo
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: 'points',
-  });
+  const pointFields = watch('points') ?? [];
+
+  const appendPoint = () => {
+    setValue('points', [...pointFields, ''], { shouldValidate: true });
+  };
+
+  const removePoint = (index: number) => {
+    setValue(
+      'points',
+      pointFields.filter((_, pointIndex) => pointIndex !== index),
+      { shouldValidate: true }
+    );
+  };
 
   useEffect(() => {
     if (experience) {
@@ -63,11 +70,11 @@ export function ExperienceForm({ experience, onSuccess, onCancel }: ExperienceFo
       const result = await response.json();
 
       if (result.success && result.data.points) {
-        setPoints(result.data.points);
-        // Initialize form with existing points as strings
-        result.data.points.forEach((point: DBExperiencePoint) => {
-          append(point.point);
-        });
+        setValue(
+          'points',
+          result.data.points.map((point: DBExperiencePoint) => point.point),
+          { shouldValidate: true }
+        );
       }
     } catch (error) {
       console.error('Failed to fetch experience points:', error);
@@ -217,21 +224,21 @@ export function ExperienceForm({ experience, onSuccess, onCancel }: ExperienceFo
             type="button"
             variant="outline"
             size="sm"
-            onClick={() => append('')}
+            onClick={appendPoint}
           >
             <Plus className="w-4 h-4 mr-2" />
             Add Point
           </Button>
         </div>
 
-        {fields.length === 0 ? (
+        {pointFields.length === 0 ? (
           <div className="text-center py-8 border-2 border-dashed rounded-lg">
             <p className="text-gray-500 mb-2">No points added yet</p>
             <Button
               type="button"
               variant="outline"
               size="sm"
-              onClick={() => append('')}
+              onClick={appendPoint}
             >
               <Plus className="w-4 h-4 mr-2" />
               Add First Point
@@ -239,8 +246,8 @@ export function ExperienceForm({ experience, onSuccess, onCancel }: ExperienceFo
           </div>
         ) : (
           <div className="space-y-3">
-            {fields.map((field, index) => (
-              <div key={field.id} className="flex gap-2">
+            {pointFields.map((_, index) => (
+              <div key={index} className="flex gap-2">
                 <div className="flex-1 space-y-1">
                   <Input
                     {...register(`points.${index}` as const)}
@@ -256,7 +263,7 @@ export function ExperienceForm({ experience, onSuccess, onCancel }: ExperienceFo
                   type="button"
                   variant="ghost"
                   size="sm"
-                  onClick={() => remove(index)}
+                  onClick={() => removePoint(index)}
                   className="text-red-600 hover:text-red-700 hover:bg-red-50"
                 >
                   <X className="w-4 h-4" />

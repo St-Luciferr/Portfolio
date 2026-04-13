@@ -33,7 +33,7 @@ export function validationErrorResponse(error: ZodError) {
     {
       success: false,
       error: 'Validation failed',
-      details: error.errors,
+      details: error.issues,
     },
     { status: 400 }
   );

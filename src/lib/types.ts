@@ -135,6 +135,14 @@ export interface DBNavLink {
   display_order: number;
 }
 
+export interface DBSiteSettings {
+  id: string;
+  key: string;
+  value: unknown;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface SiteSettings {
   hero: {
     heading: string;
