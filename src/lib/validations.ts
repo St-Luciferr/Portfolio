@@ -128,7 +128,10 @@ export const updateTestimonialSchema = testimonialSchema.partial().extend({
 export const heroSettingsSchema = z.object({
   heading: z.string().min(1, 'Heading is required').max(100, 'Heading too long'),
   name: z.string().min(1, 'Name is required').max(100, 'Name too long'),
-  subtitle: z.string().min(10, 'Subtitle must be at least 10 characters').max(1000, 'Subtitle too long'),
+  role: z.string().min(1, 'Role is required').max(200, 'Role too long'),
+  tagline: z.string().min(10, 'Tagline must be at least 10 characters').max(1000, 'Tagline too long'),
+  cta_text: z.string().min(1, 'CTA text is required').max(50, 'CTA text too long'),
+  cta_url: z.string().min(1, 'CTA URL is required'),
   background_image_url: z.string().url('Invalid background image URL').optional(),
   resume_url: z
     .string()

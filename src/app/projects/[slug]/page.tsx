@@ -9,6 +9,7 @@ import {
   getPublishedNavLinks,
   getPublishedProjectBySlug,
   getPublishedProjectSlugs,
+  getRelatedProjects,
 } from '@/lib/data';
 import { getProjectDetailContent } from '@/lib/project-details';
 
@@ -42,6 +43,10 @@ export async function generateMetadata({
   return {
     title,
     description,
+    keywords: project.tags.map(tag => tag.name),
+    authors: [{ name: 'Santosh Pandey', url: 'https://pandeysantosh.com.np' }],
+    creator: 'Santosh Pandey',
+    publisher: 'Santosh Pandey',
     alternates: {
       canonical: canonicalUrl,
     },
@@ -50,18 +55,31 @@ export async function generateMetadata({
       url: canonicalUrl,
       title: `${title} | Santosh Pandey`,
       description,
+      siteName: 'Santosh Pandey Portfolio',
       images: [
         {
           url: project.imageUrl,
+          width: 1200,
+          height: 630,
           alt: `${project.name} project preview`,
         },
       ],
+      authors: ['Santosh Pandey'],
+      tags: project.tags.map(tag => tag.name),
     },
     twitter: {
       card: 'summary_large_image',
+      site: '@suntoss',
+      creator: '@suntoss',
       title,
       description,
       images: [project.imageUrl],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
     },
   };
 }
@@ -91,24 +109,39 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     notFound();
   }
 
+  // Fetch related projects after we have the project
+  const relatedProjects = await getRelatedProjects(project.id);
+
   const content = getProjectDetailContent(project);
   const canonicalUrl = `https://pandeysantosh.com.np/projects/${project.slug}`;
   const authorName = settings['hero']?.name || 'Santosh Pandey';
+
+  // Determine if this is a software project (use SoftwareApplication schema)
+  const isSoftwareProject = project.tags.some(tag =>
+    ['AI', 'ML', 'Backend', 'Frontend', 'Full Stack', 'Mobile', 'Automation'].includes(tag.name)
+  );
+
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'CreativeWork',
+    '@type': isSoftwareProject ? 'SoftwareApplication' : 'CreativeWork',
     name: project.name,
     headline: `${project.name} Case Study`,
     description: content.summary,
-    image: project.image_url,
+    image: project.imageUrl,
     url: canonicalUrl,
     author: {
       '@type': 'Person',
       name: authorName,
+      url: 'https://pandeysantosh.com.np',
     },
     keywords: project.tags.map((tag) => tag.name),
-    codeRepository: project.source_code_link,
-    sameAs: [project.demo_url, project.source_code_link].filter(Boolean),
+    ...(isSoftwareProject && {
+      applicationCategory: 'DeveloperApplication',
+      operatingSystem: 'Cross-platform',
+    }),
+    ...(project.sourceCodeLink && { codeRepository: project.sourceCodeLink }),
+    ...(project.demoUrl && { installUrl: project.demoUrl }),
+    sameAs: [project.demoUrl, project.sourceCodeLink].filter(Boolean),
   };
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
@@ -148,21 +181,22 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       <main className="min-h-screen bg-primary">
         <Navbar navLinks={navLinks} />
 
-        <section className="pt-32 pb-16 sm:px-16 px-6">
+        <article className="pt-32 pb-16 sm:px-16 px-6">
           <div className="max-w-7xl mx-auto">
-            <div className="flex flex-wrap items-center gap-3 text-sm text-secondary">
+            {/* Breadcrumb navigation for better UX and SEO */}
+            <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-3 text-sm text-secondary">
               <Link href="/" className="hover:text-white transition-colors">
                 Home
               </Link>
-              <span>/</span>
+              <span aria-hidden="true">/</span>
               <Link href="/projects" className="hover:text-white transition-colors">
                 Projects
               </Link>
-              <span>/</span>
-              <span className="text-white">{project.name}</span>
-            </div>
+              <span aria-hidden="true">/</span>
+              <span className="text-white" aria-current="page">{project.name}</span>
+            </nav>
 
-            <div className="mt-10 grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+            <header className="mt-10 grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
               <div>
                 <p className="text-secondary uppercase tracking-wider text-sm sm:text-base">
                   {content.eyebrow}
@@ -174,10 +208,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   {content.summary}
                 </p>
 
-                <div className="mt-7 flex flex-wrap gap-2">
+                {/* Technology tags */}
+                <div className="mt-7 flex flex-wrap gap-2" role="list" aria-label="Technologies used">
                   {project.tags.map((tag) => (
                     <span
                       key={tag.id}
+                      role="listitem"
                       className={`text-sm ${tag.color} bg-gray-800/30 px-3 py-1 rounded-md`}
                     >
                       {tag.name}
@@ -185,22 +221,25 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   ))}
                 </div>
 
+                {/* Call-to-action buttons */}
                 <div className="mt-9 flex flex-wrap gap-4">
-                  {project.demo_url && (
+                  {project.demoUrl && (
                     <a
-                      href={project.demo_url}
+                      href={project.demoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="rounded-md bg-[#915eff] px-5 py-3 text-white font-semibold hover:bg-[#7a4fd4] transition-colors"
+                      aria-label={`View live demo of ${project.name}`}
                     >
                       View Live Demo
                     </a>
                   )}
                   <a
-                    href={project.source_code_link}
+                    href={project.sourceCodeLink}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="rounded-md border border-[#915eff] px-5 py-3 text-white font-semibold hover:bg-[#915eff] transition-colors"
+                    aria-label={`View source code for ${project.name}`}
                   >
                     View Source Code
                   </a>
@@ -213,18 +252,18 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 </div>
               </div>
 
-              <div className="relative aspect-[16/10] overflow-hidden rounded-lg border border-white/10">
+              <figure className="relative aspect-[16/10] overflow-hidden rounded-lg border border-white/10">
                 <Image
                   src={project.imageUrl}
-                  alt={`${project.name} project preview`}
+                  alt={`${project.name} project preview showing the main interface`}
                   fill
                   priority
                   className="object-cover"
                 />
-              </div>
-            </div>
+              </figure>
+            </header>
           </div>
-        </section>
+        </article>
 
         <section className="pb-24 sm:px-16 px-6">
           <div className="max-w-7xl mx-auto grid gap-12 lg:grid-cols-[0.72fr_0.28fr]">
@@ -311,6 +350,55 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </aside>
           </div>
         </section>
+
+        {/* Related Projects Section */}
+        {relatedProjects.length > 0 && (
+          <section className="pb-24 sm:px-16 px-6">
+            <div className="max-w-7xl mx-auto">
+              <div className="border-t border-white/10 pt-16">
+                <h2 className="text-white text-3xl font-bold">Related Projects</h2>
+                <p className="mt-2 text-secondary">
+                  Explore similar work using related technologies and approaches
+                </p>
+
+                <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {relatedProjects.map((relatedProject) => (
+                    <Link
+                      key={relatedProject.id}
+                      href={`/projects/${relatedProject.slug}`}
+                      className="group rounded-lg border border-white/10 bg-tertiary p-5 hover:border-[#915eff] transition-all duration-300"
+                    >
+                      <div className="relative aspect-video overflow-hidden rounded-lg">
+                        <Image
+                          src={relatedProject.imageUrl}
+                          alt={`${relatedProject.name} preview`}
+                          fill
+                          className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        />
+                      </div>
+                      <h3 className="mt-4 text-white font-bold text-lg group-hover:text-[#915eff] transition-colors line-clamp-1">
+                        {relatedProject.name}
+                      </h3>
+                      <p className="mt-2 text-secondary text-sm leading-relaxed line-clamp-2">
+                        {relatedProject.description}
+                      </p>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {relatedProject.tags.slice(0, 3).map((tag) => (
+                          <span
+                            key={tag.id}
+                            className={`text-xs ${tag.color} bg-gray-800/30 px-2 py-1 rounded-md`}
+                          >
+                            {tag.name}
+                          </span>
+                        ))}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
       </main>
     </>
   );

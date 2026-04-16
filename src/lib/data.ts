@@ -131,6 +131,80 @@ export async function getPublishedProjectBySlug(
 }
 
 /**
+ * Fetch related projects for a given project
+ * Returns frontend-formatted project data for related projects
+ */
+export async function getRelatedProjects(projectId: string): Promise<Project[]> {
+  // Fetch project relations
+  const { data: relations, error: relationsError } = await supabase
+    .from('project_relations')
+    .select('related_project_id, relation_type')
+    .eq('project_id', projectId)
+    .order('display_order', { ascending: true });
+
+  if (relationsError || !relations || relations.length === 0) {
+    return [];
+  }
+
+  // Fetch the related projects with their tags
+  const relatedProjectIds = relations.map(r => r.related_project_id);
+
+  const { data: projects, error: projectsError } = await supabase
+    .from('projects')
+    .select('*')
+    .in('id', relatedProjectIds)
+    .eq('is_published', true);
+
+  if (projectsError || !projects) {
+    return [];
+  }
+
+  // Fetch tags for all related projects
+  const { data: tags, error: tagsError } = await supabase
+    .from('project_tags')
+    .select('*')
+    .in('project_id', relatedProjectIds)
+    .order('display_order', { ascending: true });
+
+  if (tagsError) {
+    console.error('Error fetching tags for related projects:', tagsError);
+  }
+
+  // Group tags by project_id
+  const tagsByProject = (tags || []).reduce(
+    (acc, tag) => {
+      if (!acc[tag.project_id]) {
+        acc[tag.project_id] = [];
+      }
+      acc[tag.project_id].push(tag);
+      return acc;
+    },
+    {} as Record<string, DBProjectTag[]>
+  );
+
+  // Combine projects with their tags
+  const projectsWithTags = projects.map((project) => ({
+    ...project,
+    tags: tagsByProject[project.id] || [],
+  }));
+
+  // Map to frontend format and sort by original relation order
+  const mappedProjects = mapProjects(projectsWithTags);
+
+  // Sort according to the relation display_order
+  const projectOrder = relations.reduce((acc, rel, idx) => {
+    acc[rel.related_project_id] = idx;
+    return acc;
+  }, {} as Record<string, number>);
+
+  return mappedProjects.sort((a, b) => {
+    const orderA = projectOrder[a.id] ?? 999;
+    const orderB = projectOrder[b.id] ?? 999;
+    return orderA - orderB;
+  });
+}
+
+/**
  * Fetch published project slugs for static route generation and sitemaps
  */
 export async function getPublishedProjectSlugs(): Promise<string[]> {
