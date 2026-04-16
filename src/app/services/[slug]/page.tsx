@@ -10,7 +10,7 @@ import {
   getPublishedServiceBySlug,
   getPublishedServiceSlugs,
   getServiceProjects,
-} from '@/lib/data';
+} from '@/lib/services';
 
 interface ServicePageProps {
   params: Promise<{ slug: string }>;

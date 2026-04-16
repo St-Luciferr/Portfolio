@@ -20,7 +20,7 @@ import {
   getAllSiteSettings,
   getPublishedTestimonials,
   getSelectedResultsSettings,
-} from '@/lib/data';
+} from '@/lib/services';
 
 // Dynamic import for Stars canvas (background - client component)
 const StarsCanvas = dynamic(() => import('@/components/canvas/Stars'));

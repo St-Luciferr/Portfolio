@@ -10,7 +10,7 @@ import {
   getPublishedProjectBySlug,
   getPublishedProjectSlugs,
   getRelatedProjects,
-} from '@/lib/data';
+} from '@/lib/services';
 import { getProjectDetailContent } from '@/lib/project-details';
 
 interface ProjectPageProps {

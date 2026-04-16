@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import {
   getPublishedNavLinks,
   getPublishedProjects,
-} from '@/lib/data';
+} from '@/lib/services';
 
 const ProjectsClient = dynamic(() => import('./ProjectsClient'), {
   ssr: true,
