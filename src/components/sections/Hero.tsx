@@ -3,27 +3,21 @@ import { FaFileDownload } from 'react-icons/fa';
 import { styles } from '@/lib/styles';
 import HeroAnimation from '@/components/sections/HeroAnimation';
 import Lazy3DCanvas from '@/components/canvas/Lazy3DCanvas';
+import { HeroSettings } from '@/types/frontend';
 
 interface HeroProps {
-  data?: {
-    name?: string;
-    role?: string;
-    tagline?: string;
-    cta_text?: string;
-    cta_url?: string;
-    resume_url?: string;
-  };
+  data?: HeroSettings;  
 }
 
 const Hero = ({ data }: HeroProps) => {
   const name = data?.name || 'Santosh';
   const role = data?.role || 'Machine Learning Engineer';
   const tagline =
-    data?.tagline ||
+    data?.tagLine ||
     "a machine learning engineer passionate about building real-world solutions with Generative AI, NLP, and intelligent automation. Let's connect and shape the future of AI together!";
-  const ctaText = data?.cta_text || "Let's Work Together";
-  const ctaUrl = data?.cta_url || '#contact';
-  const resumeUrl = data?.resume_url || '/cv.pdf';
+  const ctaText = data?.ctaText || "Let's Work Together";
+  const ctaUrl = data?.ctaURL || '#contact';
+  const resumeUrl = data?.resumeUrl || '/cv.pdf';
 
   return (
     <section className="relative w-full h-screen mx-auto">

@@ -140,7 +140,10 @@ export interface NavLink {
 export interface HeroSettings {
   heading: string;
   name: string;
-  subtitle: string;
+  role: string;
+  tagLine: string;
+  ctaText?: string;
+  ctaURL?: string;
   backgroundImageUrl?: string;
   resumeUrl: string;
 }

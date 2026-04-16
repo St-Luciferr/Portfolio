@@ -21,8 +21,11 @@ import type {
 export function mapSiteSettings(dbSettings: Record<string, any>): SiteSettings {
   const hero: HeroSettings = {
     heading: dbSettings.hero?.heading || 'Hi, I\'m',
-    name: dbSettings.hero?.name || 'Developer',
-    subtitle: dbSettings.hero?.subtitle || 'Building amazing things',
+    tagLine: dbSettings.hero?.tagline || 'Building intelligent, real-world systems with GenAI, NLP, and scalable backend engineering.',
+    name: dbSettings.hero?.name || 'Santosh',
+    role: dbSettings.hero?.role || 'Full Stack Developer',
+    ctaText: dbSettings.hero?.cta_text || 'Get in Touch',
+    ctaURL: dbSettings.hero?.cta_url || '/contact',
     backgroundImageUrl: dbSettings.hero?.background_image_url,
     resumeUrl: dbSettings.hero?.resume_url || '/resume.pdf',
   };
