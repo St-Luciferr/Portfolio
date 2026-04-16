@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import Tilt from 'react-parallax-tilt';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
@@ -13,10 +14,11 @@ interface ServiceCardProps {
   index: number;
   title: string;
   iconUrl: string;
+  slug?: string | null;
 }
 
-const ServiceCard = ({ index, title, iconUrl }: ServiceCardProps) => {
-  return (
+const ServiceCard = ({ index, title, iconUrl, slug }: ServiceCardProps) => {
+  const card = (
     <Tilt className="xs:w-[250px] w-full">
       <motion.div
         variants={fadeIn('right', 'spring', 0.5 * index, 0.75)}
@@ -33,10 +35,25 @@ const ServiceCard = ({ index, title, iconUrl }: ServiceCardProps) => {
           <h3 className="text-white text-[20px] font-bold text-center">
             {title}
           </h3>
+          {slug && (
+            <span className="text-secondary text-sm mt-2 opacity-70">
+              Learn more →
+            </span>
+          )}
         </div>
       </motion.div>
     </Tilt>
   );
+
+  if (slug) {
+    return (
+      <Link href={`/services/${slug}`} className="block">
+        {card}
+      </Link>
+    );
+  }
+
+  return card;
 };
 
 interface AboutProps {
@@ -79,6 +96,7 @@ const About = ({ data, services = [] }: AboutProps) => {
             index={index}
             title={service.title}
             iconUrl={service.iconUrl}
+            slug={service.slug}
           />
         ))}
       </div>

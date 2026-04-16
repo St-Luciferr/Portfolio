@@ -6,6 +6,7 @@ import type {
   DBExperiencePoint,
   DBTechnology,
   DBService,
+  DBTestimonial,
   DBSiteSettings,
   DBNavLink,
 } from './types';
@@ -14,6 +15,8 @@ import type {
   Experience,
   Technology,
   Service,
+  Testimonial,
+  SelectedResultsSettings,
   NavLink,
   SiteSettings,
 } from '@/types/frontend';
@@ -23,6 +26,7 @@ import {
   mapExperiences,
   mapTechnologies,
   mapServices,
+  mapTestimonials,
   mapNavLinks,
   mapSiteSettings,
 } from '@/mappers';
@@ -314,6 +318,131 @@ export async function getPublishedServices(): Promise<Service[]> {
 
   // Map to frontend format
   return mapServices(data || []);
+}
+
+/**
+ * Fetch all published testimonials
+ */
+export async function getPublishedTestimonials(): Promise<Testimonial[]> {
+  const { data, error } = await supabase
+    .from('testimonials')
+    .select('*')
+    .eq('is_published', true)
+    .order('display_order', { ascending: true });
+
+  if (error) {
+    console.error('Error fetching testimonials:', error);
+    return [];
+  }
+
+  return mapTestimonials((data || []) as DBTestimonial[]);
+}
+
+/**
+ * Fetch a single published service by slug
+ */
+export async function getPublishedServiceBySlug(slug: string): Promise<Service | null> {
+  const { data, error } = await supabase
+    .from('services')
+    .select('*')
+    .eq('slug', slug)
+    .eq('is_published', true)
+    .single();
+
+  if (error || !data) {
+    return null;
+  }
+
+  return mapServices([data as DBService])[0] || null;
+}
+
+/**
+ * Fetch published service slugs for static route generation
+ */
+export async function getPublishedServiceSlugs(): Promise<string[]> {
+  const { data, error } = await supabase
+    .from('services')
+    .select('slug')
+    .eq('is_published', true)
+    .not('slug', 'is', null);
+
+  if (error) return [];
+  return (data || []).map((s: { slug: string | null }) => s.slug).filter(Boolean) as string[];
+}
+
+/**
+ * Fetch projects linked to a service via service_projects junction table
+ */
+export async function getServiceProjects(serviceId: string): Promise<Project[]> {
+  const { data: links, error } = await supabase
+    .from('service_projects')
+    .select('project_id, display_order')
+    .eq('service_id', serviceId)
+    .order('display_order', { ascending: true });
+
+  if (error || !links?.length) return [];
+
+  const projectIds = links.map((l: { project_id: string; display_order: number }) => l.project_id);
+
+  const { data: projects, error: projectsError } = await supabase
+    .from('projects')
+    .select('*')
+    .in('id', projectIds)
+    .eq('is_published', true);
+
+  if (projectsError || !projects?.length) return [];
+
+  const { data: tags } = await supabase
+    .from('project_tags')
+    .select('*')
+    .in('project_id', projectIds)
+    .order('display_order', { ascending: true });
+
+  const tagsByProject = ((tags || []) as DBProjectTag[]).reduce(
+    (acc, tag) => {
+      if (!acc[tag.project_id]) acc[tag.project_id] = [];
+      acc[tag.project_id].push(tag);
+      return acc;
+    },
+    {} as Record<string, DBProjectTag[]>
+  );
+
+  const projectsWithTags = (projects as DBProject[]).map((p) => ({
+    ...p,
+    tags: tagsByProject[p.id] || [],
+  }));
+
+  const mapped = mapProjects(projectsWithTags);
+
+  const orderMap = links.reduce(
+    (acc: Record<string, number>, l: { project_id: string }, idx: number) => {
+      acc[l.project_id] = idx;
+      return acc;
+    },
+    {} as Record<string, number>
+  );
+
+  return mapped.sort((a, b) => (orderMap[a.id] ?? 999) - (orderMap[b.id] ?? 999));
+}
+
+/**
+ * Fetch selected results settings for the homepage proof section
+ */
+export async function getSelectedResultsSettings(): Promise<SelectedResultsSettings | null> {
+  const settings = await getSiteSettings(['selected_results']);
+  const raw = settings['selected_results'];
+  if (!raw) return null;
+
+  return {
+    isEnabled: raw.is_enabled ?? true,
+    heading: raw.heading || 'Selected Results',
+    subheading: raw.subheading || '',
+    metrics: (raw.metrics || []).map((m: { label?: string; value?: string; context?: string }) => ({
+      label: m.label || '',
+      value: m.value || '',
+      context: m.context || '',
+    })),
+  };
 }
 
 /**

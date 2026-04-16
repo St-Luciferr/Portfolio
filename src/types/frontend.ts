@@ -74,10 +74,53 @@ export interface Technology {
 // SERVICE TYPES
 // ============================================
 
+export interface ServiceProcessStep {
+  step: string;
+  description: string;
+}
+
 export interface Service {
   id: string;
   title: string;
   iconUrl: string;
+  slug: string | null;
+  summary: string | null;
+  description: string | null;
+  process: ServiceProcessStep[];
+  benefits: string[];
+  toolsTechnologies: string[];
+  deliverables: string[];
+  pricingModel: string | null;
+}
+
+// ============================================
+// TESTIMONIAL TYPES
+// ============================================
+
+export interface Testimonial {
+  id: string;
+  testimonial: string;
+  name: string;
+  designation: string;
+  company: string;
+  imageUrl: string;
+}
+
+// ============================================
+// SELECTED RESULTS TYPES
+// ============================================
+
+export interface SelectedResultMetric {
+  label: string;
+  value: string;
+  context: string;
+}
+
+export interface SelectedResultsSettings {
+  isEnabled: boolean;
+  heading: string;
+  subheading: string;
+  metrics: SelectedResultMetric[];
 }
 
 // ============================================

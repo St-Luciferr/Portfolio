@@ -22,3 +22,6 @@ export { mapNavLink, mapNavLinks } from './navigation.mapper';
 
 // Settings mappers
 export { mapSiteSettings, mapSiteSetting } from './settings.mapper';
+
+// Testimonial mappers
+export { mapTestimonial, mapTestimonials } from './testimonial.mapper';

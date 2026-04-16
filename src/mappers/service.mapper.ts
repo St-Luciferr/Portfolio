@@ -15,6 +15,14 @@ export function mapService(dbService: DBService): Service {
     id: dbService.id,
     title: dbService.title,
     iconUrl: dbService.icon_url,
+    slug: dbService.slug || null,
+    summary: dbService.summary || null,
+    description: dbService.description || null,
+    process: dbService.process || [],
+    benefits: dbService.benefits || [],
+    toolsTechnologies: dbService.tools_technologies || [],
+    deliverables: dbService.deliverables || [],
+    pricingModel: dbService.pricing_model || null,
   };
 }
 

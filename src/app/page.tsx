@@ -4,9 +4,11 @@ import type { Metadata } from 'next';
 import Navbar from '@/components/layout/Navbar';
 import Hero from '@/components/sections/Hero';
 import About from '@/components/sections/About';
+import SelectedResults from '@/components/sections/SelectedResults';
 import Experience from '@/components/sections/Experience';
 import Tech from '@/components/sections/Tech';
 import Works from '@/components/sections/Works';
+import Testimonials from '@/components/sections/Testimonials';
 import Contact from '@/components/sections/Contact';
 
 import {
@@ -16,6 +18,8 @@ import {
   getPublishedServices,
   getPublishedNavLinks,
   getAllSiteSettings,
+  getPublishedTestimonials,
+  getSelectedResultsSettings,
 } from '@/lib/data';
 
 // Dynamic import for Stars canvas (background - client component)
@@ -85,7 +89,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Home() {
   // Fetch all data in parallel for better performance
-  const [projects, experiences, technologies, services, navLinks, settings] =
+  const [projects, experiences, technologies, services, navLinks, settings, testimonials, selectedResults] =
     await Promise.all([
       getPublishedProjects(),
       getPublishedExperiences(),
@@ -93,6 +97,8 @@ export default async function Home() {
       getPublishedServices(),
       getPublishedNavLinks(),
       getAllSiteSettings(),
+      getPublishedTestimonials(),
+      getSelectedResultsSettings(),
     ]);
 
   // Build JSON-LD structured data from settings
@@ -134,9 +140,17 @@ export default async function Home() {
           <Hero data={settings['hero']} />
         </div>
         <About data={settings['bio']} services={services} />
+        {selectedResults?.isEnabled && (
+          <SelectedResults
+            heading={selectedResults.heading}
+            subheading={selectedResults.subheading}
+            metrics={selectedResults.metrics}
+          />
+        )}
         <Experience experiences={experiences} />
         <Tech technologies={technologies} />
         <Works projects={projects} />
+        <Testimonials testimonials={testimonials} />
         <div className="relative z-0">
           <Contact data={settings['contact']} />
           <StarsCanvas />
