@@ -21,7 +21,10 @@ INSERT INTO site_settings (key, value) VALUES
 ('hero', '{
   "heading": "Hi, I''m",
   "name": "Santosh",
-  "subtitle": "a machine learning engineer passionate about building real-world solutions with Generative AI, NLP, and intelligent automation. Let''s connect and shape the future of AI together!",
+  "role": "Machine Learning Engineer",
+  "tagline": "a machine learning engineer passionate about building real-world solutions with Generative AI, NLP, and intelligent automation. Let''s connect and shape the future of AI together!",
+  "cta_text": "Let''s Work Together",
+  "cta_url": "#contact",
   "resume_url": "/cv.pdf"
 }'::jsonb),
 ('bio', '{

@@ -4,32 +4,35 @@ import { useState } from 'react';
 import Tilt from 'react-parallax-tilt';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { styles } from '@/lib/styles';
 import SectionWrapper from '@/components/hoc/SectionWrapper';
 import { fadeIn, textVariant } from '@/lib/motion';
-import type { DBProject, DBProjectTag } from '@/lib/types';
+import type { Project, ProjectTag } from '@/types/frontend';
 
 interface ProjectCardProps {
   index: number;
+  slug: string;
   name: string;
   description: string;
-  tags: DBProjectTag[];
-  image_url: string;
-  source_code_link: string;
-  demo_url: string | null;
-  is_demo: boolean;
+  tags: ProjectTag[];
+  imageUrl: string;
+  sourceCodeLink: string;
+  demoUrl: string | null;
+  isDemo: boolean;
 }
 
 const ProjectCard = ({
   index,
+  slug,
   name,
   description,
   tags,
-  image_url,
-  source_code_link,
-  demo_url,
-  is_demo,
+  imageUrl,
+  sourceCodeLink,
+  demoUrl,
+  isDemo,
 }: ProjectCardProps) => {
   const [readMore, setReadMore] = useState(false);
   const maxDescriptionLength = 120;
@@ -39,7 +42,7 @@ const ProjectCard = ({
       ? description.slice(0, maxDescriptionLength) + '...'
       : description;
 
-  const linkUrl = is_demo && demo_url ? demo_url : source_code_link;
+  const linkUrl = isDemo && demoUrl ? demoUrl : sourceCodeLink;
 
   return (
     <motion.div
@@ -47,79 +50,89 @@ const ProjectCard = ({
       className="sm:w-[360px] w-full"
       style={{ minHeight: '480px' }}
     >
-      <Tilt className="bg-tertiary p-5 rounded-3xl shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out cursor-pointer flex flex-col h-full">
-        <div className="relative w-full h-48 sm:h-54 md:h-62 lg:h-68 xl:h-76 rounded-3xl overflow-hidden flex-shrink-0">
-          <Image
-            src={image_url}
-            alt={name}
-            fill
-            className="object-cover rounded-3xl"
-          />
+      <Link href={`/projects/${slug}`} className="block h-full">
+        <Tilt className="bg-tertiary p-5 rounded-3xl shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out flex flex-col h-full cursor-pointer">
+          <div className="relative w-full h-48 sm:h-54 md:h-62 lg:h-68 xl:h-76 rounded-3xl overflow-hidden flex-shrink-0">
+            <Image
+              src={imageUrl}
+              alt={name}
+              fill
+              className="object-cover rounded-3xl transition-transform duration-300 hover:scale-105"
+            />
 
-          <div className="absolute inset-0 flex justify-end items-start p-4">
-            <div
-              onClick={(e) => {
-                e.stopPropagation();
-                window.open(linkUrl, '_blank');
-              }}
-              className="black-gradient w-12 h-12 rounded-full flex justify-center items-center cursor-pointer hover:bg-gray-800/70 transition-colors duration-200"
-              title={is_demo ? 'View Demo' : 'View Source Code'}
-            >
-              <Image
-                src={is_demo ? '/images/web.png' : '/images/github.png'}
-                alt={is_demo ? 'demo' : 'github'}
-                width={24}
-                height={24}
-                className="object-contain"
-              />
+            <div className="absolute inset-0 flex justify-end items-start p-4">
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  window.open(linkUrl, '_blank');
+                }}
+                className="black-gradient w-12 h-12 rounded-full flex justify-center items-center cursor-pointer hover:bg-gray-800/70 transition-colors duration-200 z-10"
+                title={isDemo ? 'View Demo' : 'View Source Code'}
+                aria-label={isDemo ? `View ${name} demo` : `View ${name} source code`}
+              >
+                <Image
+                  src={isDemo ? '/images/web.png' : '/images/github.png'}
+                  alt={isDemo ? 'demo' : 'github'}
+                  width={24}
+                  height={24}
+                  className="object-contain"
+                />
+              </button>
             </div>
           </div>
-        </div>
 
-        <div className="mt-6 flex flex-col flex-grow">
-          <h3
-            className="text-white font-semibold text-xl sm:text-2xl truncate"
-            title={name}
-          >
-            {name}
-          </h3>
+          <div className="mt-6 flex flex-col flex-grow">
+            <h3
+              className="text-white font-semibold text-xl sm:text-2xl truncate hover:text-[#915eff] transition-colors"
+              title={name}
+            >
+              {name}
+            </h3>
 
-          <p
-            className="mt-3 text-secondary text-sm sm:text-base leading-relaxed"
-            style={{ textAlign: 'justify' }}
-          >
-            {readMore ? description : truncatedDescription}
-            {description.length > maxDescriptionLength && (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setReadMore(!readMore);
-                }}
-                className="ml-2 text-blue-400 hover:underline focus:outline-none"
-              >
-                {readMore ? 'Read less' : 'Read more'}
-              </button>
-            )}
-          </p>
+            <p
+              className="mt-3 text-secondary text-sm sm:text-base leading-relaxed"
+              style={{ textAlign: 'justify' }}
+            >
+              {readMore ? description : truncatedDescription}
+              {description.length > maxDescriptionLength && (
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setReadMore(!readMore);
+                  }}
+                  className="ml-2 text-[#915eff] hover:underline focus:outline-none"
+                >
+                  {readMore ? 'Read less' : 'Read more'}
+                </button>
+              )}
+            </p>
 
-          <div className="mt-auto flex flex-wrap gap-2 pt-5">
-            {tags.map((tag) => (
-              <span
-                key={tag.id}
-                className={`text-[13px] sm:text-sm ${tag.color} bg-gray-800/30 px-2 py-1 rounded-full select-none`}
-              >
-                {tag.name}
-              </span>
-            ))}
+            <div className="mt-auto flex flex-wrap gap-2 pt-5">
+              {tags.map((tag) => (
+                <span
+                  key={tag.id}
+                  className={`text-[13px] sm:text-sm ${tag.color} bg-gray-800/30 px-2 py-1 rounded-full select-none`}
+                >
+                  {tag.name}
+                </span>
+              ))}
+            </div>
+
+            <span className="mt-5 inline-flex w-fit text-sm font-semibold text-[#915eff] hover:text-white transition-colors">
+              View case study →
+            </span>
           </div>
-        </div>
-      </Tilt>
+        </Tilt>
+      </Link>
     </motion.div>
   );
 };
 
 interface WorksProps {
-  projects?: (DBProject & { tags: DBProjectTag[] })[];
+  projects?: Project[];
 }
 
 const Works = ({ projects = [] }: WorksProps) => {
@@ -137,7 +150,7 @@ const Works = ({ projects = [] }: WorksProps) => {
         >
           The following projects showcase my skills and experience through
           real-world examples of my work. Each project is briefly described with
-          links to code repositories.
+          links to detailed case studies, source code, and live demos where available.
         </motion.p>
       </div>
 

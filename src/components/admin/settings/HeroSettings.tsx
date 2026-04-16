@@ -134,18 +134,62 @@ export function HeroSettings() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="subtitle">
-              Subtitle <span className="text-red-500">*</span>
+            <Label htmlFor="role">
+              Role/Title <span className="text-red-500">*</span>
+            </Label>
+            <Input
+              id="role"
+              {...register('role')}
+              placeholder="Machine Learning Engineer"
+            />
+            {errors.role && (
+              <p className="text-sm text-red-500">{errors.role.message}</p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="tagline">
+              Tagline <span className="text-red-500">*</span>
             </Label>
             <Textarea
-              id="subtitle"
-              {...register('subtitle')}
+              id="tagline"
+              {...register('tagline')}
               rows={4}
               placeholder="a machine learning engineer passionate about..."
             />
-            {errors.subtitle && (
-              <p className="text-sm text-red-500">{errors.subtitle.message}</p>
+            {errors.tagline && (
+              <p className="text-sm text-red-500">{errors.tagline.message}</p>
             )}
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="cta_text">
+                Primary CTA Text <span className="text-red-500">*</span>
+              </Label>
+              <Input
+                id="cta_text"
+                {...register('cta_text')}
+                placeholder="Let's Work Together"
+              />
+              {errors.cta_text && (
+                <p className="text-sm text-red-500">{errors.cta_text.message}</p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="cta_url">
+                Primary CTA URL <span className="text-red-500">*</span>
+              </Label>
+              <Input
+                id="cta_url"
+                {...register('cta_url')}
+                placeholder="#contact"
+              />
+              {errors.cta_url && (
+                <p className="text-sm text-red-500">{errors.cta_url.message}</p>
+              )}
+            </div>
           </div>
 
           <ImageUpload

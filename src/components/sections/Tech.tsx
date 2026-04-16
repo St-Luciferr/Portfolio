@@ -2,10 +2,10 @@
 
 import SectionWrapper from '@/components/hoc/SectionWrapper';
 import LazyBallCanvas from '@/components/canvas/LazyBallCanvas';
-import type { DBTechnology } from '@/lib/types';
+import type { Technology } from '@/types/frontend';
 
 interface TechProps {
-  technologies?: DBTechnology[];
+  technologies?: Technology[];
 }
 
 const Tech = ({ technologies = [] }: TechProps) => {
@@ -18,7 +18,7 @@ const Tech = ({ technologies = [] }: TechProps) => {
             className="w-28 h-28"
             key={technology.id}
           >
-            <LazyBallCanvas icon={technology.icon_url} />
+            <LazyBallCanvas icon={technology.iconUrl} />
           </div>
         ))}
       </div>

@@ -60,12 +60,51 @@ export function ProjectForm({ project, onSuccess, onCancel }: ProjectFormProps) 
         name: tag.name,
         color: tag.color,
       })) || [{ name: '', color: 'blue-text-gradient' }],
+      // Project details
+      eyebrow: project?.eyebrow || '',
+      summary: project?.summary || '',
+      problem: project?.problem?.map(p => ({ value: p })) || [],
+      solution: project?.solution?.map(s => ({ value: s })) || [],
+      features: project?.features?.map(f => ({ value: f })) || [],
+      architecture: project?.architecture?.map(a => ({ value: a })) || [],
+      results: project?.results?.map(r => ({ value: r })) || [],
+      stack: project?.stack?.map(s => ({ value: s })) || [],
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields: tagFields, append: appendTag, remove: removeTag } = useFieldArray({
     control,
     name: 'tags',
+  });
+
+  const { fields: problemFields, append: appendProblem, remove: removeProblem } = useFieldArray({
+    control,
+    name: 'problem',
+  });
+
+  const { fields: solutionFields, append: appendSolution, remove: removeSolution } = useFieldArray({
+    control,
+    name: 'solution',
+  });
+
+  const { fields: featureFields, append: appendFeature, remove: removeFeature } = useFieldArray({
+    control,
+    name: 'features',
+  });
+
+  const { fields: architectureFields, append: appendArchitecture, remove: removeArchitecture } = useFieldArray({
+    control,
+    name: 'architecture',
+  });
+
+  const { fields: resultFields, append: appendResult, remove: removeResult } = useFieldArray({
+    control,
+    name: 'results',
+  });
+
+  const { fields: stackFields, append: appendStack, remove: removeStack } = useFieldArray({
+    control,
+    name: 'stack',
   });
 
   const onSubmit = async (data: any) => {
@@ -176,7 +215,7 @@ export function ProjectForm({ project, onSuccess, onCancel }: ProjectFormProps) 
           Tags <span className="text-red-500">*</span>
         </Label>
         <div className="space-y-2">
-          {fields.map((field, index) => (
+          {tagFields.map((field, index) => (
             <div key={field.id} className="flex gap-2">
               <Input
                 {...register(`tags.${index}.name` as const)}
@@ -200,12 +239,12 @@ export function ProjectForm({ project, onSuccess, onCancel }: ProjectFormProps) 
                   ))}
                 </SelectContent>
               </Select>
-              {fields.length > 1 && (
+              {tagFields.length > 1 && (
                 <Button
                   type="button"
                   variant="ghost"
                   size="sm"
-                  onClick={() => remove(index)}
+                  onClick={() => removeTag(index)}
                 >
                   <X className="w-4 h-4" />
                 </Button>
@@ -217,7 +256,7 @@ export function ProjectForm({ project, onSuccess, onCancel }: ProjectFormProps) 
           type="button"
           variant="outline"
           size="sm"
-          onClick={() => append({ name: '', color: 'blue-text-gradient' })}
+          onClick={() => appendTag({ name: '', color: 'blue-text-gradient' })}
         >
           <Plus className="w-4 h-4 mr-2" />
           Add Tag
@@ -271,8 +310,259 @@ export function ProjectForm({ project, onSuccess, onCancel }: ProjectFormProps) 
         </p>
       </div>
 
+      {/* Divider */}
+      <div className="border-t pt-6">
+        <h3 className="text-lg font-semibold mb-4">Project Details (Case Study Content)</h3>
+        <p className="text-sm text-gray-500 mb-6">
+          Add detailed information about the project for the case study page.
+        </p>
+      </div>
+
+      {/* Eyebrow */}
+      <div className="space-y-2">
+        <Label htmlFor="eyebrow">Eyebrow Text</Label>
+        <Input
+          id="eyebrow"
+          {...register('eyebrow')}
+          placeholder="e.g., Architecture, search, chunking, observability"
+        />
+        <p className="text-sm text-gray-500">
+          Short category or keyword line displayed above the title
+        </p>
+      </div>
+
+      {/* Summary */}
+      <div className="space-y-2">
+        <Label htmlFor="summary">Summary</Label>
+        <Textarea
+          id="summary"
+          {...register('summary')}
+          rows={3}
+          placeholder="A brief summary of what this project does..."
+        />
+        <p className="text-sm text-gray-500">
+          Detailed summary for the case study page (1-2 sentences)
+        </p>
+      </div>
+
+      {/* Problem */}
+      <div className="space-y-2">
+        <Label>Problem Statements</Label>
+        <p className="text-sm text-gray-500">
+          What problems does this project solve?
+        </p>
+        <div className="space-y-2">
+          {problemFields.map((field, index) => (
+            <div key={field.id} className="flex gap-2">
+              <Input
+                {...register(`problem.${index}.value` as const)}
+                placeholder="Problem statement..."
+                className="flex-1"
+              />
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => removeProblem(index)}
+              >
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+          ))}
+        </div>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => appendProblem({ value: '' })}
+        >
+          <Plus className="w-4 h-4 mr-2" />
+          Add Problem
+        </Button>
+      </div>
+
+      {/* Solution */}
+      <div className="space-y-2">
+        <Label>Solution Points</Label>
+        <p className="text-sm text-gray-500">
+          How does this project solve the problems?
+        </p>
+        <div className="space-y-2">
+          {solutionFields.map((field, index) => (
+            <div key={field.id} className="flex gap-2">
+              <Input
+                {...register(`solution.${index}.value` as const)}
+                placeholder="Solution point..."
+                className="flex-1"
+              />
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => removeSolution(index)}
+              >
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+          ))}
+        </div>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => appendSolution({ value: '' })}
+        >
+          <Plus className="w-4 h-4 mr-2" />
+          Add Solution
+        </Button>
+      </div>
+
+      {/* Features */}
+      <div className="space-y-2">
+        <Label>Key Features</Label>
+        <p className="text-sm text-gray-500">
+          What are the key features of this project?
+        </p>
+        <div className="space-y-2">
+          {featureFields.map((field, index) => (
+            <div key={field.id} className="flex gap-2">
+              <Input
+                {...register(`features.${index}.value` as const)}
+                placeholder="Feature..."
+                className="flex-1"
+              />
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => removeFeature(index)}
+              >
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+          ))}
+        </div>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => appendFeature({ value: '' })}
+        >
+          <Plus className="w-4 h-4 mr-2" />
+          Add Feature
+        </Button>
+      </div>
+
+      {/* Architecture */}
+      <div className="space-y-2">
+        <Label>Architecture Details</Label>
+        <p className="text-sm text-gray-500">
+          Describe the system architecture and design
+        </p>
+        <div className="space-y-2">
+          {architectureFields.map((field, index) => (
+            <div key={field.id} className="flex gap-2">
+              <Input
+                {...register(`architecture.${index}.value` as const)}
+                placeholder="Architecture detail..."
+                className="flex-1"
+              />
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => removeArchitecture(index)}
+              >
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+          ))}
+        </div>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => appendArchitecture({ value: '' })}
+        >
+          <Plus className="w-4 h-4 mr-2" />
+          Add Architecture Detail
+        </Button>
+      </div>
+
+      {/* Results */}
+      <div className="space-y-2">
+        <Label>Results & Outcomes</Label>
+        <p className="text-sm text-gray-500">
+          What were the results or what does this demonstrate?
+        </p>
+        <div className="space-y-2">
+          {resultFields.map((field, index) => (
+            <div key={field.id} className="flex gap-2">
+              <Input
+                {...register(`results.${index}.value` as const)}
+                placeholder="Result or outcome..."
+                className="flex-1"
+              />
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => removeResult(index)}
+              >
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+          ))}
+        </div>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => appendResult({ value: '' })}
+        >
+          <Plus className="w-4 h-4 mr-2" />
+          Add Result
+        </Button>
+      </div>
+
+      {/* Stack */}
+      <div className="space-y-2">
+        <Label>Technology Stack</Label>
+        <p className="text-sm text-gray-500">
+          List the technologies, frameworks, and tools used
+        </p>
+        <div className="space-y-2">
+          {stackFields.map((field, index) => (
+            <div key={field.id} className="flex gap-2">
+              <Input
+                {...register(`stack.${index}.value` as const)}
+                placeholder="Technology name..."
+                className="flex-1"
+              />
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => removeStack(index)}
+              >
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+          ))}
+        </div>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => appendStack({ value: '' })}
+        >
+          <Plus className="w-4 h-4 mr-2" />
+          Add Stack Item
+        </Button>
+      </div>
+
       {/* Published Status */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 pt-4 border-t">
         <input
           type="checkbox"
           id="is_published"
