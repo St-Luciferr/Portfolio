@@ -157,6 +157,7 @@ export interface SEOSettings {
   description: string;
   keywords: string[];
   ogImage: string;
+  canonicalUrl?: string;
 }
 
 export interface ContactSettings {

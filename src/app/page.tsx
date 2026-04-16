@@ -38,8 +38,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const title = seoSettings.title || 'Santosh Pandey | ML Engineer & Full Stack Developer';
   const description = seoSettings.description || 'Machine Learning Engineer passionate about Generative AI, NLP, and intelligent automation.';
   const keywords = seoSettings.keywords || [];
-  const canonicalUrl = seoSettings.canonical_url || 'https://pandeysantosh.com.np';
-  const ogImage = seoSettings.og_image || '/og-image.png';
+  const canonicalUrl = seoSettings.canonicalUrl || 'https://pandeysantosh.com.np';
+  const ogImage = seoSettings.ogImage || '/og-image.png';
 
   return {
     metadataBase: new URL(canonicalUrl),
@@ -104,10 +104,10 @@ export default async function Home() {
   // Build JSON-LD structured data from settings
   const heroSettings = settings['hero'] || {};
   const seoSettings = settings['seo'] || {};
-  const socialSettings = settings['social_links'] || {};
+  const socialSettings = settings['socialLinks'] || {};
   const bioSettings = settings['bio'] || {};
-  const backgroundImage = heroSettings.background_image_url
-    ? { backgroundImage: `url(${heroSettings.background_image_url})` }
+  const backgroundImage = heroSettings.backgroundImageUrl
+    ? { backgroundImage: `url(${heroSettings.backgroundImageUrl})` }
     : undefined;
 
   const jsonLd = {
@@ -115,7 +115,7 @@ export default async function Home() {
     '@type': 'Person',
     name: heroSettings.name || 'Santosh Pandey',
     jobTitle: heroSettings.role || 'Machine Learning Engineer',
-    url: seoSettings.canonical_url || 'https://pandeysantosh.com.np',
+    url: seoSettings.canonicalUrl || 'https://pandeysantosh.com.np',
     sameAs: [
       socialSettings.github,
       socialSettings.linkedin,
