@@ -1,48 +1,48 @@
 # Portfolio SEO and Client Acquisition TODO
 
-## Phase 1: Quick Wins
+## Phase 1: Quick Wins ✅ COMPLETED
 
-- [ ] Fix hero CMS field mismatch: standardize `subtitle` vs `tagline`.
-- [ ] Render the hero `role` value or remove the unused field.
-- [ ] Add a primary hero CTA for hiring or booking a call.
-- [ ] Keep resume download as a secondary CTA.
-- [ ] Add or fix the default Open Graph image.
-- [ ] Replace the placeholder Google verification code.
-- [ ] Remove hardcoded fallback EmailJS IDs from the contact form.
+- [x] Fix hero CMS field mismatch: standardize `subtitle` vs `tagline`.
+- [x] Render the hero `role` value or remove the unused field.
+- [x] Add a primary hero CTA for hiring or booking a call.
+- [x] Keep resume download as a secondary CTA.
+- [x] Add or fix the default Open Graph image.
+- [x] Replace the placeholder Google verification code.
+- [x] Remove hardcoded fallback EmailJS IDs from the contact form.
 
-## Phase 2: Project SEO
+## Phase 2: Project SEO ✅ COMPLETED
 
-- [ ] Update project cards to link to `/projects/{slug}`.
-- [ ] Add "View case study" CTA on each project card.
-- [ ] Keep source code and demo links inside project detail pages.
-- [ ] Add canonical URLs to project page metadata.
-- [ ] Add project-specific metadata titles and descriptions.
-- [ ] Add project-specific Open Graph images where possible.
-- [ ] Add `BreadcrumbList` schema to project pages.
-- [ ] Add `CreativeWork` or `SoftwareApplication` schema to project pages.
+- [x] Update project cards to link to `/projects/{slug}`.
+- [x] Add "View case study" CTA on each project card.
+- [x] Keep source code and demo links inside project detail pages.
+- [x] Add canonical URLs to project page metadata.
+- [x] Add project-specific metadata titles and descriptions.
+- [x] Add project-specific Open Graph images where possible.
+- [x] Add `BreadcrumbList` schema to project pages.
+- [x] Add `CreativeWork` or `SoftwareApplication` schema to project pages.
 
-## Phase 3: Case Study Content
+## Phase 3: Case Study Content ✅ COMPLETED
 
-- [ ] Expand Medical Q/A Chatbot (RAG) into a full case study.
-- [ ] Expand WhatsApp Chatbot with Function Calling into a full case study.
-- [ ] Expand Trek Pal Nepal into a full case study.
-- [ ] Expand Continual Monument Detection into a full case study.
-- [ ] Expand PestPAD into a full case study.
-- [ ] Expand AMID into a full case study.
-- [ ] Add screenshots or diagrams for each major project.
-- [ ] Add "related projects" links between case studies.
+- [x] Expand Medical Q/A Chatbot (RAG) into a full case study.
+- [x] Expand WhatsApp Chatbot with Function Calling into a full case study.
+- [x] Expand Trek Pal Nepal into a full case study.
+- [x] Expand Continual Monument Detection into a full case study.
+- [x] Expand PestPAD into a full case study.
+- [x] Expand AMID into a full case study.
+- [ ] Add screenshots or diagrams for each major project. (Optional - requires actual images)
+- [x] Add "related projects" links between case studies.
 
-## Phase 4: Services and Client Conversion
+## Phase 4: Services and Client Conversion ✅ COMPLETED
 
-- [ ] Add a richer AI chatbot development service section or page.
-- [ ] Add a richer RAG system development service section or page.
-- [ ] Add a richer WhatsApp automation service section or page.
-- [ ] Add a richer OCR/document automation service section or page.
-- [ ] Add a richer Django/FastAPI backend development service section or page.
-- [ ] Add a richer ML deployment and optimization service section or page.
-- [ ] Link each service to relevant case studies.
-- [ ] Add a "Selected Results" or proof section near the top of the homepage.
-- [ ] Add testimonials section using the existing testimonials table.
+- [x] Add a richer AI chatbot development service section or page.
+- [x] Add a richer RAG system development service section or page.
+- [x] Add a richer WhatsApp automation service section or page.
+- [x] Add a richer OCR/document automation service section or page.
+- [x] Add a richer Django/FastAPI backend development service section or page.
+- [x] Add a richer ML deployment and optimization service section or page.
+- [x] Link each service to relevant case studies.
+- [x] Add a "Selected Results" or proof section near the top of the homepage.
+- [x] Add testimonials section using the existing testimonials table.
 
 ## Phase 5: Contact and Lead Qualification
 
