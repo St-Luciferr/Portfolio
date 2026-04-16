@@ -43,12 +43,25 @@ const Contact = ({ data }: ContactProps) => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+
+    // Validate EmailJS configuration
+    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+    if (!serviceId || !templateId || !publicKey) {
+      alert(
+        'Email service is not configured. Please contact me directly at ' + toEmail
+      );
+      return;
+    }
+
     setLoading(true);
 
     emailjs
       .send(
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'service_1p99x0j',
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 'template_epwmplk',
+        serviceId,
+        templateId,
         {
           from_name: form.name,
           to_name: toName,
@@ -56,12 +69,12 @@ const Contact = ({ data }: ContactProps) => {
           to_email: toEmail,
           message: form.message,
         },
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || '-OvhlkkzMKUz5pjMs'
+        publicKey
       )
       .then(
         () => {
           setLoading(false);
-          alert('Thank you, I will get back to you as soon as possible.');
+          alert('Thank you! I will get back to you as soon as possible.');
           setForm({
             name: '',
             email: '',
@@ -70,8 +83,10 @@ const Contact = ({ data }: ContactProps) => {
         },
         (error) => {
           setLoading(false);
-          console.error(error);
-          alert('Something went wrong. Please try again.');
+          console.error('EmailJS Error:', error);
+          alert(
+            `Failed to send message. Please email me directly at ${toEmail}`
+          );
         }
       );
   };

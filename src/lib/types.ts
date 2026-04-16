@@ -60,6 +60,15 @@ export interface DBProject {
   is_demo: boolean;
   is_published: boolean;
   display_order: number;
+  // Project detail fields
+  eyebrow: string | null;
+  summary: string | null;
+  problem: string[];
+  solution: string[];
+  features: string[];
+  architecture: string[];
+  results: string[];
+  stack: string[];
   created_at: string;
   updated_at: string;
   project_tags?: DBProjectTag[];
@@ -112,6 +121,14 @@ export interface DBService {
   display_order: number;
   created_at: string;
   updated_at: string;
+  slug: string | null;
+  summary: string | null;
+  description: string | null;
+  process: Array<{ step: string; description: string }> | null;
+  benefits: string[] | null;
+  tools_technologies: string[] | null;
+  deliverables: string[] | null;
+  pricing_model: string | null;
 }
 
 export interface DBTestimonial {

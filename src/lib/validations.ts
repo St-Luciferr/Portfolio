@@ -10,6 +10,10 @@ export const projectTagSchema = z.object({
   display_order: z.number().int().min(0).optional(),
 });
 
+export const projectArrayItemSchema = z.object({
+  value: z.string().min(1).max(1000),
+});
+
 export const projectSchema = z.object({
   slug: z
     .string()
@@ -28,6 +32,15 @@ export const projectSchema = z.object({
   is_published: z.boolean().default(true),
   display_order: z.number().int().min(0),
   tags: z.array(projectTagSchema).min(1, 'At least one tag is required'),
+  // Project detail fields
+  eyebrow: z.string().max(100, 'Eyebrow too long').optional(),
+  summary: z.string().max(2000, 'Summary too long').optional(),
+  problem: z.array(projectArrayItemSchema).default([]).transform(arr => arr.map(item => item.value)),
+  solution: z.array(projectArrayItemSchema).default([]).transform(arr => arr.map(item => item.value)),
+  features: z.array(projectArrayItemSchema).default([]).transform(arr => arr.map(item => item.value)),
+  architecture: z.array(projectArrayItemSchema).default([]).transform(arr => arr.map(item => item.value)),
+  results: z.array(projectArrayItemSchema).default([]).transform(arr => arr.map(item => item.value)),
+  stack: z.array(projectArrayItemSchema).default([]).transform(arr => arr.map(item => item.value)),
 });
 
 export const updateProjectSchema = projectSchema.partial().extend({
@@ -115,7 +128,10 @@ export const updateTestimonialSchema = testimonialSchema.partial().extend({
 export const heroSettingsSchema = z.object({
   heading: z.string().min(1, 'Heading is required').max(100, 'Heading too long'),
   name: z.string().min(1, 'Name is required').max(100, 'Name too long'),
-  subtitle: z.string().min(10, 'Subtitle must be at least 10 characters').max(1000, 'Subtitle too long'),
+  role: z.string().min(1, 'Role is required').max(200, 'Role too long'),
+  tagline: z.string().min(10, 'Tagline must be at least 10 characters').max(1000, 'Tagline too long'),
+  cta_text: z.string().min(1, 'CTA text is required').max(50, 'CTA text too long'),
+  cta_url: z.string().min(1, 'CTA URL is required'),
   background_image_url: z.string().url('Invalid background image URL').optional(),
   resume_url: z
     .string()

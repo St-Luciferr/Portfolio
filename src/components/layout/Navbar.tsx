@@ -3,24 +3,48 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 
 import { styles } from '@/lib/styles';
-import type { DBNavLink } from '@/lib/types';
+import type { NavLink } from '@/types/frontend';
 
 interface NavbarProps {
-  navLinks?: DBNavLink[];
+  navLinks?: NavLink[];
 }
 
-const fallbackNavLinks: Pick<DBNavLink, 'link_id' | 'title'>[] = [
-  { link_id: 'about', title: 'About' },
-  { link_id: 'work', title: 'Work' },
-  { link_id: 'contact', title: 'Contact' },
+const fallbackNavLinks: Pick<NavLink, 'linkId' | 'title'>[] = [
+  { linkId: 'about', title: 'About' },
+  { linkId: 'work', title: 'Work' },
+  { linkId: '/projects', title: 'Projects' },
+  { linkId: 'contact', title: 'Contact' },
 ];
 
 const Navbar = ({ navLinks = [] }: NavbarProps) => {
   const [active, setActive] = useState('');
   const [toggle, setToggle] = useState(false);
-  const links = navLinks.length > 0 ? navLinks : fallbackNavLinks;
+  const pathname = usePathname();
+  const cmsLinks = navLinks.length > 0 ? navLinks : fallbackNavLinks;
+  const links = cmsLinks.some(
+    (link) => link.linkId === '/projects' || link.linkId === 'projects'
+  )
+    ? cmsLinks
+    : [
+        ...cmsLinks.slice(0, 2),
+        { id: 'generated-projects', linkId: '/projects', title: 'Projects' },
+        ...cmsLinks.slice(2),
+      ];
+
+  const getHref = (linkId: string) => {
+    if (linkId === 'projects') {
+      return '/projects';
+    }
+
+    if (linkId.startsWith('/')) {
+      return linkId;
+    }
+
+    return pathname === '/' ? `#${linkId}` : `/#${linkId}`;
+  };
 
   return (
     <nav
@@ -52,13 +76,13 @@ const Navbar = ({ navLinks = [] }: NavbarProps) => {
         <ul className="list-none hidden sm:flex flex-row gap-10">
           {links.map((link) => (
             <li
-              key={link.link_id}
+              key={link.linkId}
               className={`${
                 active === link.title ? 'text-white' : 'text-secondary'
               } hover:text-white text-[18px] font-medium cursor-pointer`}
               onClick={() => setActive(link.title)}
             >
-              <a href={`#${link.link_id}`}>{link.title}</a>
+              <Link href={getHref(link.linkId)}>{link.title}</Link>
             </li>
           ))}
         </ul>
@@ -82,7 +106,7 @@ const Navbar = ({ navLinks = [] }: NavbarProps) => {
             <ul className="list-none flex justify-end items-start flex-col gap-4">
               {links.map((link) => (
                 <li
-                  key={link.link_id}
+                  key={link.linkId}
                   className={`${
                     active === link.title ? 'text-white' : 'text-secondary'
                   } font-poppins font-medium cursor-pointer text-[16px]`}
@@ -91,7 +115,7 @@ const Navbar = ({ navLinks = [] }: NavbarProps) => {
                     setActive(link.title);
                   }}
                 >
-                  <a href={`#${link.link_id}`}>{link.title}</a>
+                  <Link href={getHref(link.linkId)}>{link.title}</Link>
                 </li>
               ))}
             </ul>

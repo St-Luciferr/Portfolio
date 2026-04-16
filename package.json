@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:seed": "node --env-file=.env.local -r tsx/cjs scripts/seed-database.ts"
+    "db:seed": "node --env-file=.env.local -r tsx/cjs scripts/seed-database.ts",
+    "db:migrate-details": "node --env-file=.env.local -r tsx/cjs scripts/migrate-project-details.ts",
+    "db:migration-guide": "node -r tsx/cjs scripts/run-migration.ts"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

@@ -1,0 +1,37 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Context-Aware RAG project preview</title>
+  <desc id="desc">Abstract preview card showing document chunks, vector search, and LLM response flow.</desc>
+  <rect width="1200" height="675" fill="#050816"/>
+  <rect x="66" y="58" width="1068" height="559" rx="28" fill="#11162D" stroke="#2D345F" stroke-width="2"/>
+  <circle cx="133" cy="121" r="16" fill="#FF6B6B"/>
+  <circle cx="181" cy="121" r="16" fill="#FFD166"/>
+  <circle cx="229" cy="121" r="16" fill="#06D6A0"/>
+  <text x="86" y="205" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="54" font-weight="700">Context-Aware RAG</text>
+  <text x="88" y="257" fill="#B9C0E8" font-family="Arial, Helvetica, sans-serif" font-size="26">retrieval augmented generation for grounded answers</text>
+  <g transform="translate(86 323)">
+    <rect width="268" height="196" rx="18" fill="#181E3A" stroke="#4752A5" stroke-width="2"/>
+    <text x="26" y="47" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">Documents</text>
+    <rect x="28" y="76" width="202" height="12" rx="6" fill="#6C7CFF"/>
+    <rect x="28" y="108" width="164" height="12" rx="6" fill="#48547E"/>
+    <rect x="28" y="140" width="214" height="12" rx="6" fill="#48547E"/>
+  </g>
+  <g transform="translate(466 323)">
+    <rect width="268" height="196" rx="18" fill="#181E3A" stroke="#06D6A0" stroke-width="2"/>
+    <text x="26" y="47" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">Retriever</text>
+    <circle cx="75" cy="118" r="28" fill="#06D6A0" fill-opacity=".18" stroke="#06D6A0" stroke-width="3"/>
+    <circle cx="134" cy="118" r="28" fill="#06D6A0" fill-opacity=".18" stroke="#06D6A0" stroke-width="3"/>
+    <circle cx="193" cy="118" r="28" fill="#06D6A0" fill-opacity=".18" stroke="#06D6A0" stroke-width="3"/>
+    <path d="M102 118H106M161 118H165" stroke="#06D6A0" stroke-width="5" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(846 323)">
+    <rect width="268" height="196" rx="18" fill="#181E3A" stroke="#FF7AC8" stroke-width="2"/>
+    <text x="26" y="47" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">LLM Answer</text>
+    <rect x="28" y="80" width="210" height="14" rx="7" fill="#FF7AC8"/>
+    <rect x="28" y="116" width="166" height="14" rx="7" fill="#48547E"/>
+    <rect x="28" y="152" width="196" height="14" rx="7" fill="#48547E"/>
+  </g>
+  <path d="M371 421H438" stroke="#8EA0FF" stroke-width="8" stroke-linecap="round"/>
+  <path d="M426 401L446 421L426 441" stroke="#8EA0FF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M751 421H818" stroke="#8EA0FF" stroke-width="8" stroke-linecap="round"/>
+  <path d="M806 401L826 421L806 441" stroke="#8EA0FF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

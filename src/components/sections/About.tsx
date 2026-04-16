@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import Tilt from 'react-parallax-tilt';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
@@ -7,16 +8,17 @@ import Image from 'next/image';
 import { styles } from '@/lib/styles';
 import { fadeIn, textVariant } from '@/lib/motion';
 import SectionWrapper from '@/components/hoc/SectionWrapper';
-import type { DBService } from '@/lib/types';
+import type { Service } from '@/types/frontend';
 
 interface ServiceCardProps {
   index: number;
   title: string;
-  icon_url: string;
+  iconUrl: string;
+  slug?: string | null;
 }
 
-const ServiceCard = ({ index, title, icon_url }: ServiceCardProps) => {
-  return (
+const ServiceCard = ({ index, title, iconUrl, slug }: ServiceCardProps) => {
+  const card = (
     <Tilt className="xs:w-[250px] w-full">
       <motion.div
         variants={fadeIn('right', 'spring', 0.5 * index, 0.75)}
@@ -24,7 +26,7 @@ const ServiceCard = ({ index, title, icon_url }: ServiceCardProps) => {
       >
         <div className="bg-tertiary rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col">
           <Image
-            src={icon_url}
+            src={iconUrl}
             alt={title}
             width={64}
             height={64}
@@ -33,17 +35,32 @@ const ServiceCard = ({ index, title, icon_url }: ServiceCardProps) => {
           <h3 className="text-white text-[20px] font-bold text-center">
             {title}
           </h3>
+          {slug && (
+            <span className="text-secondary text-sm mt-2 opacity-70">
+              Learn more →
+            </span>
+          )}
         </div>
       </motion.div>
     </Tilt>
   );
+
+  if (slug) {
+    return (
+      <Link href={`/services/${slug}`} className="block">
+        {card}
+      </Link>
+    );
+  }
+
+  return card;
 };
 
 interface AboutProps {
   data?: {
     paragraphs?: string[];
   };
-  services?: DBService[];
+  services?: Service[];
 }
 
 const About = ({ data, services = [] }: AboutProps) => {
@@ -78,7 +95,8 @@ const About = ({ data, services = [] }: AboutProps) => {
             key={service.id}
             index={index}
             title={service.title}
-            icon_url={service.icon_url}
+            iconUrl={service.iconUrl}
+            slug={service.slug}
           />
         ))}
       </div>
