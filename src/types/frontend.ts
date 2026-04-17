@@ -94,6 +94,38 @@ export interface Service {
 }
 
 // ============================================
+// BLOG TYPES
+// ============================================
+
+export interface BlogTag {
+  id?: string;
+  name: string;
+  slug: string;
+}
+
+export interface BlogPostSEO {
+  title?: string;
+  description?: string;
+  keywords: string[];
+  canonicalUrl?: string;
+}
+
+export interface BlogPost {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  coverImageUrl: string | null;
+  coverImageAlt: string | null;
+  readingTimeMinutes: number;
+  seo: BlogPostSEO;
+  publishedAt: string | null;
+  updatedAt: string;
+  tags: BlogTag[];
+}
+
+// ============================================
 // TESTIMONIAL TYPES
 // ============================================
 
