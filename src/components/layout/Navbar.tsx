@@ -24,7 +24,7 @@ const Navbar = ({ navLinks = [] }: NavbarProps) => {
   const [toggle, setToggle] = useState(false);
   const pathname = usePathname();
   const cmsLinks = navLinks.length > 0 ? navLinks : fallbackNavLinks;
-  const links = cmsLinks.some(
+  const withProjects = cmsLinks.some(
     (link) => link.linkId === '/projects' || link.linkId === 'projects'
   )
     ? cmsLinks
@@ -32,6 +32,15 @@ const Navbar = ({ navLinks = [] }: NavbarProps) => {
         ...cmsLinks.slice(0, 2),
         { id: 'generated-projects', linkId: '/projects', title: 'Projects' },
         ...cmsLinks.slice(2),
+      ];
+  const links = withProjects.some(
+    (link) => link.linkId === '/blog' || link.linkId === 'blog'
+  )
+    ? withProjects
+    : [
+        ...withProjects.slice(0, withProjects.length - 1),
+        { id: 'generated-blog', linkId: '/blog', title: 'Blog' },
+        ...withProjects.slice(withProjects.length - 1),
       ];
 
   const getHref = (linkId: string) => {

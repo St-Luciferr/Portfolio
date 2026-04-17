@@ -20,12 +20,19 @@ const defaultNavLinks = [
   { linkId: 'about', title: 'About' },
   { linkId: 'work', title: 'Experience' },
   { linkId: '/projects', title: 'Projects' },
+  { linkId: '/blog', title: 'Blog' },
   { linkId: 'contact', title: 'Contact' },
 ];
 
 const Footer = ({ socialLinks, navLinks, name = 'Santosh Pandey' }: FooterProps) => {
   const year = new Date().getFullYear();
-  const links = navLinks?.length ? navLinks : defaultNavLinks;
+  const baseLinks = navLinks?.length ? navLinks : defaultNavLinks;
+  const hasBlog = baseLinks.some(
+    (l) => l.linkId === '/blog' || l.linkId === 'blog'
+  );
+  const links = hasBlog
+    ? baseLinks
+    : [...baseLinks, { linkId: '/blog', title: 'Blog' }];
 
   const socials = [
     { key: 'github', href: socialLinks?.github, Icon: FaGithub, label: 'GitHub', hoverClass: 'hover:text-white' },
