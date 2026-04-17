@@ -264,8 +264,8 @@ openGraph: {
 },
 twitter: {
   card: 'summary_large_image',
-  site: '@suntoss',                              // NEW ✨
-  creator: '@suntoss',                           // NEW ✨
+  site: '@Su_n_toss',                              // NEW ✨
+  creator: '@Su_n_toss',                           // NEW ✨
   // ...
 }
 ```
