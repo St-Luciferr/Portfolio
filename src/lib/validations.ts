@@ -185,6 +185,51 @@ export const updateNavLinkSchema = navLinkSchema.partial().extend({
 });
 
 // ============================================
+// BLOG POST SCHEMAS
+// ============================================
+
+export const blogTagSchema = z.object({
+  name: z.string().min(1, 'Tag name is required').max(50, 'Tag name too long'),
+  slug: z
+    .string()
+    .min(1, 'Tag slug is required')
+    .max(60, 'Tag slug too long')
+    .regex(/^[a-z0-9-]+$/, 'Tag slug must contain only lowercase letters, numbers, and hyphens'),
+  display_order: z.number().int().min(0).optional(),
+});
+
+export const blogPostSchema = z.object({
+  slug: z
+    .string()
+    .min(1, 'Slug is required')
+    .max(140, 'Slug too long')
+    .regex(/^[a-z0-9-]+$/, 'Slug must contain only lowercase letters, numbers, and hyphens'),
+  title: z.string().min(1, 'Title is required').max(200, 'Title too long'),
+  excerpt: z
+    .string()
+    .min(10, 'Excerpt must be at least 10 characters')
+    .max(320, 'Excerpt too long (keep under ~160 chars for best SEO)'),
+  content: z.string().min(1, 'Content is required'),
+  cover_image_url: z.string().url('Invalid cover image URL').nullable().optional(),
+  cover_image_alt: z.string().max(200, 'Alt text too long').nullable().optional(),
+  // SEO overrides (all optional)
+  seo_title: z.string().max(80, 'SEO title too long').nullable().optional(),
+  seo_description: z.string().max(200, 'SEO description too long').nullable().optional(),
+  seo_keywords: z.array(z.string().min(1).max(60)).default([]),
+  canonical_url: z.string().url('Invalid canonical URL').nullable().optional(),
+  is_published: z.boolean().default(false),
+  display_order: z.number().int().min(0).default(0),
+  tags: z.array(blogTagSchema).default([]),
+});
+
+export const updateBlogPostSchema = blogPostSchema.partial().extend({
+  id: z.string().uuid(),
+});
+
+export type BlogPostSchema = z.infer<typeof blogPostSchema>;
+export type BlogTagSchema = z.infer<typeof blogTagSchema>;
+
+// ============================================
 // REORDER SCHEMA (for drag-and-drop)
 // ============================================
 
@@ -203,7 +248,7 @@ export const reorderSchema = z.object({
 
 export const fileUploadSchema = z.object({
   file: z.instanceof(File),
-  bucket: z.enum(['projects', 'companies', 'technologies', 'services', 'testimonials', 'meta', 'resume']),
+  bucket: z.enum(['projects', 'companies', 'technologies', 'services', 'testimonials', 'meta', 'resume', 'blog']),
 });
 
 // Type exports for TypeScript inference
