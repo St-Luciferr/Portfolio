@@ -25,3 +25,6 @@ export { mapSiteSettings, mapSiteSetting } from './settings.mapper';
 
 // Testimonial mappers
 export { mapTestimonial, mapTestimonials } from './testimonial.mapper';
+
+// Blog mappers
+export { mapBlogPost, mapBlogPosts, mapBlogTag } from './blog.mapper';
