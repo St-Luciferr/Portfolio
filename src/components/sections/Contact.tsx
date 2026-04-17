@@ -12,6 +12,7 @@ import Lazy3DCanvas from '@/components/canvas/Lazy3DCanvas';
 interface FormState {
   name: string;
   email: string;
+  subject: string;
   message: string;
 }
 
@@ -28,6 +29,7 @@ const Contact = ({ data }: ContactProps) => {
   const [form, setForm] = useState<FormState>({
     name: '',
     email: '',
+    subject: '',
     message: '',
   });
 
@@ -67,7 +69,7 @@ const Contact = ({ data }: ContactProps) => {
           to_name: toName,
           from_email: form.email,
           to_email: toEmail,
-          message: form.message,
+          message: form.subject ? `[${form.subject}]\n\n${form.message}` : form.message,
         },
         publicKey
       )
@@ -78,6 +80,7 @@ const Contact = ({ data }: ContactProps) => {
           setForm({
             name: '',
             email: '',
+            subject: '',
             message: '',
           });
         },
@@ -100,6 +103,9 @@ const Contact = ({ data }: ContactProps) => {
         >
         <p className={styles.sectionSubText}>Get In Touch</p>
         <h3 className={styles.sectionHeadText}>Contact.</h3>
+        <p className="text-secondary text-sm mt-2">
+          Have a project idea, want to collaborate, or just want to say hi? I&apos;d love to hear from you.
+        </p>
 
         <form
           ref={formRef}
@@ -133,6 +139,20 @@ const Contact = ({ data }: ContactProps) => {
           </label>
 
           <label className="flex flex-col">
+            <span className="text-white font-medium mb-4">
+              What&apos;s this about? <span className="text-secondary font-normal text-sm">(optional)</span>
+            </span>
+            <input
+              type="text"
+              name="subject"
+              value={form.subject}
+              onChange={handleChange}
+              placeholder="e.g. Collaboration, open source, just saying hi..."
+              className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium"
+            />
+          </label>
+
+          <label className="flex flex-col">
             <span className="text-white font-medium mb-4">Your Message</span>
             <textarea
               rows={7}
@@ -145,13 +165,18 @@ const Contact = ({ data }: ContactProps) => {
             />
           </label>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="bg-tertiary py-3 px-8 outline-none w-fit text-white font-bold shadow-md shadow-primary rounded-xl hover:bg-tertiary/80 transition-colors disabled:opacity-50"
-          >
-            {loading ? 'Sending...' : 'Send'}
-          </button>
+          <div className="flex flex-col gap-2">
+            <button
+              type="submit"
+              disabled={loading}
+              className="bg-tertiary py-3 px-8 outline-none w-fit text-white font-bold shadow-md shadow-primary rounded-xl hover:bg-tertiary/80 transition-colors disabled:opacity-50"
+            >
+              {loading ? 'Sending...' : 'Send'}
+            </button>
+            <p className="text-secondary text-xs">
+              I usually respond within 24–48 hours.
+            </p>
+          </div>
         </form>
       </motion.div>
 

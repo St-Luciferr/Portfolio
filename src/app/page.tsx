@@ -10,6 +10,7 @@ import Tech from '@/components/sections/Tech';
 import Works from '@/components/sections/Works';
 import Testimonials from '@/components/sections/Testimonials';
 import Contact from '@/components/sections/Contact';
+import Footer from '@/components/layout/Footer';
 
 import {
   getPublishedProjects,
@@ -156,6 +157,11 @@ export default async function Home() {
           <StarsCanvas />
         </div>
       </main>
+      <Footer
+        socialLinks={settings['socialLinks']}
+        navLinks={navLinks}
+        name={heroSettings.name}
+      />
     </>
   );
 }
