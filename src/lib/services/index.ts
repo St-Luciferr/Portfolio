@@ -26,3 +26,12 @@ export {
   getAllSiteSettings,
   getSelectedResultsSettings,
 } from './settings.service';
+
+export {
+  getPublishedPosts,
+  getPostBySlug,
+  getPublishedPostSlugs,
+  getPostsByTag,
+  getAllPublishedTags,
+  getRelatedPosts,
+} from './blog.service';
