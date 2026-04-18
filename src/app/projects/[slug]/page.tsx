@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import Navbar from '@/components/layout/Navbar';
+import { ProjectCTAs } from '@/components/projects/ProjectCTAs';
 import {
   getAllSiteSettings,
   getPublishedNavLinks,
@@ -222,34 +223,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 </div>
 
                 {/* Call-to-action buttons */}
-                <div className="mt-9 flex flex-wrap gap-4">
-                  {project.demoUrl && (
-                    <a
-                      href={project.demoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="rounded-md bg-[#915eff] px-5 py-3 text-white font-semibold hover:bg-[#7a4fd4] transition-colors"
-                      aria-label={`View live demo of ${project.name}`}
-                    >
-                      View Live Demo
-                    </a>
-                  )}
-                  <a
-                    href={project.sourceCodeLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="rounded-md border border-[#915eff] px-5 py-3 text-white font-semibold hover:bg-[#915eff] transition-colors"
-                    aria-label={`View source code for ${project.name}`}
-                  >
-                    View Source Code
-                  </a>
-                  <Link
-                    href="/#contact"
-                    className="rounded-md border border-white/20 px-5 py-3 text-white font-semibold hover:border-white transition-colors"
-                  >
-                    Build Something Similar
-                  </Link>
-                </div>
+                <ProjectCTAs
+                  slug={project.slug}
+                  name={project.name}
+                  demoUrl={project.demoUrl}
+                  sourceCodeLink={project.sourceCodeLink}
+                />
               </div>
 
               <figure className="relative aspect-[16/10] overflow-hidden rounded-lg border border-white/10">
@@ -258,6 +237,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   alt={`${project.name} project preview showing the main interface`}
                   fill
                   priority
+                  sizes="(max-width: 1024px) 100vw, 640px"
                   className="object-cover"
                 />
               </figure>
@@ -373,6 +353,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                           src={relatedProject.imageUrl}
                           alt={`${relatedProject.name} preview`}
                           fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
                           className="object-cover transition-transform duration-300 group-hover:scale-105"
                         />
                       </div>
