@@ -144,6 +144,35 @@ export interface DBTestimonial {
   updated_at: string;
 }
 
+export interface DBBlogPost {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  cover_image_url: string | null;
+  cover_image_alt: string | null;
+  reading_time_minutes: number;
+  seo_title: string | null;
+  seo_description: string | null;
+  seo_keywords: string[];
+  canonical_url: string | null;
+  is_published: boolean;
+  published_at: string | null;
+  display_order: number;
+  created_at: string;
+  updated_at: string;
+  blog_tags?: DBBlogTag[];
+}
+
+export interface DBBlogTag {
+  id: string;
+  post_id: string;
+  name: string;
+  slug: string;
+  display_order: number;
+}
+
 export interface DBNavLink {
   id: string;
   link_id: string;
@@ -199,3 +228,6 @@ export type CreateExperience = Omit<DBExperience, 'id' | 'created_at' | 'updated
 export type CreateTechnology = Omit<DBTechnology, 'id' | 'created_at' | 'updated_at'>;
 export type CreateService = Omit<DBService, 'id' | 'created_at' | 'updated_at'>;
 export type CreateTestimonial = Omit<DBTestimonial, 'id' | 'created_at' | 'updated_at'>;
+export type CreateBlogPost = Omit<DBBlogPost, 'id' | 'created_at' | 'updated_at'> & {
+  tags: Array<Omit<DBBlogTag, 'id' | 'post_id'>>;
+};

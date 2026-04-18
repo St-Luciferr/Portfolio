@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Poppins } from 'next/font/google';
+import { AnalyticsProvider } from '@/components/analytics/AnalyticsProvider';
 import './globals.css';
 
 const poppins = Poppins({
@@ -96,7 +97,10 @@ export default function RootLayout({
         {/* DNS prefetch for EmailJS (only used in Contact form) */}
         <link rel="dns-prefetch" href="https://api.emailjs.com" />
       </head>
-      <body className="font-poppins bg-primary antialiased">{children}</body>
+      <body className="font-poppins bg-primary antialiased">
+        {children}
+        <AnalyticsProvider />
+      </body>
     </html>
   );
 }

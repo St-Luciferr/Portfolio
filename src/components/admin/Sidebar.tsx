@@ -10,6 +10,7 @@ import {
   Code,
   Settings,
   Wrench,
+  BookOpen,
 } from 'lucide-react';
 
 const navigation = [
@@ -37,6 +38,11 @@ const navigation = [
     name: 'Services',
     href: '/admin/services',
     icon: Wrench,
+  },
+  {
+    name: 'Blog',
+    href: '/admin/blog',
+    icon: BookOpen,
   },
   {
     name: 'Settings',
