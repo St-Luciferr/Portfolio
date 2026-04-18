@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { styles } from '@/lib/styles';
 import SectionWrapper from '@/components/hoc/SectionWrapper';
 import { fadeIn, textVariant } from '@/lib/motion';
+import { track } from '@/lib/analytics';
 import type { Project, ProjectTag } from '@/types/frontend';
 
 interface ProjectCardProps {
@@ -57,6 +58,7 @@ const ProjectCard = ({
               src={imageUrl}
               alt={name}
               fill
+              sizes="(max-width: 640px) 100vw, 360px"
               className="object-cover rounded-3xl transition-transform duration-300 hover:scale-105"
             />
 
@@ -66,6 +68,10 @@ const ProjectCard = ({
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
+                  track(
+                    isDemo ? 'project_demo_click' : 'project_source_click',
+                    { slug, source: 'card' }
+                  );
                   window.open(linkUrl, '_blank');
                 }}
                 className="black-gradient w-12 h-12 rounded-full flex justify-center items-center cursor-pointer hover:bg-gray-800/70 transition-colors duration-200 z-10"

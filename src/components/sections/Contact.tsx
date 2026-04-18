@@ -8,6 +8,7 @@ import { styles } from '@/lib/styles';
 import SectionWrapper from '@/components/hoc/SectionWrapper';
 import { slideIn } from '@/lib/motion';
 import Lazy3DCanvas from '@/components/canvas/Lazy3DCanvas';
+import { track } from '@/lib/analytics';
 
 interface FormState {
   name: string;
@@ -76,6 +77,10 @@ const Contact = ({ data }: ContactProps) => {
       .then(
         () => {
           setLoading(false);
+          track('contact_submit', {
+            status: 'success',
+            hasSubject: !!form.subject.trim(),
+          });
           alert('Thank you! I will get back to you as soon as possible.');
           setForm({
             name: '',
@@ -86,6 +91,10 @@ const Contact = ({ data }: ContactProps) => {
         },
         (error) => {
           setLoading(false);
+          track('contact_submit', {
+            status: 'error',
+            hasSubject: !!form.subject.trim(),
+          });
           console.error('EmailJS Error:', error);
           alert(
             `Failed to send message. Please email me directly at ${toEmail}`
