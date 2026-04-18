@@ -37,6 +37,30 @@
     scroll-behavior: smooth;
   }
 
+  @media (pointer: fine) {
+    html.custom-cursor-active,
+    html.custom-cursor-active body,
+    html.custom-cursor-active * {
+      cursor: none;
+    }
+    html.custom-cursor-active a,
+    html.custom-cursor-active button,
+    html.custom-cursor-active [role='button'] {
+      cursor: pointer;
+    }
+    html.custom-cursor-active input,
+    html.custom-cursor-active textarea,
+    html.custom-cursor-active [contenteditable='true'] {
+      cursor: text;
+    }
+    /* Elements opting into a labeled custom cursor keep the native one hidden
+       so the ring+label is the only visual indicator. */
+    html.custom-cursor-active [data-cursor-label],
+    html.custom-cursor-active [data-cursor-label] * {
+      cursor: pointer;
+    }
+  }
+
   body {
     margin: 0;
     padding: 0;
