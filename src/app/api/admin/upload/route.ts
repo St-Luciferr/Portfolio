@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
 import { verifyAdmin } from '@/lib/api/auth';
+import { createAdminClient } from '@/lib/supabase/admin';
 import {
   successResponse,
   unauthorizedResponse,
@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const supabase = await createClient();
+    const supabase = createAdminClient();
 
     // Generate unique filename
     const fileExt = file.name.split('.').pop();
@@ -105,7 +105,7 @@ export async function DELETE(request: NextRequest) {
       return errorResponse('File path is required');
     }
 
-    const supabase = await createClient();
+    const supabase = createAdminClient();
 
     const { error } = await supabase.storage
       .from('portfolio-images')
