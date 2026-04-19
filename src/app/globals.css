@@ -44,13 +44,19 @@
       cursor: none;
     }
     html.custom-cursor-active a,
+    html.custom-cursor-active a *,
     html.custom-cursor-active button,
-    html.custom-cursor-active [role='button'] {
+    html.custom-cursor-active button *,
+    html.custom-cursor-active [role='button'],
+    html.custom-cursor-active [role='button'] * {
       cursor: pointer;
     }
     html.custom-cursor-active input,
+    html.custom-cursor-active input *,
     html.custom-cursor-active textarea,
-    html.custom-cursor-active [contenteditable='true'] {
+    html.custom-cursor-active textarea *,
+    html.custom-cursor-active [contenteditable='true'],
+    html.custom-cursor-active [contenteditable='true'] * {
       cursor: text;
     }
     /* Elements opting into a labeled custom cursor keep the native one hidden
