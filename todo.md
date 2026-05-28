@@ -86,3 +86,88 @@
 - [x] Track project case-study visits. (automatic pageviews for `/projects/[slug]`)
 - [x] Track resume downloads. (`resume_download` with `source`)
 - [x] Track demo/source outbound clicks. (`project_demo_click` / `project_source_click` with `slug` + `source: 'card' | 'detail'`)
+
+---
+
+## Phase 8: Quick SEO Wins 🚀
+
+> Target: Week 1. See [`docs/GROWTH_PLAN.md`](docs/GROWTH_PLAN.md#phase-8--quick-seo-wins-week-1-10-hours-total) for rationale.
+
+- [ ] **8.1** Add canonical URL to homepage metadata in `src/app/page.tsx` — `alternates: { canonical: 'https://pandeysantosh.com.np' }`.
+- [ ] **8.2** Include `/services` index + every `/services/[slug]` in `src/app/sitemap.ts` (priority 0.7, monthly).
+- [ ] **8.3** Wrap `src/components/sections/Testimonials.tsx` cards with `Review` + `AggregateRating` JSON-LD; validate at [validator.schema.org](https://validator.schema.org/).
+- [ ] **8.4** Add a third hero CTA "Browse Projects" → `/projects` in `src/components/sections/HeroCTAs.tsx`; emit `hero_cta_click: variant='projects'` analytics event.
+- [ ] **8.5** Build dynamic OG images via `next/og`:
+  - [ ] `src/app/blog/[slug]/opengraph-image.tsx`
+  - [ ] `src/app/projects/[slug]/opengraph-image.tsx`
+- [ ] **8.6** Add 5–8 FAQ Q&As + `FAQPage` JSON-LD on each `/services/[slug]` page (Q&As can be static array per service or new `service_faqs` column).
+- [ ] **8.7** Record Lighthouse baseline (homepage, project detail, blog list, service detail) in `docs/GROWTH_PLAN.md` success-metrics table.
+- [ ] **8.8** Verify site ownership in Google Search Console + Bing Webmaster; submit sitemap.
+
+## Phase 9: Content Engine Launch ✍️
+
+> Target: Weeks 2–6. 5 cornerstone posts + cross-linking.
+
+### Cornerstone posts (1,800+ words each, ≥3 internal links, hero image, code samples)
+
+- [ ] **9.1** Publish "RAG in production: 3 lessons from shipping a medical chatbot" → links to `/projects/medical-qa-chatbot`, `/services/rag-development`. Tags: `rag`, `production`, `healthcare`, `llm`.
+- [ ] **9.2** Publish "Building WhatsApp bots with function calling: a practical guide" → links to `/projects/whatsapp-chatbot`, `/services/whatsapp-automation`. Tags: `whatsapp`, `openai`, `automation`.
+- [ ] **9.3** Publish "Fine-tuning vs RAG: when to pick each" → links to both RAG case studies and `/services/rag-development`, `/services/ai-chatbot-development`. Tags: `rag`, `fine-tuning`, `llm`, `architecture`.
+- [ ] **9.4** Publish "On-device ML with TensorFlow Lite: lessons from AMID" → links to `/projects/amid`, `/services/ml-deployment`. Tags: `mobile-ml`, `tflite`, `edge`.
+- [ ] **9.5** Publish "Continual learning for production CV: avoiding catastrophic forgetting" → links to `/projects/continual-monument-detection`, `/services/ml-deployment`. Tags: `continual-learning`, `computer-vision`, `ewc`, `maml`.
+
+### Cross-linking layer (after posts ship)
+
+- [ ] **9.6** Build `RelatedProjectsByTags` server component and render at bottom of `src/app/blog/[slug]/page.tsx` (mirror existing `getRelatedProjects` pattern, match on tag overlap).
+- [ ] **9.7** Add 1–2 inline links to relevant blog posts inside each project's `case_study_content` (edit `scripts/migrate-project-details.ts` then run `npm run db:migrate-details`).
+- [ ] **9.8** Add "Related Reading" widget on each `/services/[slug]` listing 2–3 blog posts that share the service's primary technology tags.
+
+### Validation
+
+- [ ] **9.9** Verify all 5 posts indexed in Google Search Console; confirm each appears in `/sitemap.xml`.
+- [ ] **9.10** Run [Rich Results Test](https://search.google.com/test/rich-results) on each post URL — `BlogPosting` + `BreadcrumbList` must validate.
+
+## Phase 10: Conversion & E-E-A-T 💰
+
+> Target: Weeks 7–10. Quantify everything, add pricing, build authority signals.
+
+- [ ] **10.1** Add ≥3 specific metrics (latency, accuracy, cost, time saved) to **Results** section of every case study via `scripts/migrate-project-details.ts` → `npm run db:migrate-details`.
+- [ ] **10.2** Rewrite About bio with quantified claims (years coding, # production systems shipped, key wins) — edit via `/admin/settings` or `src/lib/constants.ts`.
+- [ ] **10.3** Add 3-tier pricing (Starter / Production / Enterprise) to each `/services/[slug]`:
+  - [ ] Schema design: extend `services` table with `pricing_tiers` JSONB column (new migration `008_add_service_pricing.sql`).
+  - [ ] Admin form: extend `src/components/admin/services/` to edit tiers.
+  - [ ] Render component with scope + timeline + "starting at" price.
+- [ ] **10.4** Add process-timeline section per service (week-by-week or milestone-based delivery).
+- [ ] **10.5** Build `/uses` page at `src/app/uses/page.tsx`:
+  - [ ] List current stack grouped by category (frameworks, models, hosting, tools).
+  - [ ] 1–2 line *why* for each entry.
+  - [ ] Add to Navbar and sitemap.
+  - [ ] Render `ItemList` JSON-LD.
+- [ ] **10.6** Newsletter capture system:
+  - [ ] DB migration `009_add_newsletter_subscribers.sql` (email, source_post_slug, tags, confirmed_at, RLS).
+  - [ ] `src/components/blog/NewsletterCTA.tsx` rendered mid-post (scroll trigger) + end-of-post.
+  - [ ] `POST /api/newsletter/subscribe` route + double-opt-in email via Resend or similar.
+  - [ ] Admin view at `/admin/subscribers` to export CSV.
+- [ ] **10.7** Strengthen Person JSON-LD in `src/app/layout.tsx`:
+  - [ ] Populate `sameAs` (GitHub, LinkedIn, Twitter/X).
+  - [ ] Populate `alumniOf`, `knowsAbout`, `jobTitle`.
+- [ ] **10.8** Add client logos / press / certifications row to homepage if available (E-E-A-T proof).
+
+## Phase 11: Authority & Topical Hubs 🏛️
+
+> Target: Months 4–6. Build the moat.
+
+- [ ] **11.1** Build `/guides` (or `/resources`) hub at `src/app/guides/page.tsx`:
+  - [ ] Curate 30–50 internal links grouped by topic (RAG, optimization, automation, mobile ML, backend).
+  - [ ] Each topic `h2` matches a target keyword cluster.
+  - [ ] Add to Navbar; sitemap priority 0.85.
+- [ ] **11.2** Publish 1 cornerstone "definitive guide" (4,000+ words), e.g., "The Complete Guide to RAG Evaluation" — designed to attract inbound links.
+- [ ] **11.3** Outreach: DM 20–30 dev creators / newsletter operators sharing the cornerstone; goal 5+ inbound links from DR≥30 sites within 60 days.
+- [ ] **11.4** Continue cadence — 1 blog post every 2 weeks for 8 weeks (4 more posts). Pick topics from Search Console "impressions but no clicks" queries.
+- [ ] **11.5** Build `/talks` or `/oss` page listing conference talks, OSS contributions, GitHub stats. Wire to `Person.subjectOf`.
+- [ ] **11.6** Audit thin content — review every URL's Search Console impressions; merge or `noindex` anything under 50 impressions over 90 days.
+
+### Review checkpoints
+
+- [ ] **Monthly**: Update success-metrics table in `docs/GROWTH_PLAN.md` with actuals.
+- [ ] **Quarterly**: Re-sequence remaining phases based on Search Console data.
