@@ -41,10 +41,10 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
         aria-label="Table of contents"
         className="hidden lg:block sticky top-28 max-h-[calc(100vh-8rem)] overflow-auto"
       >
-        <p className="text-xs font-semibold uppercase tracking-wider text-secondary mb-4">
+        <p className="text-sm font-medium text-fg mb-4">
           On this page
         </p>
-        <ul className="space-y-2 border-l border-white/10">
+        <ul className="space-y-2 border-l border-fg/10">
           {headings.map((h) => (
             <li key={h.id}>
               <a
@@ -53,8 +53,8 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
                   '-ml-px block border-l-2 pl-4 text-sm transition-colors',
                   h.depth === 3 && 'pl-7 text-[13px]',
                   activeId === h.id
-                    ? 'border-[#915eff] text-white'
-                    : 'border-transparent text-secondary hover:text-white'
+                    ? 'border-brand text-fg'
+                    : 'border-transparent text-secondary hover:text-fg'
                 )}
               >
                 {h.text}
@@ -64,19 +64,19 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
         </ul>
       </nav>
 
-      <details className="lg:hidden group rounded-lg border border-white/10 bg-tertiary/30 mb-8">
-        <summary className="cursor-pointer px-4 py-3 text-sm font-medium text-white list-none flex items-center justify-between">
+      <details className="lg:hidden group rounded-lg border border-fg/10 bg-tertiary/30 mb-8">
+        <summary className="cursor-pointer px-4 py-3 text-sm font-medium text-fg list-none flex items-center justify-between">
           Table of contents
           <span className="text-secondary transition-transform group-open:rotate-180">
             ▾
           </span>
         </summary>
-        <ul className="px-4 pb-4 space-y-2 border-t border-white/10 pt-3">
+        <ul className="px-4 pb-4 space-y-2 border-t border-fg/10 pt-3">
           {headings.map((h) => (
             <li key={h.id} className={cn(h.depth === 3 && 'pl-4')}>
               <a
                 href={`#${h.id}`}
-                className="text-sm text-secondary hover:text-[#915eff]"
+                className="text-sm text-secondary hover:text-brand-fg"
               >
                 {h.text}
               </a>

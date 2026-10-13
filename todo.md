@@ -285,6 +285,11 @@
 - [~] **13.21** `/projects/[slug]`: add screenshot/diagram block, client/context line, rewrite Outcome bullets as delivered results. Screenshot + client line + outcome callout built; ⏸ rewriting the bullets is content work.
 - [x] **13.22** Dynamic OG images for projects + posts via `next/og` (done in 8.5).
 
+### Polish pass (2026-10-14)
+
+- [x] **13.27** Light + dark theme with a navbar toggle (system default, persisted, no flash); admin pinned to light. Geist typeface, token-based palette (`docs/DESIGN_SPEC.md`), alternating case-study rows, sentence-case labels, dark code panels in both themes.
+- [x] **13.28** Experience restored inside About with `react-vertical-timeline-component` (one-column-left), themed from site tokens. It was dropped in 13.x by mistake: the review meant to surface that proof (Global IME Bank OCR, etc.), not remove it.
+
 ### Cleanup
 
 - [x] **13.23** Remove `react-parallax-tilt`, `react-vertical-timeline-component`, unused icons, `public/Face.jsx`, `public/rag.png`.

@@ -53,7 +53,7 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <p className="text-secondary uppercase tracking-wider text-sm">{children}</p>
+    <p className="text-brand-fg font-medium text-sm">{children}</p>
   );
 }
 
@@ -62,7 +62,7 @@ function BulletList({ items }: { items: string[] }) {
     <ul className="mt-4 space-y-3">
       {items.map((item) => (
         <li key={item} className="flex gap-3 text-secondary leading-7">
-          <span className="mt-3 h-1.5 w-1.5 flex-none rounded-full bg-[#915eff]" />
+          <span className="mt-3 h-1.5 w-1.5 flex-none rounded-full bg-brand" />
           <span>{item}</span>
         </li>
       ))}
@@ -144,14 +144,14 @@ export default async function ServicePage({ params }: ServicePageProps) {
         <section className="pt-32 pb-16 sm:px-16 px-6">
           <div className="max-w-7xl mx-auto">
             <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-3 text-sm text-secondary">
-              <Link href="/" className="hover:text-white transition-colors">Home</Link>
+              <Link href="/" className="hover:text-fg transition-colors">Home</Link>
               <span aria-hidden="true">/</span>
-              <Link href="/services" className="hover:text-white transition-colors">Services</Link>
+              <Link href="/services" className="hover:text-fg transition-colors">Services</Link>
               <span aria-hidden="true">/</span>
-              <span className="text-white" aria-current="page">{service.title}</span>
+              <span className="text-fg" aria-current="page">{service.title}</span>
             </nav>
 
-            <h1 className="mt-10 text-white font-black text-[34px] sm:text-[52px] leading-tight max-w-4xl">
+            <h1 className="mt-10 text-fg font-semibold tracking-[-0.025em] text-[34px] sm:text-[52px] leading-tight max-w-4xl">
               {service.title}
             </h1>
 
@@ -170,9 +170,9 @@ export default async function ServicePage({ params }: ServicePageProps) {
                 ]
                   .filter(([, value]) => value)
                   .map(([label, value]) => (
-                    <div key={label} className="rounded-lg border border-white/10 bg-tertiary/60 px-4 py-3">
-                      <dt className="text-xs uppercase tracking-wider text-secondary">{label}</dt>
-                      <dd className="mt-1 text-sm text-white">{value}</dd>
+                    <div key={label} className="rounded-lg border border-fg/10 bg-tertiary/60 px-4 py-3">
+                      <dt className="text-xs text-secondary">{label}</dt>
+                      <dd className="mt-1 text-sm text-fg">{value}</dd>
                     </div>
                   ))}
               </dl>
@@ -181,13 +181,13 @@ export default async function ServicePage({ params }: ServicePageProps) {
             <div className="mt-8 flex flex-wrap gap-4">
               <Link
                 href="/#contact"
-                className="rounded-md bg-[#7a4fd4] px-6 py-3 text-white font-semibold hover:bg-[#6a3fc4] transition-colors"
+                className="rounded-md bg-brand px-6 py-3 text-white font-semibold hover:bg-brand-strong transition-colors"
               >
                 Get a Quote
               </Link>
               <Link
                 href="/services"
-                className="rounded-md border border-white/20 px-6 py-3 text-white font-semibold hover:border-white transition-colors"
+                className="rounded-md border border-fg/20 px-6 py-3 text-fg font-semibold hover:border-fg transition-colors"
               >
                 View All Services
               </Link>
@@ -204,7 +204,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
               {service.description && (
                 <article>
                   <SectionLabel>Overview</SectionLabel>
-                  <h2 className="mt-3 text-white text-3xl font-bold">What You Get</h2>
+                  <h2 className="mt-3 text-fg text-3xl font-bold">What You Get</h2>
                   <p className="mt-5 text-secondary leading-7">{service.description}</p>
                 </article>
               )}
@@ -212,15 +212,15 @@ export default async function ServicePage({ params }: ServicePageProps) {
               {service.process.length > 0 && (
                 <article>
                   <SectionLabel>Process</SectionLabel>
-                  <h2 className="mt-3 text-white text-3xl font-bold">How I Work</h2>
+                  <h2 className="mt-3 text-fg text-3xl font-bold">How I Work</h2>
                   <ol className="mt-6 space-y-6">
                     {service.process.map((step, i) => (
                       <li key={step.step} className="flex gap-4">
-                        <span className="flex-shrink-0 w-8 h-8 rounded-full bg-[#915eff] flex items-center justify-center text-white font-bold text-sm">
+                        <span className="flex-shrink-0 w-8 h-8 rounded-full bg-brand flex items-center justify-center text-fg font-bold text-sm">
                           {i + 1}
                         </span>
                         <div>
-                          <p className="text-white font-semibold">{step.step}</p>
+                          <p className="text-fg font-semibold">{step.step}</p>
                           <p className="mt-1 text-secondary text-sm leading-6">{step.description}</p>
                         </div>
                       </li>
@@ -232,7 +232,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
               {service.benefits.length > 0 && (
                 <article>
                   <SectionLabel>Benefits</SectionLabel>
-                  <h2 className="mt-3 text-white text-3xl font-bold">Why Choose This Service</h2>
+                  <h2 className="mt-3 text-fg text-3xl font-bold">Why Choose This Service</h2>
                   <BulletList items={service.benefits} />
                 </article>
               )}
@@ -240,7 +240,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
               {service.deliverables.length > 0 && (
                 <article>
                   <SectionLabel>Deliverables</SectionLabel>
-                  <h2 className="mt-3 text-white text-3xl font-bold">What You Receive</h2>
+                  <h2 className="mt-3 text-fg text-3xl font-bold">What You Receive</h2>
                   <BulletList items={service.deliverables} />
                 </article>
               )}
@@ -248,15 +248,15 @@ export default async function ServicePage({ params }: ServicePageProps) {
               {service.faqs.length > 0 && (
                 <article>
                   <SectionLabel>FAQ</SectionLabel>
-                  <h2 className="mt-3 text-white text-3xl font-bold">Common Questions</h2>
-                  <div className="mt-6 divide-y divide-white/10 rounded-lg border border-white/10 bg-tertiary">
+                  <h2 className="mt-3 text-fg text-3xl font-bold">Common Questions</h2>
+                  <div className="mt-6 divide-y divide-fg/10 rounded-lg border border-fg/10 bg-tertiary">
                     {service.faqs.map((faq) => (
                       <details key={faq.question} className="group px-6 py-5">
-                        <summary className="flex cursor-pointer list-none items-start justify-between gap-4 text-white font-semibold [&::-webkit-details-marker]:hidden">
+                        <summary className="flex cursor-pointer list-none items-start justify-between gap-4 text-fg font-semibold [&::-webkit-details-marker]:hidden">
                           <span>{faq.question}</span>
                           <span
                             aria-hidden="true"
-                            className="mt-0.5 text-[#915eff] transition-transform duration-200 group-open:rotate-45"
+                            className="mt-0.5 text-brand-fg transition-transform duration-200 group-open:rotate-45"
                           >
                             +
                           </span>
@@ -272,8 +272,8 @@ export default async function ServicePage({ params }: ServicePageProps) {
             {/* Right sidebar */}
             <aside className="lg:sticky lg:top-28 h-fit space-y-6">
               {service.toolsTechnologies.length > 0 && (
-                <div className="rounded-lg border border-white/10 bg-tertiary p-6">
-                  <h2 className="text-white text-xl font-bold">Tech Stack</h2>
+                <div className="rounded-lg border border-fg/10 bg-tertiary p-6">
+                  <h2 className="text-fg text-xl font-bold">Tech Stack</h2>
                   <div className="mt-5 flex flex-wrap gap-2">
                     {service.toolsTechnologies.map((tool) => (
                       <span
@@ -287,14 +287,14 @@ export default async function ServicePage({ params }: ServicePageProps) {
                 </div>
               )}
 
-              <div className="rounded-lg border border-white/10 bg-tertiary p-6">
-                <h2 className="text-white text-xl font-bold">Ready to Start?</h2>
+              <div className="rounded-lg border border-fg/10 bg-tertiary p-6">
+                <h2 className="text-fg text-xl font-bold">Ready to Start?</h2>
                 <p className="mt-3 text-secondary leading-7 text-sm">
                   Send a brief description of your project and I will get back to you within 24 hours.
                 </p>
                 <Link
                   href="/#contact"
-                  className="mt-5 inline-flex rounded-md bg-[#7a4fd4] px-4 py-3 text-white font-semibold hover:bg-[#6a3fc4] transition-colors text-sm"
+                  className="mt-5 inline-flex rounded-md bg-brand px-4 py-3 text-white font-semibold hover:bg-brand-strong transition-colors text-sm"
                 >
                   Start a Conversation
                 </Link>
@@ -307,9 +307,9 @@ export default async function ServicePage({ params }: ServicePageProps) {
         {linkedProjects.length > 0 && (
           <section className="pb-24 sm:px-16 px-6">
             <div className="max-w-7xl mx-auto">
-              <div className="border-t border-white/10 pt-16">
-                <p className="text-secondary uppercase tracking-wider text-sm">Live Examples</p>
-                <h2 className="mt-3 text-white text-3xl font-bold">Case Studies</h2>
+              <div className="border-t border-fg/10 pt-16">
+                <p className="text-brand-fg font-medium text-sm">Live Examples</p>
+                <h2 className="mt-3 text-fg text-3xl font-bold">Case Studies</h2>
                 <p className="mt-2 text-secondary">
                   Real projects built using this service
                 </p>

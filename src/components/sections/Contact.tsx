@@ -19,6 +19,9 @@ type SubmitStatus =
   | { kind: 'success' }
   | { kind: 'error'; message: string };
 
+const inputClass =
+  'rounded-lg border border-fg/10 bg-black-100 px-4 py-3 text-[15px] text-fg placeholder:text-secondary/80 outline-none transition-colors focus:border-brand/60 focus:ring-2 focus:ring-brand/15';
+
 interface ContactProps {
   data?: {
     name?: string;
@@ -124,49 +127,48 @@ const Contact = ({
   };
 
   return (
-    <section id="contact" className={`scroll-mt-24 py-20 sm:py-24 ${styles.paddingX}`}>
-    <div className="max-w-7xl mx-auto">
-      <div className="grid grid-cols-1 gap-10 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
-        <div className="bg-black-100 p-8 rounded-2xl">
-        <p className={styles.sectionSubText}>Get In Touch</p>
-        <h2 className="mt-3 text-white font-black text-[32px] sm:text-[44px] leading-tight">Start a project.</h2>
-        <p className="text-secondary text-sm mt-2">
+    <section id="contact" className={`scroll-mt-20 py-20 sm:py-28 ${styles.paddingX}`}>
+    <div className="max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
+        <div className="rounded-xl border border-fg/10 bg-tertiary p-6 shadow-soft sm:p-9">
+        <h2 className="text-fg text-[30px] sm:text-[40px] font-semibold leading-[1.15] tracking-[-0.02em]">Start a project</h2>
+        <p className="text-secondary text-[15px] mt-3">
           Tell me what you want to build or fix. A few sentences is enough to start.
         </p>
 
         <form
           ref={formRef}
           onSubmit={handleSubmit}
-          className="mt-12 flex flex-col gap-8"
+          className="mt-9 flex flex-col gap-6"
         >
           <label className="flex flex-col">
-            <span className="text-white font-medium mb-4">Your Name</span>
+            <span className="text-fg text-sm font-medium mb-2">Your name</span>
             <input
               type="text"
               name="name"
               value={form.name}
               onChange={handleChange}
               placeholder="What's your name?"
-              className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium"
+              className={inputClass}
               required
             />
           </label>
 
           <label className="flex flex-col">
-            <span className="text-white font-medium mb-4">Your Email</span>
+            <span className="text-fg text-sm font-medium mb-2">Your email</span>
             <input
               type="email"
               name="email"
               value={form.email}
               onChange={handleChange}
               placeholder="What's your email?"
-              className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium"
+              className={inputClass}
               required
             />
           </label>
 
           <label className="flex flex-col">
-            <span className="text-white font-medium mb-4">
+            <span className="text-fg text-sm font-medium mb-2">
               What&apos;s this about? <span className="text-secondary font-normal text-sm">(optional)</span>
             </span>
             <input
@@ -175,19 +177,19 @@ const Contact = ({
               value={form.subject}
               onChange={handleChange}
               placeholder="e.g. Collaboration, open source, just saying hi..."
-              className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium"
+              className={inputClass}
             />
           </label>
 
           <label className="flex flex-col">
-            <span className="text-white font-medium mb-4">Your Message</span>
+            <span className="text-fg text-sm font-medium mb-2">Your message</span>
             <textarea
               rows={7}
               name="message"
               value={form.message}
               onChange={handleChange}
               placeholder="What do you want to say?"
-              className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium"
+              className={inputClass}
               required
             />
           </label>
@@ -196,21 +198,21 @@ const Contact = ({
             <button
               type="submit"
               disabled={loading}
-              className="bg-[#7a4fd4] py-3 px-8 outline-none w-fit text-white font-bold rounded-lg hover:bg-[#6a3fc4] transition-colors disabled:opacity-50"
+              className="bg-brand py-3 px-7 w-fit text-white text-[15px] font-medium rounded-lg shadow-soft hover:bg-brand-strong transition-colors disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
             >
-              {loading ? 'Sending...' : 'Send'}
+              {loading ? 'Sending…' : 'Send message'}
             </button>
             <p className="text-secondary text-xs">
               I usually respond within 24–48 hours.
             </p>
             <div aria-live="polite" role="status">
               {status.kind === 'success' && (
-                <p className="mt-2 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
+                <p className="mt-2 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-700 dark:text-emerald-200">
                   Thanks, your message is on its way. I&apos;ll reply to the email you gave.
                 </p>
               )}
               {status.kind === 'error' && (
-                <p className="mt-2 rounded-lg border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+                <p className="mt-2 rounded-lg border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-700 dark:text-red-200">
                   {status.message} Please email me directly at{' '}
                   <a href={`mailto:${toEmail}`} className="underline underline-offset-4">
                     {toEmail}

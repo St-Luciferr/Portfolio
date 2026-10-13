@@ -167,21 +167,21 @@ export default async function BlogPostPage({ params }: PageProps) {
               aria-label="Breadcrumb"
               className="flex flex-wrap items-center gap-3 text-sm text-secondary"
             >
-              <Link href="/" className="hover:text-white transition-colors">
+              <Link href="/" className="hover:text-fg transition-colors">
                 Home
               </Link>
               <span aria-hidden="true">/</span>
-              <Link href="/blog" className="hover:text-white transition-colors">
+              <Link href="/blog" className="hover:text-fg transition-colors">
                 Blog
               </Link>
               <span aria-hidden="true">/</span>
-              <span className="text-white truncate max-w-[60vw]" aria-current="page">
+              <span className="text-fg truncate max-w-[60vw]" aria-current="page">
                 {post.title}
               </span>
             </nav>
 
             <header className="mt-10 max-w-4xl">
-              <h1 className="text-white font-black text-[34px] sm:text-[48px] leading-tight">
+              <h1 className="text-fg font-semibold tracking-[-0.025em] text-[34px] sm:text-[48px] leading-tight">
                 {post.title}
               </h1>
               <p className="mt-5 text-secondary text-lg leading-relaxed">
@@ -197,7 +197,7 @@ export default async function BlogPostPage({ params }: PageProps) {
             </header>
 
             {post.coverImageUrl && (
-              <figure className="mt-10 relative aspect-[16/9] overflow-hidden rounded-2xl border border-white/10">
+              <figure className="mt-10 relative aspect-[16/9] overflow-hidden rounded-2xl border border-fg/10">
                 <Image
                   src={post.coverImageUrl}
                   alt={post.coverImageAlt || post.title}
@@ -219,7 +219,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                 <TableOfContents headings={headings} />
               </div>
               <div
-                className="prose prose-invert prose-lg max-w-none prose-headings:font-bold prose-headings:text-white prose-h2:mt-14 prose-h2:mb-5 prose-h2:text-3xl prose-h3:mt-10 prose-h3:text-xl prose-p:text-secondary prose-p:leading-8 prose-li:text-secondary prose-strong:text-white prose-a:text-[#915eff] hover:prose-a:text-[#b48cff] prose-a:no-underline hover:prose-a:underline prose-code:text-[#b48cff] prose-code:bg-white/5 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none prose-pre:bg-black-100 prose-pre:border prose-pre:border-white/10 prose-pre:rounded-xl prose-blockquote:border-l-[#915eff] prose-blockquote:text-secondary prose-img:rounded-xl prose-img:border prose-img:border-white/10 prose-hr:border-white/10"
+                className="prose dark:prose-invert prose-lg max-w-none prose-headings:font-bold prose-headings:text-fg prose-h2:mt-14 prose-h2:mb-5 prose-h2:text-3xl prose-h3:mt-10 prose-h3:text-xl prose-p:text-secondary prose-p:leading-8 prose-li:text-secondary prose-strong:text-fg prose-a:text-brand-fg hover:prose-a:text-brand-fg prose-a:no-underline hover:prose-a:underline prose-code:text-brand-fg prose-code:bg-fg/5 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none prose-pre:bg-[#0d1018] prose-pre:border prose-pre:border-white/10 prose-pre:rounded-xl prose-blockquote:border-l-brand prose-blockquote:text-secondary prose-img:rounded-xl prose-img:border prose-img:border-fg/10 prose-hr:border-fg/10"
                 dangerouslySetInnerHTML={{ __html: html }}
               />
 
@@ -227,16 +227,16 @@ export default async function BlogPostPage({ params }: PageProps) {
 
               <RelatedPosts posts={related} />
 
-              <div className="mt-16 pt-8 border-t border-white/10 flex items-center justify-between">
+              <div className="mt-16 pt-8 border-t border-fg/10 flex items-center justify-between">
                 <Link
                   href="/blog"
-                  className="text-sm text-secondary hover:text-white transition-colors"
+                  className="text-sm text-secondary hover:text-fg transition-colors"
                 >
                   ← Back to blog
                 </Link>
                 <Link
                   href="/#contact"
-                  className="rounded-md bg-[#7a4fd4] px-4 py-2 text-white text-sm font-semibold hover:bg-[#6a3fc4] transition-colors"
+                  className="rounded-md bg-brand px-4 py-2 text-white text-sm font-semibold hover:bg-brand-strong transition-colors"
                 >
                   Let&apos;s work together
                 </Link>

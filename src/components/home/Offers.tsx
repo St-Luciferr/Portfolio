@@ -4,59 +4,54 @@ import { ArrowUpRight, Code2 } from 'lucide-react';
 import { Section, SectionLink } from './Section';
 import type { Service } from '@/types/frontend';
 
-interface OffersProps {
-  services: Service[];
-}
+const card =
+  'group relative flex flex-col rounded-xl border border-fg/10 bg-tertiary p-6 shadow-soft transition-[border-color,box-shadow] hover:border-brand/40 hover:shadow-lift focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand';
 
 /** Three AI offers from the CMS plus the full-stack work that surrounds them. */
-export function Offers({ services }: OffersProps) {
+export function Offers({ services }: { services: Service[] }) {
   const offers = services.filter((s) => s.slug);
 
   return (
     <Section
       id="services"
-      eyebrow="What I do"
-      title="Products and the AI inside them."
-      intro="End-to-end builds: the web app, the backend and the AI features, shipped by one developer who owns the whole stack."
+      title="Products, and the AI inside them"
+      intro="End-to-end builds: the web app, the backend and the AI features, delivered by one developer who owns the whole stack."
       action={<SectionLink href="/services">All services</SectionLink>}
     >
-      <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {offers.map((service) => (
-          <Link
-            key={service.id}
-            href={`/services/${service.slug}`}
-            className="group flex flex-col rounded-2xl border border-white/10 bg-tertiary/60 p-6 transition-colors hover:border-[#915eff]/60"
-          >
-            <Image src={service.iconUrl} alt="" width={44} height={44} className="object-contain" />
-            <h3 className="mt-5 text-white text-lg font-bold">{service.title}</h3>
+          <Link key={service.id} href={`/services/${service.slug}`} className={card}>
+            <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-brand/[0.08] ring-1 ring-brand/15">
+              <Image src={service.iconUrl} alt="" width={26} height={26} className="object-contain" />
+            </span>
+            <h3 className="mt-5 text-fg text-[17px] font-semibold leading-snug">{service.title}</h3>
             {service.summary && (
               <p className="mt-2 text-sm leading-6 text-secondary line-clamp-4">{service.summary}</p>
             )}
             {(service.timeline || service.engagementModel) && (
-              <p className="mt-4 text-xs text-secondary/80">
-                {[service.timeline, service.engagementModel].filter(Boolean).join(' · ')}
+              <p className="mt-4 text-xs text-secondary">
+                {[service.timeline, service.engagementModel].filter(Boolean).join(', ')}
               </p>
             )}
-            <span className="mt-auto pt-5 inline-flex items-center gap-1 text-sm font-semibold text-[#cbb5ff] group-hover:text-white">
-              Learn more <ArrowUpRight className="h-4 w-4" />
-            </span>
+            <ArrowUpRight
+              className="absolute right-5 top-6 h-4 w-4 text-secondary transition-colors group-hover:text-brand-fg"
+              aria-hidden="true"
+            />
           </Link>
         ))}
 
-        <Link
-          href="/projects"
-          className="group flex flex-col rounded-2xl border border-dashed border-white/15 bg-white/[0.02] p-6 transition-colors hover:border-[#915eff]/60"
-        >
-          <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-[#915eff] to-[#4f8cff]">
-            <Code2 className="h-5 w-5 text-white" />
+        <Link href="/projects" className={card}>
+          <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-brand/[0.08] ring-1 ring-brand/15">
+            <Code2 className="h-5 w-5 text-brand-fg" />
           </span>
-          <h3 className="mt-5 text-white text-lg font-bold">Full-Stack Web &amp; APIs</h3>
+          <h3 className="mt-5 text-fg text-[17px] font-semibold leading-snug">Full-Stack Web &amp; APIs</h3>
           <p className="mt-2 text-sm leading-6 text-secondary">
             Web apps, dashboards and backends in Next.js, React, Django and FastAPI, with or without an AI feature.
           </p>
-          <span className="mt-auto pt-5 inline-flex items-center gap-1 text-sm font-semibold text-[#cbb5ff] group-hover:text-white">
-            See the work <ArrowUpRight className="h-4 w-4" />
-          </span>
+          <ArrowUpRight
+            className="absolute right-5 top-6 h-4 w-4 text-secondary transition-colors group-hover:text-brand-fg"
+            aria-hidden="true"
+          />
         </Link>
       </div>
     </Section>

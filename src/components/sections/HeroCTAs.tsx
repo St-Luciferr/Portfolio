@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { FaFileDownload } from 'react-icons/fa';
+import { Download } from 'lucide-react';
 import { track } from '@/lib/analytics';
 
 interface HeroCTAsProps {
@@ -10,35 +10,32 @@ interface HeroCTAsProps {
   bookingUrl?: string;
 }
 
+const primary =
+  'inline-flex items-center justify-center rounded-lg bg-brand px-6 py-3 text-[15px] font-medium text-white shadow-soft transition-colors hover:bg-brand-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand';
+const secondary =
+  'inline-flex items-center justify-center rounded-lg border border-fg/15 bg-tertiary px-6 py-3 text-[15px] font-medium text-fg shadow-soft transition-colors hover:border-fg/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand';
+
 export function HeroCTAs({ resumeUrl, bookingUrl }: HeroCTAsProps) {
   return (
-    <div className="mt-9">
-      <div className="flex flex-wrap gap-4">
+    <div className="mt-10">
+      <div className="flex flex-wrap gap-3">
         {bookingUrl ? (
           <a
             href={bookingUrl}
             target="_blank"
             rel="noreferrer"
             onClick={() => track('hero_cta_click', { variant: 'call' })}
-            className="rounded-lg bg-[#7a4fd4] px-7 py-3 font-semibold text-white shadow-lg transition-colors hover:bg-[#6a3fc4]"
+            className={primary}
           >
             Book a call
           </a>
         ) : (
-          <a
-            href="#contact"
-            onClick={() => track('hero_cta_click', { variant: 'primary' })}
-            className="rounded-lg bg-[#7a4fd4] px-7 py-3 font-semibold text-white shadow-lg transition-colors hover:bg-[#6a3fc4]"
-          >
+          <a href="#contact" onClick={() => track('hero_cta_click', { variant: 'primary' })} className={primary}>
             Start a project
           </a>
         )}
 
-        <Link
-          href="#work"
-          onClick={() => track('hero_cta_click', { variant: 'projects' })}
-          className="rounded-lg border border-white/20 px-7 py-3 font-semibold text-white transition-colors hover:border-[#915eff] hover:bg-[#915eff]/10"
-        >
+        <Link href="#work" onClick={() => track('hero_cta_click', { variant: 'projects' })} className={secondary}>
           See case studies
         </Link>
       </div>
@@ -52,9 +49,9 @@ export function HeroCTAs({ resumeUrl, bookingUrl }: HeroCTAsProps) {
           track('hero_cta_click', { variant: 'resume' });
           track('resume_download', { source: 'hero' });
         }}
-        className="mt-5 inline-flex items-center gap-2 text-sm text-secondary underline-offset-4 hover:text-white hover:underline"
+        className="mt-6 inline-flex items-center gap-2 text-sm text-secondary hover:text-fg transition-colors"
       >
-        <FaFileDownload className="h-3.5 w-3.5" />
+        <Download className="h-4 w-4" aria-hidden="true" />
         Download résumé (PDF)
       </a>
     </div>

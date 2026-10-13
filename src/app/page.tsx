@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 
 import Navbar from '@/components/layout/Navbar';
 import Hero from '@/components/sections/Hero';
@@ -16,6 +15,7 @@ import { SITE_URL } from '@/lib/site';
 import {
   getPublishedProjects,
   getPublishedPosts,
+  getPublishedExperiences,
   getPublishedTechnologies,
   getPublishedServices,
   getPublishedNavLinks,
@@ -92,10 +92,11 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Home() {
   // Fetch all data in parallel for better performance
-  const [projects, posts, technologies, services, navLinks, settings, testimonials, selectedResults] =
+  const [projects, posts, experiences, technologies, services, navLinks, settings, testimonials, selectedResults] =
     await Promise.all([
       getPublishedProjects(),
       getPublishedPosts(),
+      getPublishedExperiences(),
       getPublishedTechnologies(),
       getPublishedServices(),
       getPublishedNavLinks(),
@@ -169,23 +170,13 @@ export default async function Home() {
           }}
         />
       )}
-      <main className="relative z-0 bg-primary">
-        {/* Hero background is the mobile LCP element: next/image + priority gets it
-            preloaded and resized instead of waiting on CSS + hydration. */}
-        <div className="relative isolate">
-          {heroSettings.backgroundImageUrl && (
-            <Image
-              src={heroSettings.backgroundImageUrl}
-              alt=""
-              fill
-              priority
-              sizes="100vw"
-              className="-z-10 object-cover object-center"
-            />
-          )}
-          <Navbar navLinks={navLinks} bookingUrl={contactSettings.bookingUrl} />
-          <Hero data={settings['hero']} bookingUrl={contactSettings.bookingUrl} />
-        </div>
+      <main className="relative bg-primary">
+        <Navbar navLinks={navLinks} bookingUrl={contactSettings.bookingUrl} />
+        <Hero
+          data={settings['hero']}
+          bookingUrl={contactSettings.bookingUrl}
+          availability={bioSettings.availability}
+        />
         <Offers services={services} />
         <FeaturedWork projects={pickFeatured(projects)} />
         <Engagement />
@@ -197,8 +188,10 @@ export default async function Home() {
         />
         <AboutSection
           bio={bioSettings}
-          name={heroSettings.name || 'Santosh Pandey'}
+          name="Santosh Pandey"
+          role={heroSettings.role || 'Full-Stack GenAI Developer'}
           technologies={technologies}
+          experiences={experiences}
           resumeUrl={heroSettings.resumeUrl || '/cv.pdf'}
         />
         <Writing posts={posts} />

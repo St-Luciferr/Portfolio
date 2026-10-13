@@ -26,6 +26,39 @@
     --radius: 0.5rem;
   }
 
+  /* Public-site palette (light is the default). Space-separated RGB so
+     Tailwind can apply opacity: bg-brand/10, border-fg/10, ... */
+  :root,
+  [data-theme='light'] {
+    --site-bg: 248 249 251;
+    --site-surface: 255 255 255;
+    --site-surface-2: 242 244 248;
+    --site-surface-3: 233 236 242;
+    --site-fg: 15 18 28;
+    --site-fg-soft: 44 49 64;
+    --site-muted: 88 94 112;
+    --site-brand: 91 70 229;
+    --site-brand-strong: 74 54 204;
+    --site-brand-fg: 79 59 210;
+    --site-shadow: 15 18 28;
+    color-scheme: light;
+  }
+
+  [data-theme='dark'] {
+    --site-bg: 9 11 17;
+    --site-surface: 18 21 31;
+    --site-surface-2: 13 16 24;
+    --site-surface-3: 24 28 41;
+    --site-fg: 237 239 245;
+    --site-fg-soft: 208 212 225;
+    --site-muted: 152 158 178;
+    --site-brand: 108 88 240;
+    --site-brand-strong: 94 74 226;
+    --site-brand-fg: 180 168 255;
+    --site-shadow: 0 0 0;
+    color-scheme: dark;
+  }
+
   * {
     margin: 0;
     padding: 0;
@@ -45,17 +78,6 @@
     position: relative;
   }
 
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 1;
-    opacity: 0.03;
-    mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.9 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-    background-size: 200px 200px;
-  }
 }
 
 /* Blog content: code block chrome on top of rehype-pretty-code output */
@@ -196,7 +218,7 @@
 }
 
 /* Design tokens for the public layer are documented in docs/DESIGN_SPEC.md:
-   dark only, one violet accent (#7a4fd4 fill / #915eff line / #cbb5ff text). */
+   light + dark via [data-theme], one indigo-violet accent (brand / brand-fg). */
 
 /* ------------------------------------------------------------------
    Hero + contact visuals (CSS-only replacements for the 3D scenes)
@@ -232,4 +254,39 @@
   .rise-in, .typing-dot, .float-slow, .orbit-spin, .orbit-spin-reverse, .glow-pulse {
     animation: none;
   }
+}
+
+/* Experience timeline (react-vertical-timeline-component), themed via site tokens */
+.experience-timeline.vertical-timeline {
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+}
+.experience-timeline .vertical-timeline-element {
+  margin: 2rem 0;
+}
+.experience-timeline .vertical-timeline-element-date.experience-timeline__date {
+  color: rgb(var(--site-muted));
+  font-size: 0.8125rem;
+  opacity: 1;
+  padding: 0.75rem 0 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .experience-timeline .vertical-timeline-element-icon.bounce-in,
+  .experience-timeline .vertical-timeline-element-content.bounce-in {
+    animation: none;
+  }
+  .experience-timeline .is-hidden {
+    visibility: visible;
+  }
+}
+
+/* Hero backdrop: 48px grid in the foreground colour, masked to fade out */
+.hero-grid {
+  background-image:
+    linear-gradient(to right, rgb(var(--site-fg) / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(var(--site-fg) / 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 100%);
 }

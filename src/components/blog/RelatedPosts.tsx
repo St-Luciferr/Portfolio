@@ -10,10 +10,10 @@ export function RelatedPosts({ posts }: RelatedPostsProps) {
 
   return (
     <section aria-labelledby="related-heading" className="mt-20">
-      <div className="border-t border-white/10 pt-12">
+      <div className="border-t border-fg/10 pt-12">
         <h2
           id="related-heading"
-          className="text-white text-2xl sm:text-3xl font-bold"
+          className="text-fg text-2xl sm:text-3xl font-bold"
         >
           Keep reading
         </h2>

@@ -13,8 +13,8 @@ function ProjectCard({ project }: { project: Project }) {
   const externalUrl = project.isDemo && project.demoUrl ? project.demoUrl : project.sourceCodeLink;
 
   return (
-    <article className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-tertiary/60 transition-colors hover:border-[#915eff]/60">
-      <Link href={`/projects/${project.slug}`} className="relative block aspect-[16/10] overflow-hidden bg-black-100">
+    <article className="group flex flex-col overflow-hidden rounded-2xl border border-fg/10 bg-tertiary/60 transition-colors hover:border-brand/60">
+      <Link href={`/projects/${project.slug}`} className="relative block aspect-[16/10] overflow-hidden bg-white">
         <Image
           src={project.screenshotUrl || project.imageUrl}
           alt={`${project.name} preview`}
@@ -25,9 +25,9 @@ function ProjectCard({ project }: { project: Project }) {
       </Link>
 
       <div className="flex flex-1 flex-col p-6">
-        {context && <p className="text-xs uppercase tracking-wider text-[#cbb5ff] line-clamp-1">{context}</p>}
-        <h3 className="mt-2 text-white text-xl font-bold">
-          <Link href={`/projects/${project.slug}`} className="hover:text-[#cbb5ff] transition-colors">
+        {context && <p className="text-xs font-medium text-brand-fg line-clamp-1">{context}</p>}
+        <h3 className="mt-2 text-fg text-xl font-bold">
+          <Link href={`/projects/${project.slug}`} className="hover:text-brand-fg transition-colors">
             {project.name}
           </Link>
         </h3>
@@ -44,7 +44,7 @@ function ProjectCard({ project }: { project: Project }) {
         <div className="mt-auto flex items-center justify-between pt-5 text-sm">
           <Link
             href={`/projects/${project.slug}`}
-            className="font-semibold text-[#cbb5ff] hover:text-white transition-colors"
+            className="font-semibold text-brand-fg hover:text-fg transition-colors"
           >
             Read the case study →
           </Link>
@@ -53,7 +53,7 @@ function ProjectCard({ project }: { project: Project }) {
               href={externalUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1 text-secondary hover:text-white transition-colors"
+              className="inline-flex items-center gap-1 text-secondary hover:text-fg transition-colors"
             >
               {project.isDemo ? 'Demo' : 'Source'} <ArrowUpRight className="h-3.5 w-3.5" />
             </a>
@@ -97,10 +97,10 @@ export default function ProjectsClient({ projects, navLinks }: ProjectsClientPro
 
       <section className="pt-32 pb-20 sm:px-16 px-6">
         <div className="max-w-7xl mx-auto">
-          <p className="text-secondary uppercase tracking-wider text-sm sm:text-base">Case studies</p>
+          <p className="text-brand-fg font-medium text-sm sm:text-base">Case studies</p>
           <div className="mt-4 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <h1 className="text-white font-black text-[38px] sm:text-[56px] leading-tight">Work</h1>
+              <h1 className="text-fg font-semibold tracking-[-0.025em] text-[38px] sm:text-[56px] leading-tight">Work</h1>
               <p className="mt-4 max-w-3xl text-secondary text-[17px] leading-8">
                 Full-stack products, AI assistants and automation, each with notes on the problem, the
                 implementation and the result.
@@ -108,7 +108,7 @@ export default function ProjectsClient({ projects, navLinks }: ProjectsClientPro
             </div>
             <Link
               href="/#contact"
-              className="w-fit rounded-md bg-[#7a4fd4] px-5 py-3 text-white font-semibold hover:bg-[#6a3fc4] transition-colors"
+              className="w-fit rounded-md bg-brand px-5 py-3 text-white font-semibold hover:bg-brand-strong transition-colors"
             >
               Discuss a project
             </Link>
@@ -117,7 +117,7 @@ export default function ProjectsClient({ projects, navLinks }: ProjectsClientPro
           <div className="mt-14 space-y-16">
             {groups.map((group) => (
               <div key={group.title ?? 'all'}>
-                {group.title && <h2 className="mb-6 text-white text-2xl font-bold">{group.title}</h2>}
+                {group.title && <h2 className="mb-6 text-fg text-2xl font-bold">{group.title}</h2>}
                 <ProjectGrid projects={group.items} />
               </div>
             ))}
