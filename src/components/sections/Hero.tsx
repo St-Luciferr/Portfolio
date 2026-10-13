@@ -14,9 +14,9 @@ interface HeroProps {
 }
 
 // Defaults until headline / audience are set in /admin/settings (hero).
-const DEFAULT_HEADLINE = 'Full-stack products, with the AI built in.';
+const DEFAULT_HEADLINE = "I'm Santosh, a full-stack developer who builds with AI.";
 const DEFAULT_AUDIENCE =
-  'I design and build web apps, APIs and AI assistants for startups and growing teams, from first prototype to production.';
+  'I work across the whole stack, from APIs and databases to web apps and the AI assistants inside them.';
 
 /** Tint the headline from the word "AI" onwards; headlines without it stay plain. */
 function splitHeadline(headline: string): [string, string] {
@@ -38,7 +38,7 @@ const Hero = ({ data, bookingUrl, availability, children }: HeroProps) => {
       <div
         className={`${styles.paddingX} relative max-w-6xl mx-auto grid items-center gap-16 xl:grid-cols-[minmax(0,1fr)_420px]`}
       >
-        <div className="max-w-2xl">
+        <div className="min-w-0 max-w-2xl">
           <p className="inline-flex items-center gap-2 rounded-full border border-fg/10 bg-tertiary/70 px-3 py-1 text-[13px] text-secondary shadow-soft">
             <span className={`h-1.5 w-1.5 rounded-full ${availability ? 'bg-emerald-500' : 'bg-brand'}`} />
             {availability || role}
@@ -54,7 +54,7 @@ const Hero = ({ data, bookingUrl, availability, children }: HeroProps) => {
           <HeroCTAs resumeUrl={resumeUrl} bookingUrl={bookingUrl} />
         </div>
 
-        <div className="flex justify-center xl:justify-end">
+        <div className="flex min-w-0 justify-center xl:justify-end">
           <HeroVisual />
         </div>
       </div>

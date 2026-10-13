@@ -44,7 +44,7 @@ function ProjectCard({ project }: { project: Project }) {
         <div className="mt-auto flex items-center justify-between pt-5 text-sm">
           <Link
             href={`/projects/${project.slug}`}
-            className="font-semibold text-brand-fg hover:text-fg transition-colors"
+            className="tap-target font-semibold text-brand-fg hover:text-fg transition-colors"
           >
             Read the case study →
           </Link>
@@ -53,7 +53,7 @@ function ProjectCard({ project }: { project: Project }) {
               href={externalUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1 text-secondary hover:text-fg transition-colors"
+              className="tap-target inline-flex items-center gap-1 text-secondary hover:text-fg transition-colors"
             >
               {project.isDemo ? 'Demo' : 'Source'} <ArrowUpRight className="h-3.5 w-3.5" />
             </a>

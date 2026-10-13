@@ -110,7 +110,7 @@ export function HeroSettings() {
             <Input
               id="headline"
               {...register('headline')}
-              placeholder="Full-stack products, with AI built in."
+              placeholder="I'm Santosh, a full-stack developer who builds with AI."
             />
             <p className="text-sm text-gray-500">
               The large hero headline. Leave blank to use the built-in default.
@@ -122,7 +122,7 @@ export function HeroSettings() {
             <Input
               id="audience"
               {...register('audience')}
-              placeholder="For startups and growing teams that need..."
+              placeholder="I work across the whole stack, from APIs and databases to..."
             />
           </div>
 

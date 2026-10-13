@@ -60,7 +60,7 @@ export function FeaturedWork({ projects }: { projects: Project[] }) {
                 </ul>
                 <Link
                   href={`/projects/${project.slug}`}
-                  className="group mt-7 inline-flex items-center gap-1.5 text-sm font-medium text-fg hover:text-brand-fg transition-colors"
+                  className="tap-target group mt-7 inline-flex items-center gap-1.5 text-sm font-medium text-fg hover:text-brand-fg transition-colors"
                 >
                   Read the case study
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />

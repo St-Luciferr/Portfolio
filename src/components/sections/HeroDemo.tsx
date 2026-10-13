@@ -122,7 +122,7 @@ export function HeroDemo() {
         </span>
       </div>
 
-      <div className="flex gap-1 border-b border-fg/[0.06] px-3 py-2" role="tablist" aria-label="Example assistants">
+      <div className="flex gap-1 overflow-x-auto border-b border-fg/[0.06] px-2 py-2 [scrollbar-width:none] sm:px-3" role="tablist" aria-label="Example assistants">
         {SCENARIOS.map((x, i) => (
           <button
             key={x.id}
@@ -130,11 +130,11 @@ export function HeroDemo() {
             role="tab"
             aria-selected={i === s.index}
             onClick={() => setS(animated ? { index: i, phase: 0, chars: 0, words: 0 } : DONE(i))}
-            className={`inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-[12px] font-medium transition-colors ${
+            className={`inline-flex flex-none items-center gap-1.5 whitespace-nowrap rounded-md px-2.5 py-1.5 text-[12px] font-medium transition-colors ${
               i === s.index ? 'bg-brand/10 text-brand-fg' : 'text-secondary hover:text-fg'
             }`}
           >
-            <x.Icon className="h-3.5 w-3.5" aria-hidden="true" />
+            <x.Icon className="hidden h-3.5 w-3.5 min-[380px]:block" aria-hidden="true" />
             {x.tab}
           </button>
         ))}

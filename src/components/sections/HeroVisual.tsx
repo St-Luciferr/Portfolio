@@ -34,7 +34,7 @@ function CodeCard() {
  */
 const HeroVisual = () => {
   return (
-    <div className="relative mt-10 w-full max-w-[440px] sm:mt-16 xl:mt-0">
+    <div className="relative mt-10 w-full min-w-0 max-w-[440px] sm:mt-16 xl:mt-0">
       <CodeCard />
 
       <HeroDemo />

@@ -76,7 +76,7 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
             <li key={h.id} className={cn(h.depth === 3 && 'pl-4')}>
               <a
                 href={`#${h.id}`}
-                className="text-sm text-secondary hover:text-brand-fg"
+                className="tap-target text-sm text-secondary hover:text-brand-fg"
               >
                 {h.text}
               </a>

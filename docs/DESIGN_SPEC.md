@@ -5,8 +5,8 @@
 ## Positioning (13.1)
 
 - **Who**: Santosh Pandey, full-stack developer who also builds AI assistants. The pitch is deliberately not AI-only.
-- **Headline** (hero, editable in `/admin/settings` → Hero → *Positioning headline*): "Full-stack products, with the AI built in."
-- **Audience line**: "I design and build web apps, APIs and AI assistants (RAG, WhatsApp, document automation) for startups and growing teams, from first prototype to production."
+- **Headline** (hero, editable in `/admin/settings` → Hero → *Positioning headline*): "I'm Santosh, a full-stack developer who builds with AI." (an introduction, not a product tagline; changed 2026-10-14 at the owner's request)
+- **Sub-line**: "I work across the whole stack, from APIs and databases to web apps and the AI assistants inside them."
 - **Voice**: plain, specific, first person. Describe what was built and what changed; no superlatives, no unsourced numbers.
 
 ## Offers

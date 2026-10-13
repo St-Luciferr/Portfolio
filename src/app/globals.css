@@ -332,6 +332,19 @@
   }
 }
 
+/* Small standalone links (breadcrumbs, "All projects", TOC, footer): an
+   invisible ::after widens the touch area to ~40px without moving layout. */
+.tap-target,
+nav[aria-label='Breadcrumb'] a {
+  position: relative;
+}
+.tap-target::after,
+nav[aria-label='Breadcrumb'] a::after {
+  content: '';
+  position: absolute;
+  inset: -10px -6px;
+}
+
 /* Scroll reveal (RevealObserver.tsx). Only hides when JS is running. */
 html.js [data-reveal]:not([data-shown]) {
   opacity: 0;

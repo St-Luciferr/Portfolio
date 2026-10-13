@@ -49,7 +49,7 @@ export function HeroCTAs({ resumeUrl, bookingUrl }: HeroCTAsProps) {
           track('hero_cta_click', { variant: 'resume' });
           track('resume_download', { source: 'hero' });
         }}
-        className="mt-6 inline-flex items-center gap-2 text-sm text-secondary hover:text-fg transition-colors"
+        className="tap-target mt-6 inline-flex items-center gap-2 text-sm text-secondary hover:text-fg transition-colors"
       >
         <Download className="h-4 w-4" aria-hidden="true" />
         Download résumé (PDF)

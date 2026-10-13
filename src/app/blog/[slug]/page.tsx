@@ -230,7 +230,7 @@ export default async function BlogPostPage({ params }: PageProps) {
               <div className="mt-16 pt-8 border-t border-fg/10 flex items-center justify-between">
                 <Link
                   href="/blog"
-                  className="text-sm text-secondary hover:text-fg transition-colors"
+                  className="tap-target text-sm text-secondary hover:text-fg transition-colors"
                 >
                   ← Back to blog
                 </Link>

@@ -48,7 +48,7 @@ export function SectionLink({ href, children }: { href: string; children: ReactN
   return (
     <a
       href={href}
-      className="group inline-flex items-center gap-1.5 text-sm font-medium text-secondary hover:text-fg transition-colors"
+      className="tap-target group inline-flex items-center gap-1.5 text-sm font-medium text-secondary hover:text-fg transition-colors"
     >
       {children}
       <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />

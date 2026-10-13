@@ -70,7 +70,7 @@ const Footer = ({ socialLinks, navLinks, name = 'Santosh Pandey' }: FooterProps)
                 <li key={link.linkId}>
                   <Link
                     href={getHref(link.linkId)}
-                    className="text-secondary hover:text-fg text-sm transition-colors duration-200"
+                    className="tap-target text-secondary hover:text-fg text-sm transition-colors duration-200"
                   >
                     {link.title}
                   </Link>
@@ -94,7 +94,7 @@ const Footer = ({ socialLinks, navLinks, name = 'Santosh Pandey' }: FooterProps)
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
-                    className={`text-secondary ${hoverClass} transition-colors duration-200`}
+                    className={`tap-target text-secondary ${hoverClass} transition-colors duration-200`}
                   >
                     <Icon size={19} />
                   </a>
