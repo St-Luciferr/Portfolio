@@ -70,26 +70,26 @@ export default async function TagPage({ params }: PageProps) {
             aria-label="Breadcrumb"
             className="flex flex-wrap items-center gap-3 text-sm text-secondary"
           >
-            <Link href="/" className="hover:text-white transition-colors">
+            <Link href="/" className="hover:text-fg transition-colors">
               Home
             </Link>
             <span aria-hidden="true">/</span>
-            <Link href="/blog" className="hover:text-white transition-colors">
+            <Link href="/blog" className="hover:text-fg transition-colors">
               Blog
             </Link>
             <span aria-hidden="true">/</span>
-            <span className="text-white" aria-current="page">
+            <span className="text-fg" aria-current="page">
               #{current?.name || slug}
             </span>
           </nav>
 
-          <h1 className="mt-8 text-white font-black text-[36px] sm:text-[48px] leading-tight">
-            <span className="text-[#915eff]">#</span>
+          <h1 className="mt-8 text-fg font-semibold tracking-[-0.025em] text-[36px] sm:text-[48px] leading-tight">
+            <span className="text-brand-fg">#</span>
             {current?.name || slug}
           </h1>
           <p className="mt-3 text-secondary text-lg">
             {posts.length} {posts.length === 1 ? 'post' : 'posts'} tagged with{' '}
-            <span className="text-white">#{current?.name || slug}</span>.
+            <span className="text-fg">#{current?.name || slug}</span>.
           </p>
 
           {allTags.length > 1 && (
@@ -110,15 +110,15 @@ export default async function TagPage({ params }: PageProps) {
       <section className="pb-24 sm:px-16 px-6">
         <div className="max-w-6xl mx-auto">
           {posts.length === 0 ? (
-            <div className="rounded-2xl border border-white/10 bg-tertiary/40 p-12 text-center">
-              <p className="text-white font-medium">No posts yet</p>
+            <div className="rounded-2xl border border-fg/10 bg-tertiary/40 p-12 text-center">
+              <p className="text-fg font-medium">No posts yet</p>
               <p className="text-secondary mt-2 text-sm">
                 Nothing tagged with #{current?.name || slug} is published right
                 now.
               </p>
               <Link
                 href="/blog"
-                className="inline-block mt-4 text-[#915eff] hover:underline"
+                className="inline-block mt-4 text-brand-fg hover:underline"
               >
                 ← Back to all posts
               </Link>

@@ -87,7 +87,7 @@ function DetailList({ items }: { items: string[] }) {
     <ul className="mt-5 space-y-3">
       {items.map((item) => (
         <li key={item} className="flex gap-3 text-secondary leading-7">
-          <span className="mt-3 h-1.5 w-1.5 flex-none rounded-full bg-[#915eff]" />
+          <span className="mt-3 h-1.5 w-1.5 flex-none rounded-full bg-brand" />
           <span>{item}</span>
         </li>
       ))}
@@ -183,23 +183,23 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <div className="max-w-7xl mx-auto">
             {/* Breadcrumb navigation for better UX and SEO */}
             <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-3 text-sm text-secondary">
-              <Link href="/" className="hover:text-white transition-colors">
+              <Link href="/" className="hover:text-fg transition-colors">
                 Home
               </Link>
               <span aria-hidden="true">/</span>
-              <Link href="/projects" className="hover:text-white transition-colors">
+              <Link href="/projects" className="hover:text-fg transition-colors">
                 Projects
               </Link>
               <span aria-hidden="true">/</span>
-              <span className="text-white" aria-current="page">{project.name}</span>
+              <span className="text-fg" aria-current="page">{project.name}</span>
             </nav>
 
             <header className="mt-10 grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
               <div>
-                <p className="text-secondary uppercase tracking-wider text-sm sm:text-base">
+                <p className="text-brand-fg font-medium text-sm sm:text-base">
                   {project.clientName || content.eyebrow}
                 </p>
-                <h1 className="mt-4 text-white font-black text-[34px] sm:text-[52px] leading-tight">
+                <h1 className="mt-4 text-fg font-semibold tracking-[-0.025em] text-[34px] sm:text-[52px] leading-tight">
                   {project.name}
                 </h1>
                 <p className="mt-6 text-secondary text-[17px] leading-8 max-w-3xl">
@@ -207,8 +207,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 </p>
 
                 {project.outcomeLine && (
-                  <p className="mt-5 flex gap-3 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm leading-6 text-emerald-100">
-                    <span className="font-semibold text-emerald-300">Outcome</span>
+                  <p className="mt-5 flex gap-3 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm leading-6 text-emerald-800 dark:text-emerald-100">
+                    <span className="font-semibold text-emerald-700 dark:text-emerald-300">Outcome</span>
                     {project.outcomeLine}
                   </p>
                 )}
@@ -235,7 +235,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 />
               </div>
 
-              <figure className="relative aspect-[16/10] overflow-hidden rounded-lg border border-white/10">
+              <figure className="relative aspect-[16/10] overflow-hidden rounded-xl border border-fg/10 bg-white shadow-lift">
                 <Image
                   src={project.screenshotUrl || project.imageUrl}
                   alt={`${project.name} project preview showing the main interface`}
@@ -253,50 +253,50 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <div className="max-w-7xl mx-auto grid gap-12 lg:grid-cols-[0.72fr_0.28fr]">
             <div className="space-y-14">
               <article>
-                <p className="text-secondary uppercase tracking-wider text-sm">
+                <p className="text-brand-fg font-medium text-sm">
                   Problem
                 </p>
-                <h2 className="mt-3 text-white text-3xl font-bold">
+                <h2 className="mt-3 text-fg text-3xl font-bold">
                   What this project solves
                 </h2>
                 <DetailList items={content.problem} />
               </article>
 
               <article>
-                <p className="text-secondary uppercase tracking-wider text-sm">
+                <p className="text-brand-fg font-medium text-sm">
                   Solution
                 </p>
-                <h2 className="mt-3 text-white text-3xl font-bold">
+                <h2 className="mt-3 text-fg text-3xl font-bold">
                   How it works
                 </h2>
                 <DetailList items={content.solution} />
               </article>
 
               <article>
-                <p className="text-secondary uppercase tracking-wider text-sm">
+                <p className="text-brand-fg font-medium text-sm">
                   Architecture
                 </p>
-                <h2 className="mt-3 text-white text-3xl font-bold">
+                <h2 className="mt-3 text-fg text-3xl font-bold">
                   System design
                 </h2>
                 <DetailList items={content.architecture} />
               </article>
 
               <article>
-                <p className="text-secondary uppercase tracking-wider text-sm">
+                <p className="text-brand-fg font-medium text-sm">
                   Features
                 </p>
-                <h2 className="mt-3 text-white text-3xl font-bold">
+                <h2 className="mt-3 text-fg text-3xl font-bold">
                   Key capabilities
                 </h2>
                 <DetailList items={content.features} />
               </article>
 
               <article>
-                <p className="text-secondary uppercase tracking-wider text-sm">
+                <p className="text-brand-fg font-medium text-sm">
                   Outcome
                 </p>
-                <h2 className="mt-3 text-white text-3xl font-bold">
+                <h2 className="mt-3 text-fg text-3xl font-bold">
                   What it demonstrates
                 </h2>
                 <DetailList items={content.results} />
@@ -304,8 +304,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </div>
 
             <aside className="lg:sticky lg:top-28 h-fit">
-              <div className="rounded-lg border border-white/10 bg-tertiary p-6">
-                <h2 className="text-white text-xl font-bold">Project Stack</h2>
+              <div className="rounded-lg border border-fg/10 bg-tertiary p-6">
+                <h2 className="text-fg text-xl font-bold">Project Stack</h2>
                 <div className="mt-5 flex flex-wrap gap-2">
                   {content.stack.map((item) => (
                     <span
@@ -318,15 +318,15 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 </div>
               </div>
 
-              <div className="mt-6 rounded-lg border border-white/10 bg-tertiary p-6">
-                <h2 className="text-white text-xl font-bold">Next Step</h2>
+              <div className="mt-6 rounded-lg border border-fg/10 bg-tertiary p-6">
+                <h2 className="text-fg text-xl font-bold">Next Step</h2>
                 <p className="mt-3 text-secondary leading-7">
                   Need a similar AI, automation, backend, or product workflow?
                   Send a short brief and I will review the best implementation path.
                 </p>
                 <Link
                   href="/#contact"
-                  className="mt-5 inline-flex rounded-md bg-[#7a4fd4] px-4 py-3 text-white font-semibold hover:bg-[#6a3fc4] transition-colors"
+                  className="mt-5 inline-flex rounded-md bg-brand px-4 py-3 text-white font-semibold hover:bg-brand-strong transition-colors"
                 >
                   Contact Me
                 </Link>
@@ -339,8 +339,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         {relatedProjects.length > 0 && (
           <section className="pb-24 sm:px-16 px-6">
             <div className="max-w-7xl mx-auto">
-              <div className="border-t border-white/10 pt-16">
-                <h2 className="text-white text-3xl font-bold">Related Projects</h2>
+              <div className="border-t border-fg/10 pt-16">
+                <h2 className="text-fg text-3xl font-bold">Related Projects</h2>
                 <p className="mt-2 text-secondary">
                   Explore similar work using related technologies and approaches
                 </p>
@@ -350,7 +350,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     <Link
                       key={relatedProject.id}
                       href={`/projects/${relatedProject.slug}`}
-                      className="group rounded-lg border border-white/10 bg-tertiary p-5 hover:border-[#915eff] transition-all duration-300"
+                      className="group rounded-lg border border-fg/10 bg-tertiary p-5 hover:border-brand transition-all duration-300"
                     >
                       <div className="relative aspect-video overflow-hidden rounded-lg">
                         <Image
@@ -361,7 +361,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                           className="object-cover transition-transform duration-300 group-hover:scale-105"
                         />
                       </div>
-                      <h3 className="mt-4 text-white font-bold text-lg group-hover:text-[#915eff] transition-colors line-clamp-1">
+                      <h3 className="mt-4 text-fg font-bold text-lg group-hover:text-brand-fg transition-colors line-clamp-1">
                         {relatedProject.name}
                       </h3>
                       <p className="mt-2 text-secondary text-sm leading-relaxed line-clamp-2">

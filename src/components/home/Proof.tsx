@@ -1,5 +1,10 @@
 import Image from 'next/image';
 import { Section } from './Section';
+import { CountUp } from './CountUp';
+import { HUES, type HueName } from './hues';
+
+// Same order as the offers the metrics usually come from.
+const metricHues: HueName[] = ['violet', 'sky', 'amber', 'emerald'];
 import type { SelectedResultMetric, Testimonial } from '@/types/frontend';
 
 interface ProofProps {
@@ -14,41 +19,31 @@ export function Proof({ testimonials, metrics, heading, subheading }: ProofProps
   if (testimonials.length === 0 && metrics.length === 0) return null;
 
   return (
-    <Section
-      id="results"
-      eyebrow="Proof"
-      title={heading || 'Results.'}
-      intro={subheading}
-      className="bg-black-100/40"
-    >
+    <Section id="results" eyebrow="Results" title={heading || 'Results'} intro={subheading}>
       {metrics.length > 0 && (
-        <dl className="grid grid-cols-2 gap-5 lg:grid-cols-4">
-          {metrics.map((metric) => (
-            <div key={metric.label} className="flex flex-col rounded-2xl border border-white/10 bg-tertiary/50 p-6">
+        <dl className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+          {metrics.map((metric, i) => (
+            <div key={metric.label} className={`flex flex-col rounded-2xl border p-5 shadow-soft sm:p-6 ${HUES[metricHues[i % 4]].card}`}>
               {/* dt before dd for valid markup; order-first keeps the value on top */}
-              <dt className="mt-3 text-white font-bold">{metric.label}</dt>
-              <dd className="order-first text-[#b48cff] text-4xl font-black leading-none">{metric.value}</dd>
-              {metric.context && <dd className="mt-1 text-xs leading-5 text-secondary">{metric.context}</dd>}
+              <dt className="mt-3 text-fg text-[15px] font-medium">{metric.label}</dt>
+              <dd className={`order-first text-[34px] sm:text-[42px] font-semibold leading-none tracking-[-0.03em] ${HUES[metricHues[i % 4]].ink}`}>
+                <CountUp value={metric.value} />
+              </dd>
+              {metric.context && <dd className="mt-1 text-[13px] leading-5 text-secondary">{metric.context}</dd>}
             </div>
           ))}
         </dl>
       )}
 
       {testimonials.length > 0 && (
-        <div className={`grid gap-6 md:grid-cols-2 lg:grid-cols-3 ${metrics.length > 0 ? 'mt-10' : ''}`}>
+        <div className={`grid gap-5 md:grid-cols-2 lg:grid-cols-3 ${metrics.length > 0 ? 'mt-8' : ''}`}>
           {testimonials.map((t) => (
-            <figure key={t.id} className="flex flex-col rounded-2xl border border-white/10 bg-tertiary/50 p-7">
-              <blockquote className="flex-1 text-white-100 leading-7">&ldquo;{t.testimonial}&rdquo;</blockquote>
-              <figcaption className="mt-6 flex items-center gap-3">
-                <Image
-                  src={t.imageUrl}
-                  alt=""
-                  width={40}
-                  height={40}
-                  className="h-10 w-10 rounded-full object-cover"
-                />
+            <figure key={t.id} className="flex flex-col rounded-xl border border-fg/10 bg-tertiary p-7 shadow-soft">
+              <blockquote className="flex-1 text-[15px] leading-7 text-white-100">&ldquo;{t.testimonial}&rdquo;</blockquote>
+              <figcaption className="mt-6 flex items-center gap-3 border-t border-fg/[0.08] pt-5">
+                <Image src={t.imageUrl} alt="" width={40} height={40} className="h-10 w-10 rounded-full object-cover" />
                 <div>
-                  <p className="text-white font-semibold">{t.name}</p>
+                  <p className="text-fg text-sm font-semibold">{t.name}</p>
                   <p className="text-xs text-secondary">
                     {t.designation}, {t.company}
                   </p>

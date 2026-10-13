@@ -26,7 +26,7 @@ export function ProjectCTAs({
           onClick={() =>
             track('project_demo_click', { slug, source: 'detail' })
           }
-          className="rounded-md bg-[#7a4fd4] px-5 py-3 text-white font-semibold hover:bg-[#6a3fc4] transition-colors"
+          className="rounded-md bg-brand px-5 py-3 text-white font-semibold hover:bg-brand-strong transition-colors"
           aria-label={`View live demo of ${name}`}
         >
           View Live Demo
@@ -39,14 +39,14 @@ export function ProjectCTAs({
         onClick={() =>
           track('project_source_click', { slug, source: 'detail' })
         }
-        className="rounded-md border border-[#915eff] px-5 py-3 text-white font-semibold hover:bg-[#915eff] transition-colors"
+        className="rounded-md border border-brand px-5 py-3 text-fg font-semibold hover:bg-brand transition-colors"
         aria-label={`View source code for ${name}`}
       >
         View Source Code
       </a>
       <Link
         href="/#contact"
-        className="rounded-md border border-white/20 px-5 py-3 text-white font-semibold hover:border-white transition-colors"
+        className="rounded-md border border-fg/20 px-5 py-3 text-fg font-semibold hover:border-fg transition-colors"
       >
         Build Something Similar
       </Link>

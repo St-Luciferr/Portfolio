@@ -1,18 +1,24 @@
 import type { Metadata, Viewport } from 'next';
-import { Poppins } from 'next/font/google';
+import { Geist, Geist_Mono } from 'next/font/google';
 import { AnalyticsProvider } from '@/components/analytics/AnalyticsProvider';
 import { SITE_URL } from '@/lib/site';
 import './globals.css';
 
-const poppins = Poppins({
+const geist = Geist({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'], // Only load weights actually used
-  variable: '--font-poppins',
+  variable: '--font-geist',
   display: 'swap',
-  preload: true,
-  fallback: ['system-ui', 'arial'],
-  adjustFontFallback: true, // Reduce layout shift
 });
+
+const geistMono = Geist_Mono({
+  subsets: ['latin'],
+  variable: '--font-geist-mono',
+  display: 'swap',
+  preload: false, // only the hero code card uses it
+});
+
+// Runs before first paint so the stored / system theme never flashes.
+const themeScript = `(function(){try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t)}catch(e){document.documentElement.setAttribute('data-theme','dark')}document.documentElement.classList.add('js')})();`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -97,12 +103,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={poppins.variable}>
+    <html lang="en" className={`${geist.variable} ${geistMono.variable}`} suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         {/* DNS prefetch for EmailJS (only used in Contact form) */}
         <link rel="dns-prefetch" href="https://api.emailjs.com" />
       </head>
-      <body className="font-poppins bg-primary antialiased">
+      <body className="font-sans bg-primary text-fg antialiased">
         {children}
         <AnalyticsProvider />
       </body>

@@ -63,18 +63,18 @@ export default async function ServicesIndexPage() {
               aria-label="Breadcrumb"
               className="flex flex-wrap items-center gap-3 text-sm text-secondary"
             >
-              <Link href="/" className="hover:text-white transition-colors">
+              <Link href="/" className="hover:text-fg transition-colors">
                 Home
               </Link>
               <span aria-hidden="true">/</span>
-              <span className="text-white" aria-current="page">
+              <span className="text-fg" aria-current="page">
                 Services
               </span>
             </nav>
 
             <div className="mt-10 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
               <div>
-                <h1 className="text-white font-black text-[38px] sm:text-[60px] leading-tight">
+                <h1 className="text-fg font-semibold tracking-[-0.025em] text-[38px] sm:text-[60px] leading-tight">
                   Services
                 </h1>
                 <p className="mt-4 max-w-3xl text-secondary text-[17px] leading-8">
@@ -84,20 +84,20 @@ export default async function ServicesIndexPage() {
               </div>
               <Link
                 href="/#contact"
-                className="w-fit rounded-md bg-[#7a4fd4] px-5 py-3 text-white font-semibold hover:bg-[#6a3fc4] transition-colors"
+                className="w-fit rounded-md bg-brand px-5 py-3 text-white font-semibold hover:bg-brand-strong transition-colors"
               >
                 Get a Quote
               </Link>
             </div>
 
             {linkable.length === 0 ? (
-              <div className="mt-14 rounded-2xl border border-white/10 bg-tertiary/40 p-12 text-center">
-                <p className="text-white font-medium">
+              <div className="mt-14 rounded-2xl border border-fg/10 bg-tertiary/40 p-12 text-center">
+                <p className="text-fg font-medium">
                   Service details are being updated.
                 </p>
                 <p className="text-secondary mt-2 text-sm">
                   In the meantime,{' '}
-                  <Link href="/#contact" className="text-[#915eff] hover:underline">
+                  <Link href="/#contact" className="text-brand-fg hover:underline">
                     send a short brief
                   </Link>{' '}
                   and I will reply with the best approach.
@@ -109,7 +109,7 @@ export default async function ServicesIndexPage() {
                   <Link
                     key={service.id}
                     href={`/services/${service.slug}`}
-                    className="group flex flex-col rounded-lg border border-white/10 bg-tertiary p-6 hover:border-[#915eff] transition-colors duration-300"
+                    className="group flex flex-col rounded-lg border border-fg/10 bg-tertiary p-6 hover:border-brand transition-colors duration-300"
                   >
                     {service.iconUrl && (
                       <Image
@@ -120,7 +120,7 @@ export default async function ServicesIndexPage() {
                         className="object-contain"
                       />
                     )}
-                    <h2 className="mt-5 text-white text-xl font-bold group-hover:text-[#915eff] transition-colors">
+                    <h2 className="mt-5 text-fg text-xl font-bold group-hover:text-brand-fg transition-colors">
                       {service.title}
                     </h2>
                     {service.summary && (
@@ -128,7 +128,7 @@ export default async function ServicesIndexPage() {
                         {service.summary}
                       </p>
                     )}
-                    <span className="mt-auto pt-5 text-sm font-semibold text-[#915eff]">
+                    <span className="mt-auto pt-5 text-sm font-semibold text-brand-fg">
                       View service →
                     </span>
                   </Link>

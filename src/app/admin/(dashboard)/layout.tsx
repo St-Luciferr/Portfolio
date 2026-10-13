@@ -20,7 +20,8 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
+    // data-theme="light" pins the admin to the light palette whatever the site theme is.
+    <div data-theme="light" className="flex h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 text-gray-900">
       <AdminSidebar />
       <div className="flex-1 flex flex-col overflow-hidden">
         <AdminHeader user={session.user} />

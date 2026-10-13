@@ -90,10 +90,10 @@ export default async function BlogIndexPage() {
 
         <section className="pt-32 pb-10 sm:px-16 px-6">
           <div className="max-w-6xl mx-auto">
-            <p className="text-[#915eff] text-sm font-semibold tracking-wider uppercase">
+            <p className="text-brand-fg text-sm font-medium">
               Developer Notes
             </p>
-            <h1 className="mt-3 text-white font-black text-[40px] sm:text-[56px] leading-tight max-w-3xl">
+            <h1 className="mt-3 text-fg font-semibold tracking-[-0.025em] text-[40px] sm:text-[56px] leading-tight max-w-3xl">
               Notes, deep-dives, and lessons from the field.
             </h1>
             <p className="mt-5 text-secondary text-lg max-w-2xl">
@@ -114,8 +114,8 @@ export default async function BlogIndexPage() {
         <section className="pb-24 sm:px-16 px-6">
           <div className="max-w-6xl mx-auto">
             {posts.length === 0 ? (
-              <div className="rounded-2xl border border-white/10 bg-tertiary/40 p-12 text-center">
-                <p className="text-white font-medium">
+              <div className="rounded-2xl border border-fg/10 bg-tertiary/40 p-12 text-center">
+                <p className="text-fg font-medium">
                   Posts are on the way.
                 </p>
                 <p className="text-secondary mt-2 text-sm">

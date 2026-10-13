@@ -5,8 +5,8 @@
 ## Positioning (13.1)
 
 - **Who**: Santosh Pandey, full-stack developer who also builds AI assistants. The pitch is deliberately not AI-only.
-- **Headline** (hero, editable in `/admin/settings` → Hero → *Positioning headline*): "Full-stack products, with the AI built in."
-- **Audience line**: "I design and build web apps, APIs and AI assistants (RAG, WhatsApp, document automation) for startups and growing teams, from first prototype to production."
+- **Headline** (hero, editable in `/admin/settings` → Hero → *Positioning headline*): "I'm Santosh, a full-stack developer who builds with AI." (an introduction, not a product tagline; changed 2026-10-14 at the owner's request)
+- **Sub-line**: "I work across the whole stack, from APIs and databases to web apps and the AI assistants inside them."
 - **Voice**: plain, specific, first person. Describe what was built and what changed; no superlatives, no unsourced numbers.
 
 ## Offers
@@ -30,11 +30,32 @@ Nav (full name · Services · Work · Writing · About · CTA) → Hero → Offe
 
 The CTA reads **Book a call** when `contact.booking_url` is set, otherwise **Start a project** (scrolls to the form). WhatsApp appears in the contact panel when `contact.whatsapp` is set. Proof hides when there are no testimonials and the metrics are disabled.
 
-## Design system (13.3)
+## Design system (13.3, revised 2026-10-14; polish pass designed on a Claude Design canvas)
 
-- **Theme (13.4)**: dark only. Background `primary` `#050816`; surfaces `tertiary` `#151030` and `black-100` `#100d25`; text `white`, `white-100` `#f3f3f3`, `secondary` `#aaa6c3`.
-- **One accent**: violet. `#7a4fd4` for filled buttons (white text 5.4:1), `#915eff` for borders and markers, `#cbb5ff` for accent text on dark.
-- **Type scale**: hero h1 40 / 56 / 64 px; section h2 32 / 44 px; body 17 px / 30 px line height; small 14 px; eyebrow 14–18 px uppercase, tracked.
-- **Spacing**: sections `py-20 sm:py-24`, horizontal `px-6 sm:px-16`, content `max-w-7xl`.
-- **Cards**: `rounded-2xl`, `border-white/10`, translucent surface fill, border turns accent on hover. No tilt, glow-on-hover or custom cursor.
-- **Motion**: CSS keyframes only in the hero visual and contact orbit, all disabled under `prefers-reduced-motion`. Sections render without entrance animations.
+- **Themes (13.4)**: light and dark, switched by the toggle in the navbar. First visit follows the OS setting; the choice is stored in `localStorage.theme`. An inline script in `app/layout.tsx` sets `<html data-theme>` before first paint, so there is no flash. Tailwind `dark:` uses the same attribute. The admin is pinned to light with `data-theme="light"` on its root.
+- **Tokens**: CSS variables (space-separated RGB) in `globals.css`, exposed as Tailwind colours so one class works in both themes:
+
+| Token | Tailwind | Light | Dark |
+| ----- | -------- | ----- | ---- |
+| `--site-bg` | `bg-primary` | `#F8F9FB` | `#090B11` |
+| `--site-surface` | `bg-tertiary` | `#FFFFFF` | `#12151F` |
+| `--site-surface-2` | `bg-black-100` | `#F2F4F8` | `#0D1018` |
+| `--site-fg` | `text-fg`, `border-fg/10` | `#0F121C` | `#EDEFF5` |
+| `--site-fg-soft` | `text-white-100` | `#2C3140` | `#D0D4E1` |
+| `--site-muted` | `text-secondary` | `#585E70` | `#989EB2` |
+| `--site-brand` | `bg-brand` (white text) | `#5B46E5` | `#6C58F0` |
+| `--site-brand-fg` | `text-brand-fg` | `#4F3BD2` | `#B4A8FF` |
+
+- **Type**: Geist for everything; Geist Mono for the hero code panel and the small section labels ("Services", "Work"…, `text-brand-fg`). Headings semibold with tight tracking: hero 42 / 60 / 68 px (the headline is tinted `text-brand-fg` from the word "AI" on), section 30 / 36 px; body 17 px at 1.7 line height. Sentence case throughout; no all-caps labels.
+- **Layout**: content `max-w-6xl`, sections `py-14 sm:py-20` on one continuous ground (no bands, no page-wide wash, footer on the same ground). Case studies are alternating image / text rows.
+- **Colour (hues)**: one hue per offer, defined in `components/home/hues.ts`: AI assistants violet, WhatsApp emerald, documents amber, full-stack sky. The same hue is used wherever that offer appears: service card (tint fading into the surface), case-study media panel, process step badge, metric. Colour lives in content; the page background only carries the faint terrain art.
+- **Navbar**: brand left, a centred pill of links, theme toggle and a rounded `bg-fg` CTA on the right.
+- **Hero art**: `HeroArt.tsx`, a "night ridge": layered Himalayan ridges with a snow line and a moon, plus a star field in the dark theme only. Static server-rendered SVG coloured by `--ridge-*` tokens; replaces the generic grid. The tools strip sits on the near ridge.
+- **Page art (below the hero)**: `PageArt.tsx`, one continuous layer behind every section: faint topographic contours plus a dashed trekking trail that winds down the page, with altitude waypoints (5,364 m → 1,400 m) placed only in the side margins and the path fading where it crosses the content. Static SVGs in `/public/art` used as CSS masks, tinted by `--page-contour` / `--page-trail`; the trail is desktop-only. Cards and media panels have an opaque `bg-tertiary` base so lines never show through them.
+- **Closing ridge**: `BookendRidge.tsx` above the footer, a calmer echo of the hero ridges that fades into the footer (no border), so the page opens and closes on the same landscape.
+- **Buttons**: rounded-full. Primary `bg-brand-strong` with a soft brand shadow; secondary bordered on `bg-tertiary`.
+- **Surfaces**: cards `rounded-2xl`, 1 px `border-fg/10`, `shadow-soft` at rest and `shadow-lift` for raised media. Code panels stay dark in both themes.
+- **Motion**: the cycling assistant demo in the hero, the slow contact orbit and the experience timeline's reveal; all disabled under `prefers-reduced-motion`.
+- **Experience**: `react-vertical-timeline-component` (one-column-left) inside About, coloured from the site tokens.
+- **Case-study images**: `CaseImage.tsx` picks the fit after load. Wide images fill the frame; square-ish images are treated as logos (small, centred, inverted in dark). Prefer a real screenshot in `screenshot_url`.
+- **Validation**: UI changes are checked with Playwright in both themes at 1440 and 390 px (overflow, reveals, broken images, nav and menu, theme toggle, demo animation) plus Lighthouse accessibility.

@@ -13,10 +13,10 @@ export async function RelatedProjectsByTags({ tagNames, limit = 3 }: RelatedProj
 
   return (
     <section aria-labelledby="related-projects-heading" className="mt-20">
-      <div className="border-t border-white/10 pt-12">
+      <div className="border-t border-fg/10 pt-12">
         <h2
           id="related-projects-heading"
-          className="text-white text-2xl sm:text-3xl font-bold"
+          className="text-fg text-2xl sm:text-3xl font-bold"
         >
           See it in production
         </h2>

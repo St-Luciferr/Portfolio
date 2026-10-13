@@ -1,6 +1,12 @@
 import type { Config } from 'tailwindcss';
 
+// Public-site colours are CSS variables (space-separated RGB) so one class
+// works in both themes; values live in globals.css under :root (light) and
+// [data-theme="dark"]. See docs/DESIGN_SPEC.md.
+const site = (name: string) => `rgb(var(--site-${name}) / <alpha-value>)`;
+
 const config: Config = {
+  darkMode: ['selector', '[data-theme="dark"]'],
   content: [
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -9,12 +15,18 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: '#050816',
-        secondary: '#aaa6c3',
-        tertiary: '#151030',
-        'black-100': '#100d25',
-        'black-200': '#090325',
-        'white-100': '#f3f3f3',
+        primary: site('bg'),
+        secondary: site('muted'),
+        tertiary: site('surface'),
+        'black-100': site('surface-2'),
+        'black-200': site('surface-3'),
+        'white-100': site('fg-soft'),
+        fg: site('fg'),
+        brand: {
+          DEFAULT: site('brand'),
+          strong: site('brand-strong'),
+          fg: site('brand-fg'),
+        },
         'admin-primary': {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
@@ -47,6 +59,8 @@ const config: Config = {
       },
       boxShadow: {
         card: '0px 35px 120px -15px #211e35',
+        soft: '0 1px 2px rgb(var(--site-shadow) / 0.06), 0 8px 24px -12px rgb(var(--site-shadow) / 0.18)',
+        lift: '0 2px 4px rgb(var(--site-shadow) / 0.06), 0 24px 48px -20px rgb(var(--site-shadow) / 0.28)',
       },
       screens: {
         xs: '450px',
@@ -55,7 +69,8 @@ const config: Config = {
         'hero-pattern': "url('/images/herobg.webp')",
       },
       fontFamily: {
-        poppins: ['var(--font-poppins)', 'sans-serif'],
+        sans: ['var(--font-geist)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-geist-mono)', 'ui-monospace', 'monospace'],
       },
       borderRadius: {
         lg: 'var(--radius)',

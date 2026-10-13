@@ -21,7 +21,7 @@ export function PostCard({ post, priority }: PostCardProps) {
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-tertiary/50 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#915eff]/50 hover:shadow-2xl hover:shadow-[#915eff]/10"
+      className="group relative flex flex-col overflow-hidden rounded-2xl border border-fg/10 bg-tertiary/50 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand/50 hover:shadow-2xl hover:shadow-brand/10"
     >
       {post.coverImageUrl && (
         <div className="relative aspect-[16/9] overflow-hidden bg-black-100">
@@ -43,7 +43,7 @@ export function PostCard({ post, priority }: PostCardProps) {
             {post.tags.slice(0, 2).map((tag) => (
               <span
                 key={tag.slug}
-                className="text-[11px] uppercase tracking-wider text-[#915eff] font-semibold"
+                className="text-xs font-medium text-brand-fg"
               >
                 #{tag.name}
               </span>
@@ -51,7 +51,7 @@ export function PostCard({ post, priority }: PostCardProps) {
           </div>
         )}
 
-        <h3 className="text-white text-xl font-bold leading-tight group-hover:text-[#915eff] transition-colors line-clamp-2">
+        <h3 className="text-fg text-xl font-bold leading-tight group-hover:text-brand-fg transition-colors line-clamp-2">
           {post.title}
         </h3>
 

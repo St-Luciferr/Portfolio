@@ -4,9 +4,11 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { Menu, X } from 'lucide-react';
 
 import { styles } from '@/lib/styles';
 import type { NavLink } from '@/types/frontend';
+import { ThemeToggle } from './ThemeToggle';
 
 interface NavbarProps {
   navLinks?: NavLink[];
@@ -44,70 +46,76 @@ const Navbar = ({ navLinks = [], bookingUrl }: NavbarProps) => {
     : { href: pathname === '/' ? '#contact' : '/#contact', label: 'Start a project', external: false };
 
   return (
-    <nav className={`${styles.paddingX} w-full flex items-center py-4 fixed top-0 z-20 bg-primary/90 backdrop-blur-md border-b border-white/5`}>
-      <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
+    <nav className={`${styles.paddingX} w-full flex items-center h-16 fixed top-0 z-30 bg-primary/80 backdrop-blur-lg border-b border-fg/[0.07]`}>
+      <div className="w-full flex justify-between items-center max-w-6xl mx-auto">
         <Link href="/" className="flex items-center gap-2" onClick={() => setToggle(false)}>
-          <Image src="/images/logo.svg" alt="" width={32} height={32} className="object-contain" />
-          <span className="text-white text-[17px] font-bold">Santosh Pandey</span>
+          {/* Logo artwork is light blue; darken it on the light theme */}
+          <Image
+            src="/images/logo.svg"
+            alt=""
+            width={28}
+            height={28}
+            className="object-contain brightness-[0.35] dark:brightness-100"
+          />
+          <span className="text-fg text-[16px] font-semibold tracking-[-0.01em]">Santosh Pandey</span>
         </Link>
 
         {/* Desktop navigation */}
-        <div className="hidden md:flex items-center gap-8">
-          <ul className="list-none flex flex-row gap-8">
-            {links.map((link) => (
-              <li key={link.linkId}>
-                <Link
-                  href={getHref(link.linkId)}
-                  className={`${isActive(link.linkId) ? 'text-white' : 'text-secondary'} hover:text-white text-[15px] font-medium transition-colors`}
-                >
-                  {link.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
+        {/* Desktop: centred pill of links, theme + CTA on the right */}
+        <ul className="hidden md:flex list-none items-center gap-0.5 rounded-full border border-fg/10 bg-tertiary/70 p-1 shadow-soft">
+          {links.map((link) => (
+            <li key={link.linkId}>
+              <Link
+                href={getHref(link.linkId)}
+                aria-current={isActive(link.linkId) ? 'page' : undefined}
+                className={`${isActive(link.linkId) ? 'bg-black-200 text-fg' : 'text-secondary'} block rounded-full px-3.5 py-1.5 text-[14px] font-medium transition-colors hover:text-fg`}
+              >
+                {link.title}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <div className="hidden md:flex items-center gap-2">
+          <ThemeToggle />
           <a
             href={cta.href}
             {...(cta.external && { target: '_blank', rel: 'noreferrer' })}
-            className="rounded-lg bg-[#7a4fd4] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#6a3fc4]"
+            className="rounded-full bg-fg px-4 py-2 text-sm font-medium text-primary transition-opacity hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
           >
             {cta.label}
           </a>
         </div>
 
         {/* Mobile navigation */}
-        <div className="md:hidden flex flex-1 justify-end items-center">
+        <div className="md:hidden flex flex-1 justify-end items-center gap-2">
+          <ThemeToggle />
           <button
             type="button"
+            className="inline-flex h-9 w-9 items-center justify-center"
             aria-label={toggle ? 'Close menu' : 'Open menu'}
             aria-expanded={toggle}
             onClick={() => setToggle(!toggle)}
           >
-            <Image
-              src={toggle ? '/images/close.svg' : '/images/menu.svg'}
-              alt=""
-              width={26}
-              height={26}
-              className="object-contain"
-            />
+            {toggle ? <X className="h-6 w-6 text-fg" /> : <Menu className="h-6 w-6 text-fg" />}
           </button>
 
           <div
-            className={`${toggle ? 'flex' : 'hidden'} p-6 black-gradient absolute top-16 right-0 mx-4 my-2 min-w-[180px] z-10 rounded-xl border border-white/10`}
+            className={`${toggle ? 'flex' : 'hidden'} p-5 bg-tertiary shadow-lift absolute top-16 right-0 mx-4 my-2 min-w-[200px] z-10 rounded-xl border border-fg/10`}
           >
             <ul className="list-none flex items-start flex-col gap-4 w-full">
               {links.map((link) => (
-                <li key={link.linkId} className="text-secondary hover:text-white font-medium text-[16px]">
+                <li key={link.linkId} className="text-secondary hover:text-fg font-medium text-[16px]">
                   <Link href={getHref(link.linkId)} onClick={() => setToggle(false)}>
                     {link.title}
                   </Link>
                 </li>
               ))}
-              <li className="w-full pt-2 border-t border-white/10">
+              <li className="w-full pt-2 border-t border-fg/10">
                 <a
                   href={cta.href}
                   {...(cta.external && { target: '_blank', rel: 'noreferrer' })}
                   onClick={() => setToggle(false)}
-                  className="block rounded-lg bg-[#7a4fd4] px-4 py-2 text-center text-sm font-semibold text-white"
+                  className="block rounded-full bg-fg px-4 py-2 text-center text-sm font-semibold text-primary"
                 >
                   {cta.label}
                 </a>

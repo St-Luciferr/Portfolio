@@ -246,7 +246,7 @@
 
 - [x] **12.25** On-demand revalidation for service and project admin writes via `src/lib/api/revalidate.ts` (homepage, index pages, every detail page by route pattern, share images, sitemap). 60 s time-based fallback on `/services/[slug]` and `/projects/[slug]` for seed scripts and SQL edits. Done 2026-10-13.
 
-## Phase 13: Public-Layer Redesign 🎨 🟡 BUILT (2026-10-13) · ⏸ content inputs + migrations 009/010
+## Phase 13: Public-Layer Redesign 🎨 ✅ DEPLOYED (2026-10-13, PR #9 `193ee88`; migrations 009/010 applied) · ⏸ content inputs
 
 > Target: Weeks 2–4, ~2–3 weeks. Source: `docs/SITE_REVIEW_2026-10.md` R1, R3, R7.
 > Keep untouched: Supabase schema, admin dashboard, blog pipeline, `/api/admin/**`, analytics, JSON-LD helpers.
@@ -284,6 +284,12 @@
 - [x] **13.20** `/projects`: split into "Client work" and "Research & experiments"; restore project images. Server-rendered; groups appear once any project has a category.
 - [~] **13.21** `/projects/[slug]`: add screenshot/diagram block, client/context line, rewrite Outcome bullets as delivered results. Screenshot + client line + outcome callout built; ⏸ rewriting the bullets is content work.
 - [x] **13.22** Dynamic OG images for projects + posts via `next/og` (done in 8.5).
+
+### Polish pass (2026-10-14)
+
+- [x] **13.27** Light + dark theme with a navbar toggle (system default, persisted, no flash); admin pinned to light. Geist typeface, token-based palette (`docs/DESIGN_SPEC.md`), alternating case-study rows, sentence-case labels, dark code panels in both themes.
+- [x] **13.28** Experience restored inside About with `react-vertical-timeline-component` (one-column-left), themed from site tokens. It was dropped in 13.x by mistake: the review meant to surface that proof (Global IME Bank OCR, etc.), not remove it.
+- [x] **13.29** Life pass: live hero demo cycling three example flows (docs Q&A, WhatsApp booking, invoice intake) with clickable tabs; pointer spotlight on the hero grid; tools marquee under the hero; one-time scroll reveals; metric count-up; per-offer accent hues; contact section on a brand gradient band. All motion off under reduced motion; content visible without JS.
 
 ### Cleanup
 

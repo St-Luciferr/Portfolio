@@ -6,7 +6,7 @@ export function ProjectMiniCard({ project }: { project: Project }) {
   return (
     <Link
       href={`/projects/${project.slug}`}
-      className="group rounded-lg border border-white/10 bg-tertiary p-5 hover:border-[#915eff] transition-all duration-300"
+      className="group rounded-lg border border-fg/10 bg-tertiary p-5 hover:border-brand transition-all duration-300"
     >
       <div className="relative aspect-video overflow-hidden rounded-lg">
         <Image
@@ -17,7 +17,7 @@ export function ProjectMiniCard({ project }: { project: Project }) {
           className="object-cover transition-transform duration-300 group-hover:scale-105"
         />
       </div>
-      <h3 className="mt-4 text-white font-bold text-lg group-hover:text-[#915eff] transition-colors line-clamp-1">
+      <h3 className="mt-4 text-fg font-bold text-lg group-hover:text-brand-fg transition-colors line-clamp-1">
         {project.name}
       </h3>
       <p className="mt-2 text-secondary text-sm leading-relaxed line-clamp-2">

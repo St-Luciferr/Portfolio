@@ -1,16 +1,18 @@
 import Image from 'next/image';
-import { MapPin } from 'lucide-react';
+import { Download, MapPin } from 'lucide-react';
 import { Section } from './Section';
-import type { BioSettings, Technology } from '@/types/frontend';
+import { ExperienceTimeline } from './ExperienceTimeline';
+import type { BioSettings, Experience } from '@/types/frontend';
 
 interface AboutSectionProps {
   bio?: BioSettings;
   name: string;
-  technologies: Technology[];
+  role: string;
+  experiences: Experience[];
   resumeUrl: string;
 }
 
-export function AboutSection({ bio, name, technologies, resumeUrl }: AboutSectionProps) {
+export function AboutSection({ bio, name, role, experiences, resumeUrl }: AboutSectionProps) {
   const paragraphs = (bio?.paragraphs || []).filter((p) => p && p !== 'No bio available').slice(0, 3);
   const initials = name
     .split(/\s+/)
@@ -20,67 +22,65 @@ export function AboutSection({ bio, name, technologies, resumeUrl }: AboutSectio
     .toUpperCase();
 
   return (
-    <Section id="about" eyebrow="About" title="The developer behind the work.">
-      <div className="grid gap-12 lg:grid-cols-[280px_minmax(0,1fr)]">
-        <div>
-          <div className="relative aspect-square w-full max-w-[280px] overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#915eff]/40 via-tertiary to-black-100">
+    <Section id="about" eyebrow="About" title="About me">
+      <div className="grid gap-12 lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-16">
+        {/* Profile column */}
+        <aside className="lg:sticky lg:top-24 lg:self-start">
+          <div className="relative aspect-[4/5] w-full max-w-[300px] overflow-hidden rounded-2xl border border-fg/10 bg-black-100 shadow-soft">
             {bio?.photoUrl ? (
-              <Image src={bio.photoUrl} alt={name} fill sizes="280px" className="object-cover" />
+              <Image src={bio.photoUrl} alt={name} fill sizes="300px" className="object-cover" />
             ) : (
-              <span className="absolute inset-0 flex items-center justify-center text-6xl font-black text-white/80">
+              <span className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-brand/25 via-brand/[0.06] to-transparent text-6xl font-semibold tracking-tight text-brand-fg">
                 {initials}
               </span>
             )}
           </div>
-          <div className="mt-5 space-y-3 text-sm">
+          <p className="mt-5 text-fg text-lg font-semibold">{name}</p>
+          <p className="text-sm text-secondary">{role}</p>
+          <div className="mt-4 space-y-2 text-sm">
             {bio?.availability && (
-              <p className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-emerald-200">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              <p className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-emerald-700 dark:text-emerald-300">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                 {bio.availability}
               </p>
             )}
             {bio?.location && (
               <p className="flex items-center gap-2 text-secondary">
-                <MapPin className="h-4 w-4" />
+                <MapPin className="h-4 w-4" aria-hidden="true" />
                 {bio.location}
               </p>
             )}
-          </div>
-        </div>
-
-        <div>
-          <div className="space-y-4 text-[17px] leading-[30px] text-secondary">
-            {paragraphs.map((p, i) => (
-              <p key={i} className={i === 0 ? 'text-white-100' : ''}>
-                {p}
-              </p>
-            ))}
           </div>
           <a
             href={resumeUrl}
             target="_blank"
             rel="noreferrer"
-            className="mt-6 inline-flex text-sm font-semibold text-[#cbb5ff] hover:text-white"
+            className="mt-5 inline-flex items-center gap-2 rounded-full border border-fg/15 bg-tertiary px-4 py-2 text-sm font-medium text-fg shadow-soft transition-colors hover:border-fg/30"
           >
-            Full résumé (PDF) →
+            <Download className="h-4 w-4" aria-hidden="true" />
+            Résumé (PDF)
           </a>
+        </aside>
 
-          {technologies.length > 0 && (
-            <div className="mt-10">
-              <h3 className="text-sm uppercase tracking-wider text-secondary">Tools I use</h3>
-              <ul className="mt-4 flex flex-wrap gap-3">
-                {technologies.map((tech) => (
-                  <li
-                    key={tech.id}
-                    className="flex items-center gap-2 rounded-lg border border-white/10 bg-tertiary/50 px-3 py-2 text-sm text-white-100"
-                  >
-                    <Image src={tech.iconUrl} alt="" width={18} height={18} className="object-contain" />
-                    {tech.name}
-                  </li>
-                ))}
-              </ul>
+        {/* Story and experience */}
+        <div className="min-w-0">
+          <div className="max-w-2xl space-y-4 text-[17px] leading-[1.75] text-secondary">
+            {paragraphs.map((p, i) => (
+              <p key={i} className={i === 0 ? 'text-fg text-[19px] leading-[1.6]' : ''}>
+                {p}
+              </p>
+            ))}
+          </div>
+
+          {experiences.length > 0 && (
+            <div className="mt-14">
+              <h3 className="text-fg text-xl font-semibold tracking-[-0.01em]">Experience</h3>
+              <div className="mt-2">
+                <ExperienceTimeline experiences={experiences} />
+              </div>
             </div>
           )}
+
         </div>
       </div>
     </Section>

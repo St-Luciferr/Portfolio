@@ -208,3 +208,5 @@ Homepage, Lighthouse 12 mobile, local production build (`next start`), two runs.
 | Published testimonials | 0 | 0 | 2 | ⏸ needs outreach |
 
 Production re-measure after PR #8 (1 run, live `www`): Performance 74, TBT 660 ms, LCP 3.1 s, Accessibility 100, 356 KiB.
+
+Phase 13 production measure after PR #9 (1 run, live `www`): Performance 88, Accessibility 100, Best Practices 100, SEO 100, TBT 260 ms, LCP 2.9 s, CLS 0, 266 KiB.
