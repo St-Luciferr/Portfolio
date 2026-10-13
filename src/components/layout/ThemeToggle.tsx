@@ -37,7 +37,7 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
       onClick={toggle}
       aria-label={label}
       title={label}
-      className={`inline-flex h-9 w-9 items-center justify-center rounded-lg border border-fg/10 text-secondary transition-colors hover:border-fg/25 hover:text-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${className}`}
+      className={`inline-flex h-9 w-9 items-center justify-center rounded-full border border-fg/10 bg-tertiary/70 text-secondary transition-colors hover:border-fg/25 hover:text-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${className}`}
     >
       {/* Both icons render server-side; CSS picks one so there is no flash before mount. */}
       <Sun className="hidden h-4 w-4 dark:block" aria-hidden="true" />

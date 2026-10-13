@@ -41,6 +41,12 @@
     --site-brand-strong: 74 54 204;
     --site-brand-fg: 79 59 210;
     --site-shadow: 15 18 28;
+    /* Hero night-ridge art (HeroArt.tsx); alpha allowed: rgb(var(--ridge-far)) */
+    --ridge-far: 91 70 229 / 0.12;
+    --ridge-mid: 91 70 229 / 0.1;
+    --ridge-near: 233 236 242;
+    --ridge-snow: 255 255 255 / 0.9;
+    --ridge-moon: 91 70 229 / 0.07;
     color-scheme: light;
   }
 
@@ -56,6 +62,11 @@
     --site-brand-strong: 94 74 226;
     --site-brand-fg: 180 168 255;
     --site-shadow: 0 0 0;
+    --ridge-far: 108 88 240 / 0.3;
+    --ridge-mid: 66 52 160 / 0.55;
+    --ridge-near: 20 23 41;
+    --ridge-snow: 237 239 245 / 0.35;
+    --ridge-moon: 180 168 255 / 0.1;
     color-scheme: dark;
   }
 
@@ -281,24 +292,12 @@
   }
 }
 
-/* Hero backdrop: 48px grid in the foreground colour, masked to fade out */
-.hero-grid {
-  background-image:
-    linear-gradient(to right, rgb(var(--site-fg) / 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(var(--site-fg) / 0.05) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 100%);
+/* Hero: one soft brand light from the top edge, behind the ridge art */
+.hero-glow {
+  background: radial-gradient(80% 60% at 50% 0%, rgb(var(--site-brand) / 0.1), transparent 70%);
 }
-
-/* Pointer spotlight over the hero grid (Spotlight.tsx sets --mx / --my) */
-.spotlight {
-  transition: opacity 0.4s ease;
-  background: radial-gradient(
-    520px circle at var(--mx, 50%) var(--my, 30%),
-    rgb(var(--site-brand) / 0.14),
-    transparent 60%
-  );
+[data-theme='dark'] .hero-glow {
+  background: radial-gradient(80% 60% at 50% 0%, rgb(var(--site-brand) / 0.16), transparent 70%);
 }
 
 /* Scroll reveal (RevealObserver.tsx). Only hides when JS is running. */
@@ -337,43 +336,12 @@ html.js [data-reveal]:not([data-shown]) {
   .marquee { mask-image: none; -webkit-mask-image: none; }
 }
 
-
-
-/* Page-wide colour wash (homepage, below the hero). Two long linear
-   gradients at opposing angles drift through violet -> sky -> emerald ->
-   amber -> violet; no radial shapes, so there are no visible patches. */
-.page-wash {
-  --wash: 0.07;
-  background:
-    linear-gradient(
-      172deg,
-      transparent 0%,
-      rgb(139 92 246 / var(--wash)) 10%,
-      rgb(56 189 248 / var(--wash)) 28%,
-      rgb(16 185 129 / calc(var(--wash) * 0.8)) 46%,
-      rgb(245 158 11 / calc(var(--wash) * 0.8)) 62%,
-      rgb(139 92 246 / var(--wash)) 80%,
-      transparent 100%
-    ),
-    linear-gradient(
-      8deg,
-      transparent 0%,
-      rgb(56 189 248 / calc(var(--wash) * 0.6)) 22%,
-      rgb(139 92 246 / calc(var(--wash) * 0.6)) 50%,
-      rgb(56 189 248 / calc(var(--wash) * 0.6)) 78%,
-      transparent 100%
-    );
-}
-[data-theme='dark'] .page-wash {
-  --wash: 0.09;
-}
-
-/* Contact frame: soft tint on light, rich linear gradient on dark */
+/* Contact frame: soft brand -> sky -> emerald tint in both themes */
 .contact-band {
   background: linear-gradient(135deg, rgb(var(--site-brand) / 0.12), rgb(56 189 248 / 0.10) 55%, rgb(16 185 129 / 0.08));
   border: 1px solid rgb(var(--site-brand) / 0.15);
 }
 [data-theme='dark'] .contact-band {
-  background: linear-gradient(135deg, rgb(var(--site-brand-strong)) 0%, rgb(49 46 129) 50%, rgb(12 74 110) 100%);
-  border-color: transparent;
+  background: linear-gradient(135deg, rgb(var(--site-brand) / 0.22), rgb(14 165 233 / 0.10) 55%, rgb(16 185 129 / 0.08));
+  border-color: rgb(var(--site-brand) / 0.28);
 }

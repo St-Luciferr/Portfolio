@@ -1,5 +1,6 @@
 import { Check } from 'lucide-react';
 import { Section } from './Section';
+import { HUES, type HueName } from './hues';
 
 // A real sequence, so numbered.
 const steps = [
@@ -8,6 +9,9 @@ const steps = [
   { title: 'Build in milestones', text: 'Working software in your repository, with a demo at every milestone.' },
   { title: 'Launch and handover', text: 'Deployment, documentation and a walkthrough so your team can run it.' },
 ];
+
+// Discovery -> scope -> build -> launch walks through the four offer hues.
+const stepHues: HueName[] = ['violet', 'sky', 'emerald', 'amber'];
 
 const prepare = [
   'A short description of the problem and who it is for',
@@ -20,14 +24,20 @@ export function Engagement() {
   return (
     <Section
       id="process"
+      eyebrow="Process"
       title="How an engagement runs"
       intro="A predictable process, whether it is a new product or an AI feature for an existing one."
     >
-      <ol className="grid gap-px overflow-hidden rounded-xl border border-fg/10 bg-fg/10 sm:grid-cols-2 lg:grid-cols-4">
+      <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {steps.map((step, i) => (
-          <li key={step.title} className="bg-tertiary p-6">
-            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-brand/30 text-sm font-semibold text-brand-fg">
-              {i + 1}
+          <li key={step.title} className="rounded-2xl border border-fg/10 bg-tertiary p-6 shadow-soft">
+            <span className="flex items-center gap-3">
+              <span
+                className={`flex h-8 w-8 flex-none items-center justify-center rounded-full text-sm font-semibold ${HUES[stepHues[i]].tile} ${HUES[stepHues[i]].ink}`}
+              >
+                {i + 1}
+              </span>
+              <span aria-hidden="true" className="h-px flex-1 bg-fg/10" />
             </span>
             <h3 className="mt-5 text-fg text-[16px] font-semibold">{step.title}</h3>
             <p className="mt-2 text-sm leading-6 text-secondary">{step.text}</p>
@@ -35,7 +45,7 @@ export function Engagement() {
         ))}
       </ol>
 
-      <div className="mt-6 rounded-xl border border-fg/10 bg-black-100 p-6 sm:p-7">
+      <div className="mt-4 rounded-2xl border border-brand/20 bg-brand/[0.05] p-6 sm:p-7 dark:bg-brand/[0.08]">
         <h3 className="text-fg text-[16px] font-semibold">What you prepare</h3>
         <ul className="mt-4 grid gap-x-8 gap-y-3 sm:grid-cols-2">
           {prepare.map((item) => (

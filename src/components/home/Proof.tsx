@@ -1,6 +1,10 @@
 import Image from 'next/image';
 import { Section } from './Section';
 import { CountUp } from './CountUp';
+import { HUES, type HueName } from './hues';
+
+// Same order as the offers the metrics usually come from.
+const metricHues: HueName[] = ['violet', 'sky', 'amber', 'emerald'];
 import type { SelectedResultMetric, Testimonial } from '@/types/frontend';
 
 interface ProofProps {
@@ -15,14 +19,14 @@ export function Proof({ testimonials, metrics, heading, subheading }: ProofProps
   if (testimonials.length === 0 && metrics.length === 0) return null;
 
   return (
-    <Section id="results" title={heading || 'Results'} intro={subheading}>
+    <Section id="results" eyebrow="Results" title={heading || 'Results'} intro={subheading}>
       {metrics.length > 0 && (
-        <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-fg/10 bg-fg/10 lg:grid-cols-4">
-          {metrics.map((metric) => (
-            <div key={metric.label} className="flex flex-col bg-tertiary p-6 sm:p-7">
+        <dl className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+          {metrics.map((metric, i) => (
+            <div key={metric.label} className={`flex flex-col rounded-2xl border p-5 shadow-soft sm:p-6 ${HUES[metricHues[i % 4]].card}`}>
               {/* dt before dd for valid markup; order-first keeps the value on top */}
               <dt className="mt-3 text-fg text-[15px] font-medium">{metric.label}</dt>
-              <dd className="order-first text-brand-fg text-[36px] sm:text-[42px] font-semibold leading-none tracking-[-0.03em]">
+              <dd className={`order-first text-[34px] sm:text-[42px] font-semibold leading-none tracking-[-0.03em] ${HUES[metricHues[i % 4]].ink}`}>
                 <CountUp value={metric.value} />
               </dd>
               {metric.context && <dd className="mt-1 text-[13px] leading-5 text-secondary">{metric.context}</dd>}

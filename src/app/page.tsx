@@ -178,10 +178,9 @@ export default async function Home() {
           data={settings['hero']}
           bookingUrl={contactSettings.bookingUrl}
           availability={bioSettings.availability}
-        />
-        {/* One continuous colour wash behind everything below the hero */}
-        <div aria-hidden="true" className="page-wash pointer-events-none absolute inset-x-0 bottom-0 top-[100vh] -z-10" />
-        <StackStrip technologies={technologies} />
+        >
+          <StackStrip technologies={technologies} />
+        </Hero>
         <Offers services={services} />
         <FeaturedWork projects={pickFeatured(projects)} />
         <Engagement />

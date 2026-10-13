@@ -22,15 +22,15 @@ export function AboutSection({ bio, name, role, experiences, resumeUrl }: AboutS
     .toUpperCase();
 
   return (
-    <Section id="about" title="About me">
+    <Section id="about" eyebrow="About" title="About me">
       <div className="grid gap-12 lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-16">
         {/* Profile column */}
         <aside className="lg:sticky lg:top-24 lg:self-start">
-          <div className="relative aspect-[4/5] w-full max-w-[300px] overflow-hidden rounded-xl border border-fg/10 bg-black-100 shadow-soft">
+          <div className="relative aspect-[4/5] w-full max-w-[300px] overflow-hidden rounded-2xl border border-fg/10 bg-black-100 shadow-soft">
             {bio?.photoUrl ? (
               <Image src={bio.photoUrl} alt={name} fill sizes="300px" className="object-cover" />
             ) : (
-              <span className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-brand/20 to-transparent text-6xl font-semibold tracking-tight text-fg/70">
+              <span className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-brand/25 via-brand/[0.06] to-transparent text-6xl font-semibold tracking-tight text-brand-fg">
                 {initials}
               </span>
             )}
@@ -55,7 +55,7 @@ export function AboutSection({ bio, name, role, experiences, resumeUrl }: AboutS
             href={resumeUrl}
             target="_blank"
             rel="noreferrer"
-            className="mt-5 inline-flex items-center gap-2 rounded-lg border border-fg/15 bg-tertiary px-4 py-2 text-sm font-medium text-fg shadow-soft transition-colors hover:border-fg/30"
+            className="mt-5 inline-flex items-center gap-2 rounded-full border border-fg/15 bg-tertiary px-4 py-2 text-sm font-medium text-fg shadow-soft transition-colors hover:border-fg/30"
           >
             <Download className="h-4 w-4" aria-hidden="true" />
             Résumé (PDF)

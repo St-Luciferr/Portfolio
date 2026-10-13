@@ -17,7 +17,7 @@ export function StackStrip({ technologies }: { technologies: Technology[] }) {
   );
 
   return (
-    <section aria-label="Tools I work with" className={`pb-6 ${styles.paddingX}`}>
+    <section aria-label="Tools I work with" className={styles.paddingX}>
       <div className="max-w-6xl mx-auto">
         <p className="text-center text-sm text-secondary">Tools I ship with</p>
         <div className="marquee mt-5 overflow-hidden">

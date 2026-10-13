@@ -45,8 +45,9 @@ const Footer = ({ socialLinks, navLinks, name = 'Santosh Pandey' }: FooterProps)
   };
 
   return (
-    <footer className="relative border-t border-fg/[0.07] bg-black-100">
-      <div className={`${styles.paddingX} max-w-6xl mx-auto py-14`}>
+    <footer className="relative border-t border-fg/10 bg-primary">
+      <div className={styles.paddingX}>
+      <div className="max-w-6xl mx-auto py-14">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12">
           {/* Brand */}
           <div className="flex flex-col gap-4">
@@ -109,6 +110,7 @@ const Footer = ({ socialLinks, navLinks, name = 'Santosh Pandey' }: FooterProps)
             © {year} {name}. All rights reserved.
           </p>
         </div>
+      </div>
       </div>
     </footer>
   );

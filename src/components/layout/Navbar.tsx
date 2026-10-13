@@ -61,27 +61,29 @@ const Navbar = ({ navLinks = [], bookingUrl }: NavbarProps) => {
         </Link>
 
         {/* Desktop navigation */}
-        <div className="hidden md:flex items-center gap-7">
-          <ul className="list-none flex flex-row gap-7">
-            {links.map((link) => (
-              <li key={link.linkId}>
-                <Link
-                  href={getHref(link.linkId)}
-                  className={`${isActive(link.linkId) ? 'text-fg' : 'text-secondary'} hover:text-fg text-[14px] font-medium transition-colors`}
-                >
-                  {link.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
+        {/* Desktop: centred pill of links, theme + CTA on the right */}
+        <ul className="hidden md:flex list-none items-center gap-0.5 rounded-full border border-fg/10 bg-tertiary/70 p-1 shadow-soft">
+          {links.map((link) => (
+            <li key={link.linkId}>
+              <Link
+                href={getHref(link.linkId)}
+                aria-current={isActive(link.linkId) ? 'page' : undefined}
+                className={`${isActive(link.linkId) ? 'bg-black-200 text-fg' : 'text-secondary'} block rounded-full px-3.5 py-1.5 text-[14px] font-medium transition-colors hover:text-fg`}
+              >
+                {link.title}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <div className="hidden md:flex items-center gap-2">
+          <ThemeToggle />
           <a
             href={cta.href}
             {...(cta.external && { target: '_blank', rel: 'noreferrer' })}
-            className="rounded-lg bg-brand px-4 py-2 text-sm font-medium text-white shadow-soft transition-colors hover:bg-brand-strong"
+            className="rounded-full bg-fg px-4 py-2 text-sm font-medium text-primary transition-opacity hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
           >
             {cta.label}
           </a>
-          <ThemeToggle />
         </div>
 
         {/* Mobile navigation */}
@@ -113,7 +115,7 @@ const Navbar = ({ navLinks = [], bookingUrl }: NavbarProps) => {
                   href={cta.href}
                   {...(cta.external && { target: '_blank', rel: 'noreferrer' })}
                   onClick={() => setToggle(false)}
-                  className="block rounded-lg bg-brand px-4 py-2 text-center text-sm font-semibold text-white"
+                  className="block rounded-full bg-fg px-4 py-2 text-center text-sm font-semibold text-primary"
                 >
                   {cta.label}
                 </a>

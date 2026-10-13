@@ -11,9 +11,9 @@ interface HeroCTAsProps {
 }
 
 const primary =
-  'inline-flex items-center justify-center rounded-lg bg-brand px-6 py-3 text-[15px] font-medium text-white shadow-soft transition-colors hover:bg-brand-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand';
+  'inline-flex items-center justify-center rounded-full bg-brand-strong px-6 py-3 text-[15px] font-medium text-white shadow-[0_8px_20px_-10px_rgb(var(--site-brand-strong)/0.8)] transition-colors hover:bg-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand';
 const secondary =
-  'inline-flex items-center justify-center rounded-lg border border-fg/15 bg-tertiary px-6 py-3 text-[15px] font-medium text-fg shadow-soft transition-colors hover:border-fg/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand';
+  'inline-flex items-center justify-center rounded-full border border-fg/15 bg-tertiary px-6 py-3 text-[15px] font-medium text-fg shadow-soft transition-colors hover:border-fg/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand';
 
 export function HeroCTAs({ resumeUrl, bookingUrl }: HeroCTAsProps) {
   return (

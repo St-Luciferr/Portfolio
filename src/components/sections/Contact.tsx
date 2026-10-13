@@ -20,7 +20,7 @@ type SubmitStatus =
   | { kind: 'error'; message: string };
 
 const inputClass =
-  'rounded-lg border border-fg/10 bg-black-100 px-4 py-3 text-[15px] text-fg placeholder:text-secondary/80 outline-none transition-colors focus:border-brand/60 focus:ring-2 focus:ring-brand/15';
+  'rounded-xl border border-fg/10 bg-black-100 px-4 py-3 text-[15px] text-fg placeholder:text-secondary/80 outline-none transition-colors focus:border-brand/60 focus:ring-2 focus:ring-brand/15';
 
 interface ContactProps {
   data?: {
@@ -127,7 +127,7 @@ const Contact = ({
   };
 
   return (
-    <section id="contact" className={`scroll-mt-20 py-20 sm:py-28 ${styles.paddingX}`}>
+    <section id="contact" className={`scroll-mt-20 pt-14 pb-20 sm:pt-20 sm:pb-28 ${styles.paddingX}`}>
     <div data-reveal className="contact-band max-w-6xl mx-auto rounded-3xl p-3 shadow-soft sm:p-6 lg:p-8">
       <div className="grid grid-cols-1 gap-3 sm:gap-5 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
         <div className="rounded-2xl bg-tertiary p-6 shadow-lift sm:p-9">
@@ -198,7 +198,7 @@ const Contact = ({
             <button
               type="submit"
               disabled={loading}
-              className="bg-brand py-3 px-7 w-fit text-white text-[15px] font-medium rounded-lg shadow-soft hover:bg-brand-strong transition-colors disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+              className="bg-brand-strong py-3 px-7 w-fit text-white text-[15px] font-medium rounded-full shadow-[0_8px_20px_-10px_rgb(var(--site-brand-strong)/0.8)] hover:bg-brand transition-colors disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
             >
               {loading ? 'Sending…' : 'Send message'}
             </button>
@@ -236,8 +236,8 @@ const Contact = ({
         location={location}
       />
 
-      {/* Fills the band under the panel on wide screens; same steps as "How an engagement runs" */}
-      <ol className="hidden flex-1 flex-col justify-end gap-4 px-4 pb-4 text-fg dark:text-white lg:flex">
+      {/* Sits right under the panel on wide screens; same steps as "How an engagement runs" */}
+      <ol className="hidden flex-col gap-4 px-4 pt-3 text-fg dark:text-white lg:flex">
         {[
           ['You send a short brief', 'What you want to build, and where it hurts today.'],
           ['I reply within 24–48 hours', 'With questions, or a time for a quick call.'],
