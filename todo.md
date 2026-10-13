@@ -246,7 +246,7 @@
 
 - [x] **12.25** On-demand revalidation for service and project admin writes via `src/lib/api/revalidate.ts` (homepage, index pages, every detail page by route pattern, share images, sitemap). 60 s time-based fallback on `/services/[slug]` and `/projects/[slug]` for seed scripts and SQL edits. Done 2026-10-13.
 
-## Phase 13: Public-Layer Redesign 🎨 🟡 BUILT (2026-10-13) · ⏸ content inputs + migrations 009/010
+## Phase 13: Public-Layer Redesign 🎨 ✅ DEPLOYED (2026-10-13, PR #9 `193ee88`; migrations 009/010 applied) · ⏸ content inputs
 
 > Target: Weeks 2–4, ~2–3 weeks. Source: `docs/SITE_REVIEW_2026-10.md` R1, R3, R7.
 > Keep untouched: Supabase schema, admin dashboard, blog pipeline, `/api/admin/**`, analytics, JSON-LD helpers.
