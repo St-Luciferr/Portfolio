@@ -4,6 +4,7 @@
 > **Status**: Active — task tracking lives in [`../todo.md`](../todo.md) Phases 8–11.
 > **Predecessor**: SEO + client-acquisition work in `todo.md` Phases 1–7 (infrastructure complete).
 > **Blocker (2026-10-13)**: Conversion audit in [`SITE_REVIEW_2026-10.md`](SITE_REVIEW_2026-10.md) found service pages 404 in production, no published proof, and mobile TBT of 16 s. Complete `todo.md` Phases 12–14 before resuming Phase 9.
+> **Update (2026-10-13)**: Phase 8 deployed (PR #7). Service pages now return 200 in production. Still blocking Phase 9: no published proof (12.6–12.7), mobile TBT (12.9–12.13), canonical host (12.18). Phase 9 task targets were corrected for the consolidated service slugs; see the readiness note in `todo.md`.
 > **Goal**: Move from publication-ready infrastructure to actually ranking and converting.
 
 ## Why this plan exists
@@ -72,11 +73,11 @@ Each post needs: 1,800+ words, hero image, syntax-highlighted code samples, 3+ i
 
 | # | Title (working) | Primary keyword | Internal links | Effort |
 | - | --------------- | --------------- | -------------- | ------ |
-| 9.1 | "RAG in production: 3 lessons from shipping a medical chatbot" | rag production / rag systems production | `/projects/medical-qa-chatbot`, `/services/rag-development` | 8 hr |
+| 9.1 | "RAG in production: 3 lessons from shipping a medical chatbot" | rag production / rag systems production | `/projects/medical-qa-chatbot`, `/services/rag-systems` | 8 hr |
 | 9.2 | "Building WhatsApp bots with function calling: a practical guide" | whatsapp chatbot openai | `/projects/whatsapp-chatbot`, `/services/whatsapp-automation` | 8 hr |
-| 9.3 | "Fine-tuning vs RAG: when to pick each" | fine-tuning vs rag | both RAG case studies, `/services/rag-development`, `/services/ai-chatbot-development` | 10 hr |
-| 9.4 | "On-device ML with TensorFlow Lite: lessons from AMID" | tensorflow lite mobile / on-device ml | `/projects/amid`, `/services/ml-deployment` | 8 hr |
-| 9.5 | "Continual learning for production CV: avoiding catastrophic forgetting" | continual learning production / ewc maml | `/projects/continual-monument-detection`, `/services/ml-deployment` | 10 hr |
+| 9.3 | "Fine-tuning vs RAG: when to pick each" | fine-tuning vs rag | both RAG case studies, `/services/rag-systems` | 10 hr |
+| 9.4 | "On-device ML with TensorFlow Lite: lessons from AMID" | tensorflow lite mobile / on-device ml | ⚠️ no `amid` project; `ml-deployment` retired | 8 hr |
+| 9.5 | "Continual learning for production CV: avoiding catastrophic forgetting" | continual learning production / ewc maml | `/projects/continual-monument-detection` (no matching offer) | 10 hr |
 
 ### Cross-linking layer (do after posts 9.1–9.5)
 

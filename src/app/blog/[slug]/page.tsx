@@ -15,6 +15,7 @@ import { renderMarkdown, extractHeadings } from '@/lib/markdown';
 import { PostMeta } from '@/components/blog/PostMeta';
 import { TableOfContents } from '@/components/blog/TableOfContents';
 import { RelatedPosts } from '@/components/blog/RelatedPosts';
+import { RelatedProjectsByTags } from '@/components/blog/RelatedProjectsByTags';
 
 export const revalidate = 60;
 
@@ -222,6 +223,8 @@ export default async function BlogPostPage({ params }: PageProps) {
                 className="prose prose-invert prose-lg max-w-none prose-headings:font-bold prose-headings:text-white prose-h2:mt-14 prose-h2:mb-5 prose-h2:text-3xl prose-h3:mt-10 prose-h3:text-xl prose-p:text-secondary prose-p:leading-8 prose-li:text-secondary prose-strong:text-white prose-a:text-[#915eff] hover:prose-a:text-[#b48cff] prose-a:no-underline hover:prose-a:underline prose-code:text-[#b48cff] prose-code:bg-white/5 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none prose-pre:bg-black-100 prose-pre:border prose-pre:border-white/10 prose-pre:rounded-xl prose-blockquote:border-l-[#915eff] prose-blockquote:text-secondary prose-img:rounded-xl prose-img:border prose-img:border-white/10 prose-hr:border-white/10"
                 dangerouslySetInnerHTML={{ __html: html }}
               />
+
+              <RelatedProjectsByTags tagNames={post.tags.map((t) => t.name)} />
 
               <RelatedPosts posts={related} />
 
