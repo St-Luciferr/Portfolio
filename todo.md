@@ -215,7 +215,7 @@
 - [x] **12.10** Remove `Lazy3DCanvas` from `Contact.tsx`. Form is now a single centred column.
 - [x] **12.11** Replace `LazyBallCanvas` in `Tech.tsx` with a grouped text/icon list. (Icon + name tiles; `technologies` has no category column, so grouping waits for 13.x.)
 - [x] **12.12** Drop `three`, `@react-three/fiber`, `@react-three/drei`, `maath` from `package.json`; delete `public/models/**`, `public/new earth/**`, `src/components/canvas/**`. Also removed `StarsCanvas` from the homepage, `ui/Loader.tsx`, the `maath` type shim, the `/models` cache header and the canvas-loader CSS. ~88 MB of models deleted.
-- [x] **12.13** Re-run Lighthouse (mobile) — target Performance ≥ 75, TBT < 2 s. Record in `docs/SITE_REVIEW_2026-10.md`. 2026-10-13 (local prod build, 2 runs): Performance 81–89, TBT 150–360 ms, a11y 100, 345 KiB (was 5.4 MB). Hero background moved to `next/image` + `priority` (it is the LCP element). Re-measure on production after deploy.
+- [x] **12.13** Re-run Lighthouse (mobile) — target Performance ≥ 75, TBT < 2 s. Record in `docs/SITE_REVIEW_2026-10.md`. 2026-10-13 (local prod build, 2 runs): Performance 81–89, TBT 150–360 ms, a11y 100, 345 KiB (was 5.4 MB). Hero background moved to `next/image` + `priority` (it is the LCP element). Production after PR #8 (1 run): Performance 74, TBT 660 ms, LCP 3.1 s, a11y 100, 356 KiB.
 
 ### Contact (F6)
 
@@ -226,7 +226,7 @@
 
 ### Domain / SEO (F7)
 
-- [~] **12.18** Decide canonical host (`www` vs apex). Align Vercel redirect, `SITE_URL`, `metadataBase`, sitemap, JSON-LD, `og:url`. Decided `www` (Vercel already redirects apex → www). 2026-10-13: every hardcoded apex URL (layout, robots, project/service/blog pages) now uses `SITE_URL`; fallback is `www`; admin SEO `canonical_url` updated in DB; `.env.local` / `.env.example` updated. ⏸ **Set `NEXT_PUBLIC_SITE_URL=https://www.pandeysantosh.com.np` in Vercel** (it overrides the code default), then redeploy and resubmit the sitemap.
+- [~] **12.18** Decide canonical host (`www` vs apex). Align Vercel redirect, `SITE_URL`, `metadataBase`, sitemap, JSON-LD, `og:url`. Decided `www` (Vercel already redirects apex → www). 2026-10-13: every hardcoded apex URL (layout, robots, project/service/blog pages) now uses `SITE_URL`; fallback is `www`; admin SEO `canonical_url` updated in DB (note: the settings mapper doesn't read it, so `SITE_URL` alone decides); `.env.local` / `.env.example` updated. ⏸ **Set `NEXT_PUBLIC_SITE_URL=https://www.pandeysantosh.com.np` in Vercel** (confirmed 2026-10-13: production after PR #8 still emits the apex, so Vercel sets it) (it overrides the code default), then redeploy and resubmit the sitemap.
 - [x] **12.19** Add `alternates.canonical` to homepage `generateMetadata` in `src/app/page.tsx` — closes 8.1.
 - [x] **12.20** Rename blog tag "Begineer" → "Beginner" (slug + sitemap). DB row renamed 2026-10-13; `/blog/tag/begineer` 308s to `/blog/tag/beginner`.
 - [x] **12.21** Fix CTA colour contrast (primary button) and add `aria-label` to the hero scroll-indicator link in `HeroAnimation.tsx`. Primary buttons moved to `#7a4fd4` (white text 5.4:1, was 4.0:1) across 8 CTAs.
