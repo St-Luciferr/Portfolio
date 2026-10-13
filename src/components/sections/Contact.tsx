@@ -8,6 +8,7 @@ import { styles } from '@/lib/styles';
 import SectionWrapper from '@/components/hoc/SectionWrapper';
 import { slideIn } from '@/lib/motion';
 import { track } from '@/lib/analytics';
+import ContactAside from '@/components/sections/ContactAside';
 
 interface FormState {
   name: string;
@@ -26,9 +27,11 @@ interface ContactProps {
     name?: string;
     email?: string;
   };
+  services?: { title: string; slug: string }[];
+  socialLinks?: { github?: string; linkedin?: string };
 }
 
-const Contact = ({ data }: ContactProps) => {
+const Contact = ({ data, services = [], socialLinks }: ContactProps) => {
   const formRef = useRef<HTMLFormElement>(null);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<SubmitStatus>({ kind: 'idle' });
@@ -112,22 +115,16 @@ const Contact = ({ data }: ContactProps) => {
   };
 
   return (
-    <div className="max-w-screen-2xl mx-auto">
-      <div className="xl:mt-12 overflow-hidden">
+    <div className={`max-w-7xl mx-auto ${styles.paddingX}`}>
+      <div className="xl:mt-12 grid grid-cols-1 gap-10 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] overflow-hidden">
         <motion.div
           variants={slideIn('left', 'tween', 0.2, 1)}
-          className="max-w-3xl mx-auto bg-black-100 p-8 rounded-2xl"
+          className="bg-black-100 p-8 rounded-2xl"
         >
         <p className={styles.sectionSubText}>Get In Touch</p>
         <h3 className={styles.sectionHeadText}>Contact.</h3>
         <p className="text-secondary text-sm mt-2">
           Have a project idea, want to collaborate, or just want to say hi? I&apos;d love to hear from you.
-        </p>
-        <p className="text-secondary text-sm mt-2">
-          Prefer email?{' '}
-          <a href={`mailto:${toEmail}`} className="text-white underline underline-offset-4 hover:text-[#b48cff]">
-            {toEmail}
-          </a>
         </p>
 
         <form
@@ -217,6 +214,10 @@ const Contact = ({ data }: ContactProps) => {
             </div>
           </div>
         </form>
+      </motion.div>
+
+      <motion.div variants={slideIn('right', 'tween', 0.2, 1)}>
+        <ContactAside email={toEmail} services={services} socialLinks={socialLinks} />
       </motion.div>
       </div>
     </div>

@@ -115,6 +115,7 @@
 > Target: Weeks 2–6. 5 cornerstone posts + cross-linking.
 >
 > **Readiness check (2026-10-13): not ready to start as written.**
+>
 > - **Gate:** `docs/GROWTH_PLAN.md` and `docs/SITE_REVIEW_2026-10.md` (R8) sequence Phase 9 after Phases 12–14. Phase 8 cleared the service-page 404; still open are proof (0 published testimonials, 12.6–12.7), mobile performance (12.9–12.13) and the canonical host (12.18). Content traffic sent to the site now lands on those problems.
 > - **Stale targets (fixed below):** service slugs were consolidated in 12.2. `rag-development` → `rag-systems`; `ai-chatbot-development` and `ml-deployment` are retired (308 to `/services`).
 > - **Missing target:** there is no `amid` project in the DB (live projects: `medical-qa-chatbot`, `context-aware-rag`, `whatsapp-chatbot`, `continual-monument-detection`, `trek-pal-nepal`, `pestpad`). 9.4 needs a new project row or a new topic.
@@ -238,9 +239,11 @@
 - [x] **12.24** Point "Work" nav link to `/projects`; rename Experience anchor to "Experience". 2026-10-13: the CMS "Work" link (→ `#work`, the Experience section) is now titled "Experience"; Navbar already auto-inserts "Projects" → `/projects`.
 
 ### Dependency security
+
 - [x] **12.26** `npm audit` 2026-10-13: 27 findings (1 critical, 18 high) → 7 high, all build-time. `npm audit fix` (next 16.2.3 → 16.4.0 for the critical, postcss, prosemirror-view, ws, …), `sharp` ^0.35.5 (matches next 16.4), `tsx` ^4.23.15 (patched esbuild), `overrides.postcss-selector-parser` ^7.1.6 (compiled CSS verified identical). Remaining 7 tracked in 13.25 / 13.26.
 
 ### Cache freshness
+
 - [x] **12.25** On-demand revalidation for service and project admin writes via `src/lib/api/revalidate.ts` (homepage, index pages, every detail page by route pattern, share images, sitemap). 60 s time-based fallback on `/services/[slug]` and `/projects/[slug]` for seed scripts and SQL edits. Done 2026-10-13.
 
 ## Phase 13: Public-Layer Redesign 🎨

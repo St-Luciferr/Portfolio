@@ -197,7 +197,11 @@ export default async function Home() {
         <Tech technologies={technologies} />
         <Works projects={projects} />
         <Testimonials testimonials={testimonials} />
-        <Contact data={settings['contact']} />
+        <Contact
+          data={settings['contact']}
+          services={services.flatMap((s) => (s.slug ? [{ title: s.title, slug: s.slug }] : []))}
+          socialLinks={settings['socialLinks']}
+        />
       </main>
       <Footer
         socialLinks={settings['socialLinks']}
