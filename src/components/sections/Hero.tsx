@@ -1,6 +1,5 @@
 import { styles } from '@/lib/styles';
 import HeroAnimation from '@/components/sections/HeroAnimation';
-import Lazy3DCanvas from '@/components/canvas/Lazy3DCanvas';
 import { HeroCTAs } from '@/components/sections/HeroCTAs';
 import { HeroSettings } from '@/types/frontend';
 
@@ -19,10 +18,11 @@ const Hero = ({ data }: HeroProps) => {
   const resumeUrl = data?.resumeUrl || '/cv.pdf';
 
   return (
-    <section className="relative w-full h-screen mx-auto">
-      {/* Static content - renders immediately for LCP */}
+    <section className="relative w-full mx-auto pt-[120px] pb-40 sm:pb-48">
+      {/* Static content - renders immediately for LCP. The 3D desk model was
+          removed (docs/SITE_REVIEW_2026-10.md F5): it cost ~16 s of mobile TBT. */}
       <div
-        className={`${styles.paddingX} absolute inset-0 top-[120px] max-w-7xl mx-auto flex flex-row items-start gap-5`}
+        className={`${styles.paddingX} relative max-w-7xl mx-auto flex flex-row items-start gap-5`}
         style={{ zIndex: 2 }}
       >
         <div className="flex flex-col justify-center items-center mt-5">
@@ -45,9 +45,6 @@ const Hero = ({ data }: HeroProps) => {
           <HeroCTAs ctaText={ctaText} ctaUrl={ctaUrl} resumeUrl={resumeUrl} />
         </div>
       </div>
-
-      {/* 3D Canvas - loads only when visible */}
-      <Lazy3DCanvas type="computer" />
 
       {/* Animated scroll indicator - client component */}
       <HeroAnimation />

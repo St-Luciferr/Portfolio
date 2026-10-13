@@ -2,6 +2,7 @@ export {
   getPublishedProjects,
   getPublishedProjectBySlug,
   getRelatedProjects,
+  getRelatedProjectsByTags,
   getPublishedProjectSlugs,
 } from './project.service';
 
@@ -34,4 +35,5 @@ export {
   getPostsByTag,
   getAllPublishedTags,
   getRelatedPosts,
+  getPostsByTerms,
 } from './blog.service';

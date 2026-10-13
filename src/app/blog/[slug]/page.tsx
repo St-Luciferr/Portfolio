@@ -15,10 +15,10 @@ import { renderMarkdown, extractHeadings } from '@/lib/markdown';
 import { PostMeta } from '@/components/blog/PostMeta';
 import { TableOfContents } from '@/components/blog/TableOfContents';
 import { RelatedPosts } from '@/components/blog/RelatedPosts';
+import { RelatedProjectsByTags } from '@/components/blog/RelatedProjectsByTags';
+import { SITE_URL } from '@/lib/site';
 
 export const revalidate = 60;
-
-const SITE_URL = 'https://pandeysantosh.com.np';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -223,6 +223,8 @@ export default async function BlogPostPage({ params }: PageProps) {
                 dangerouslySetInnerHTML={{ __html: html }}
               />
 
+              <RelatedProjectsByTags tagNames={post.tags.map((t) => t.name)} />
+
               <RelatedPosts posts={related} />
 
               <div className="mt-16 pt-8 border-t border-white/10 flex items-center justify-between">
@@ -234,7 +236,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                 </Link>
                 <Link
                   href="/#contact"
-                  className="rounded-md bg-[#915eff] px-4 py-2 text-white text-sm font-semibold hover:bg-[#7a4fd4] transition-colors"
+                  className="rounded-md bg-[#7a4fd4] px-4 py-2 text-white text-sm font-semibold hover:bg-[#6a3fc4] transition-colors"
                 >
                   Let&apos;s work together
                 </Link>

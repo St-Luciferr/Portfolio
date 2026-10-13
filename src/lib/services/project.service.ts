@@ -2,6 +2,7 @@ import { readerClient as supabase } from '@/lib/supabase/reader';
 import type { DBProjectTag } from '@/lib/types';
 import type { Project } from '@/types/frontend';
 import { mapProjects, mapProject } from '@/mappers';
+import { rankByOverlap, toTerms } from '@/lib/tag-match';
 
 function groupTagsByProject(tags: DBProjectTag[]): Record<string, DBProjectTag[]> {
   return tags.reduce(
@@ -92,6 +93,15 @@ export async function getRelatedProjects(projectId: string): Promise<Project[]> 
   );
 
   return mapped.sort((a, b) => (orderMap[a.id] ?? 999) - (orderMap[b.id] ?? 999));
+}
+
+/** Published projects whose tags overlap `tagNames` (e.g. a blog post's tags), best match first. */
+export async function getRelatedProjectsByTags(tagNames: string[], limit = 3): Promise<Project[]> {
+  const sourceTerms = toTerms(tagNames);
+  if (!sourceTerms.length) return [];
+
+  const projects = await getPublishedProjects();
+  return rankByOverlap(projects, sourceTerms, (p) => toTerms(p.tags.map((t) => t.name)), limit);
 }
 
 export async function getPublishedProjectSlugs(): Promise<string[]> {

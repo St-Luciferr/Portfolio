@@ -84,7 +84,7 @@ export default async function ServicesIndexPage() {
               </div>
               <Link
                 href="/#contact"
-                className="w-fit rounded-md bg-[#915eff] px-5 py-3 text-white font-semibold hover:bg-[#7a4fd4] transition-colors"
+                className="w-fit rounded-md bg-[#7a4fd4] px-5 py-3 text-white font-semibold hover:bg-[#6a3fc4] transition-colors"
               >
                 Get a Quote
               </Link>

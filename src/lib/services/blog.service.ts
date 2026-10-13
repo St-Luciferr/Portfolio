@@ -2,6 +2,7 @@ import { readerClient as supabase } from '@/lib/supabase/reader';
 import type { DBBlogTag, DBBlogPost } from '@/lib/types';
 import type { BlogPost, BlogTag } from '@/types/frontend';
 import { mapBlogPosts, mapBlogPost, mapBlogTag } from '@/mappers';
+import { rankByOverlap, toTerms } from '@/lib/tag-match';
 
 function groupTagsByPost(tags: DBBlogTag[]): Record<string, DBBlogTag[]> {
   return tags.reduce(
@@ -170,4 +171,16 @@ export async function getRelatedPosts(
   return mapBlogPosts(
     (posts as DBBlogPost[]).map((p) => ({ ...p, blog_tags: tagsByPost[p.id] || [] }))
   );
+}
+
+/**
+ * Published posts whose tags overlap `terms` (e.g. a service's stack), best match first.
+ * `minScore` filters out posts that share only one incidental term (a common SDK, say).
+ */
+export async function getPostsByTerms(terms: string[], limit = 3, minScore = 1): Promise<BlogPost[]> {
+  const sourceTerms = toTerms(terms);
+  if (!sourceTerms.length) return [];
+
+  const posts = await getPublishedPosts();
+  return rankByOverlap(posts, sourceTerms, (p) => toTerms(p.tags.map((t) => t.name)), limit, minScore);
 }

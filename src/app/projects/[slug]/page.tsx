@@ -13,6 +13,7 @@ import {
   getRelatedProjects,
 } from '@/lib/services';
 import { getProjectDetailContent } from '@/lib/project-details';
+import { SITE_URL } from '@/lib/site';
 
 // Fallback refresh for edits that bypass the admin API (seed scripts, SQL editor).
 export const revalidate = 60;
@@ -42,13 +43,13 @@ export async function generateMetadata({
   const content = getProjectDetailContent(project);
   const title = `${project.name} Case Study`;
   const description = content.summary || project.description;
-  const canonicalUrl = `https://pandeysantosh.com.np/projects/${project.slug}`;
+  const canonicalUrl = `${SITE_URL}/projects/${project.slug}`;
 
   return {
     title,
     description,
     keywords: project.tags.map(tag => tag.name),
-    authors: [{ name: 'Santosh Pandey', url: 'https://pandeysantosh.com.np' }],
+    authors: [{ name: 'Santosh Pandey', url: SITE_URL }],
     creator: 'Santosh Pandey',
     publisher: 'Santosh Pandey',
     alternates: {
@@ -110,7 +111,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const relatedProjects = await getRelatedProjects(project.id);
 
   const content = getProjectDetailContent(project);
-  const canonicalUrl = `https://pandeysantosh.com.np/projects/${project.slug}`;
+  const canonicalUrl = `${SITE_URL}/projects/${project.slug}`;
   const authorName = settings['hero']?.name || 'Santosh Pandey';
 
   // Determine if this is a software project (use SoftwareApplication schema)
@@ -129,7 +130,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     author: {
       '@type': 'Person',
       name: authorName,
-      url: 'https://pandeysantosh.com.np',
+      url: SITE_URL,
     },
     keywords: project.tags.map((tag) => tag.name),
     ...(isSoftwareProject && {
@@ -148,13 +149,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: 'https://pandeysantosh.com.np',
+        item: SITE_URL,
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: 'Projects',
-        item: 'https://pandeysantosh.com.np/projects',
+        item: `${SITE_URL}/projects`,
       },
       {
         '@type': 'ListItem',
@@ -318,7 +319,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 </p>
                 <Link
                   href="/#contact"
-                  className="mt-5 inline-flex rounded-md bg-[#915eff] px-4 py-3 text-white font-semibold hover:bg-[#7a4fd4] transition-colors"
+                  className="mt-5 inline-flex rounded-md bg-[#7a4fd4] px-4 py-3 text-white font-semibold hover:bg-[#6a3fc4] transition-colors"
                 >
                   Contact Me
                 </Link>

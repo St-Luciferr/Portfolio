@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Poppins } from 'next/font/google';
 import { AnalyticsProvider } from '@/components/analytics/AnalyticsProvider';
 import CustomCursor from '@/components/ui/CustomCursor';
+import { SITE_URL } from '@/lib/site';
 import './globals.css';
 
 const poppins = Poppins({
@@ -15,7 +16,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://pandeysantosh.com.np'),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: 'Santosh Pandey | ML Engineer & Full Stack Developer',
     template: '%s | Santosh Pandey',
@@ -41,7 +42,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://pandeysantosh.com.np',
+    url: SITE_URL,
     siteName: 'Santosh Pandey Portfolio',
     title: 'Santosh Pandey | ML Engineer & Full Stack Developer',
     description:

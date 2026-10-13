@@ -7,7 +7,6 @@ import emailjs from '@emailjs/browser';
 import { styles } from '@/lib/styles';
 import SectionWrapper from '@/components/hoc/SectionWrapper';
 import { slideIn } from '@/lib/motion';
-import Lazy3DCanvas from '@/components/canvas/Lazy3DCanvas';
 import { track } from '@/lib/analytics';
 
 interface FormState {
@@ -16,6 +15,11 @@ interface FormState {
   subject: string;
   message: string;
 }
+
+type SubmitStatus =
+  | { kind: 'idle' }
+  | { kind: 'success' }
+  | { kind: 'error'; message: string };
 
 interface ContactProps {
   data?: {
@@ -27,6 +31,7 @@ interface ContactProps {
 const Contact = ({ data }: ContactProps) => {
   const formRef = useRef<HTMLFormElement>(null);
   const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<SubmitStatus>({ kind: 'idle' });
   const [form, setForm] = useState<FormState>({
     name: '',
     email: '',
@@ -53,13 +58,15 @@ const Contact = ({ data }: ContactProps) => {
     const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
     if (!serviceId || !templateId || !publicKey) {
-      alert(
-        'Email service is not configured. Please contact me directly at ' + toEmail
-      );
+      setStatus({
+        kind: 'error',
+        message: 'The contact form is temporarily unavailable.',
+      });
       return;
     }
 
     setLoading(true);
+    setStatus({ kind: 'idle' });
 
     emailjs
       .send(
@@ -81,7 +88,7 @@ const Contact = ({ data }: ContactProps) => {
             status: 'success',
             hasSubject: !!form.subject.trim(),
           });
-          alert('Thank you! I will get back to you as soon as possible.');
+          setStatus({ kind: 'success' });
           setForm({
             name: '',
             email: '',
@@ -96,24 +103,31 @@ const Contact = ({ data }: ContactProps) => {
             hasSubject: !!form.subject.trim(),
           });
           console.error('EmailJS Error:', error);
-          alert(
-            `Failed to send message. Please email me directly at ${toEmail}`
-          );
+          setStatus({
+            kind: 'error',
+            message: 'Your message could not be sent.',
+          });
         }
       );
   };
 
   return (
     <div className="max-w-screen-2xl mx-auto">
-      <div className={`xl:mt-12 xl:flex-row flex-col-reverse flex gap-10 overflow-hidden`}>
+      <div className="xl:mt-12 overflow-hidden">
         <motion.div
           variants={slideIn('left', 'tween', 0.2, 1)}
-          className="flex-[0.75] bg-black-100 p-8 rounded-2xl"
+          className="max-w-3xl mx-auto bg-black-100 p-8 rounded-2xl"
         >
         <p className={styles.sectionSubText}>Get In Touch</p>
         <h3 className={styles.sectionHeadText}>Contact.</h3>
         <p className="text-secondary text-sm mt-2">
           Have a project idea, want to collaborate, or just want to say hi? I&apos;d love to hear from you.
+        </p>
+        <p className="text-secondary text-sm mt-2">
+          Prefer email?{' '}
+          <a href={`mailto:${toEmail}`} className="text-white underline underline-offset-4 hover:text-[#b48cff]">
+            {toEmail}
+          </a>
         </p>
 
         <form
@@ -185,15 +199,24 @@ const Contact = ({ data }: ContactProps) => {
             <p className="text-secondary text-xs">
               I usually respond within 24–48 hours.
             </p>
+            <div aria-live="polite" role="status">
+              {status.kind === 'success' && (
+                <p className="mt-2 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
+                  Thanks, your message is on its way. I&apos;ll reply to the email you gave.
+                </p>
+              )}
+              {status.kind === 'error' && (
+                <p className="mt-2 rounded-lg border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+                  {status.message} Please email me directly at{' '}
+                  <a href={`mailto:${toEmail}`} className="underline underline-offset-4">
+                    {toEmail}
+                  </a>
+                  .
+                </p>
+              )}
+            </div>
           </div>
         </form>
-      </motion.div>
-
-      <motion.div
-        variants={slideIn('right', 'tween', 0.2, 1)}
-        className="xl:flex-1 xl:h-auto md:h-[550px] h-[350px]"
-      >
-        <Lazy3DCanvas type="earth" />
       </motion.div>
       </div>
     </div>

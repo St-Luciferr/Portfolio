@@ -26,7 +26,7 @@ export function ProjectCTAs({
           onClick={() =>
             track('project_demo_click', { slug, source: 'detail' })
           }
-          className="rounded-md bg-[#915eff] px-5 py-3 text-white font-semibold hover:bg-[#7a4fd4] transition-colors"
+          className="rounded-md bg-[#7a4fd4] px-5 py-3 text-white font-semibold hover:bg-[#6a3fc4] transition-colors"
           aria-label={`View live demo of ${name}`}
         >
           View Live Demo

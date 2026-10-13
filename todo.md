@@ -89,47 +89,59 @@
 
 ---
 
-## Phase 8: Quick SEO Wins 🚀 ✅ CODE COMPLETE (deploy + 8.8 left)
+## Phase 8: Quick SEO Wins 🚀 ✅ DEPLOYED (2026-10-13, PR #7 → `main` `7993061`; Bing in 8.8 deferred)
 
 > Target: Week 1. See [`docs/GROWTH_PLAN.md`](docs/GROWTH_PLAN.md#phase-8--quick-seo-wins-week-1-10-hours-total) for rationale.
 
-- [x] **8.1** Add canonical URL to homepage metadata in `src/app/page.tsx` — `alternates: { canonical: 'https://pandeysantosh.com.np' }`. Uses `SITE_URL` from `src/lib/site.ts`; host choice still open in 12.18.
-- [x] **8.2** Include `/services` index + every `/services/[slug]` in `src/app/sitemap.ts` (priority 0.7, monthly). New `/services` index page added. URLs appear automatically once services have slugs (12.1–12.3).
+- [x] **8.1** Add canonical URL to homepage metadata in `src/app/page.tsx` — `alternates: { canonical: 'https://pandeysantosh.com.np' }`. Uses `SITE_URL` from `src/lib/site.ts`. Live since 2026-10-13, but it points at the apex, which 307s to `www`; fix in 12.18.
+- [x] **8.2** Include `/services` index + every `/services/[slug]` in `src/app/sitemap.ts` (priority 0.7, monthly). New `/services` index page added. Production `/sitemap.xml` verified 2026-10-13: lists `/services` + all 3 offer URLs.
 - [~] **8.3** `Review` JSON-LD emitted from `src/app/page.tsx` for every published testimonial. `AggregateRating` intentionally **not** added: testimonials have no star score, and a made-up rating breaks Google's review-snippet policy. Validate at [validator.schema.org](https://validator.schema.org/) once ≥1 testimonial is published (12.7).
 - [x] **8.4** Add a third hero CTA "Browse Projects" → `/projects` in `src/components/sections/HeroCTAs.tsx`; emit `hero_cta_click: variant='projects'` analytics event.
 - [x] **8.5** Build dynamic OG images via `next/og` (shared renderer in `src/lib/og.tsx`):
   - [x] `src/app/blog/[slug]/opengraph-image.tsx`
   - [x] `src/app/projects/[slug]/opengraph-image.tsx`
-- [~] **8.6** FAQ `<details>` + `FAQPage` JSON-LD on `/services/[slug]`, stored in new `services.faqs` column. Draft Q&As (5 per service) in `scripts/seed-services.ts`.
+  - [x] Production check 2026-10-13: images return `image/png`, but the URL uses the apex host and costs one redirect (12.18).
+- [x] **8.6** FAQ `<details>` + `FAQPage` JSON-LD on `/services/[slug]`, stored in new `services.faqs` column. Draft Q&As (5 per service) in `scripts/seed-services.ts`.
   - [x] Run `supabase/migrations/008_add_service_faqs.sql` in the Supabase SQL editor. (Applied 2026-10-13; column verified.)
   - [x] Seeded via `npm run db:seed-services` (2026-10-13). Draft answers still worth a read-through in `scripts/seed-services.ts`.
+  - [x] Production check 2026-10-13: `/services/rag-systems` serves `FAQPage` JSON-LD.
 - [x] **8.7** Record Lighthouse baseline (homepage, project detail, blog list, service detail) in `docs/GROWTH_PLAN.md` success-metrics table.
 - [~] **8.8** Verify site ownership in Google Search Console + Bing Webmaster; submit sitemap.
-  - [x] Google Search Console verified (confirmed 2026-10-13). Resubmit `/sitemap.xml` after the Phase 8 deploy so the new service URLs are picked up.
+  - [x] Google Search Console verified (confirmed 2026-10-13). Phase 8 is deployed: **resubmit `/sitemap.xml` now** so the 3 new service URLs are picked up.
   - [ ] Bing Webmaster (deferred): set `NEXT_PUBLIC_BING_SITE_VERIFICATION` in Vercel; the meta tag is already wired in `src/app/layout.tsx`.
 
-## Phase 9: Content Engine Launch ✍️
+## Phase 9: Content Engine Launch ✍️ 🟡 CODE DONE (9.6, 9.8) · CONTENT DEFERRED
 
 > Target: Weeks 2–6. 5 cornerstone posts + cross-linking.
+>
+> **Readiness check (2026-10-13): not ready to start as written.**
+> - **Gate:** `docs/GROWTH_PLAN.md` and `docs/SITE_REVIEW_2026-10.md` (R8) sequence Phase 9 after Phases 12–14. Phase 8 cleared the service-page 404; still open are proof (0 published testimonials, 12.6–12.7), mobile performance (12.9–12.13) and the canonical host (12.18). Content traffic sent to the site now lands on those problems.
+> - **Stale targets (fixed below):** service slugs were consolidated in 12.2. `rag-development` → `rag-systems`; `ai-chatbot-development` and `ml-deployment` are retired (308 to `/services`).
+> - **Missing target:** there is no `amid` project in the DB (live projects: `medical-qa-chatbot`, `context-aware-rag`, `whatsapp-chatbot`, `continual-monument-detection`, `trek-pal-nepal`, `pestpad`). 9.4 needs a new project row or a new topic.
+> - **Off-offer topics:** 9.4 and 9.5 (mobile ML, continual learning) don't map to any of the 3 current offers. Consider swapping one for an OCR / document-automation post, since `ocr-document-automation` has no case study or post (see 13.2).
+> - **Existing post:** "How to Build a RAG Chatbot with LangChain…" is published (≈1,540 words, 0 internal links, tag `begineer` → 12.20). Add ≥3 internal links to it as part of 9.1–9.3; it overlaps the Phase 6 "How to build a RAG chatbot" article.
+> - **Infra is ready:** blog routes, admin editor, tags, sitemap, `BlogPosting` JSON-LD and OG images all ship today. Drafting posts in the admin (unpublished) can start in parallel with Phase 12.
+>
+> **Status (2026-10-13):** unblocked code shipped (9.6, 9.8). Deferred: 9.1–9.5 (publishing gated on Phases 12–14; posts are author-written), 9.7 (needs the posts to link to), 9.9–9.10 (need published posts).
 
 ### Cornerstone posts (1,800+ words each, ≥3 internal links, hero image, code samples)
 
-- [ ] **9.1** Publish "RAG in production: 3 lessons from shipping a medical chatbot" → links to `/projects/medical-qa-chatbot`, `/services/rag-development`. Tags: `rag`, `production`, `healthcare`, `llm`.
-- [ ] **9.2** Publish "Building WhatsApp bots with function calling: a practical guide" → links to `/projects/whatsapp-chatbot`, `/services/whatsapp-automation`. Tags: `whatsapp`, `openai`, `automation`.
-- [ ] **9.3** Publish "Fine-tuning vs RAG: when to pick each" → links to both RAG case studies and `/services/rag-development`, `/services/ai-chatbot-development`. Tags: `rag`, `fine-tuning`, `llm`, `architecture`.
-- [ ] **9.4** Publish "On-device ML with TensorFlow Lite: lessons from AMID" → links to `/projects/amid`, `/services/ml-deployment`. Tags: `mobile-ml`, `tflite`, `edge`.
-- [ ] **9.5** Publish "Continual learning for production CV: avoiding catastrophic forgetting" → links to `/projects/continual-monument-detection`, `/services/ml-deployment`. Tags: `continual-learning`, `computer-vision`, `ewc`, `maml`.
+- [ ] **9.1** ⏸ *Deferred: publish after Phases 12–14; draft unpublished in `/admin/blog` meanwhile.* Publish "RAG in production: 3 lessons from shipping a medical chatbot" → links to `/projects/medical-qa-chatbot`, `/services/rag-systems`. Tags: `rag`, `production`, `healthcare`, `llm`.
+- [ ] **9.2** ⏸ *Deferred: publish after Phases 12–14; draft unpublished in `/admin/blog` meanwhile.* Publish "Building WhatsApp bots with function calling: a practical guide" → links to `/projects/whatsapp-chatbot`, `/services/whatsapp-automation`. Tags: `whatsapp`, `openai`, `automation`.
+- [ ] **9.3** ⏸ *Deferred: publish after Phases 12–14; draft unpublished in `/admin/blog` meanwhile.* Publish "Fine-tuning vs RAG: when to pick each" → links to both RAG case studies (`/projects/medical-qa-chatbot`, `/projects/context-aware-rag`) and `/services/rag-systems`. Tags: `rag`, `fine-tuning`, `llm`, `architecture`.
+- [ ] **9.4** ⏸ *Deferred: publish after Phases 12–14; draft unpublished in `/admin/blog` meanwhile.* Publish "On-device ML with TensorFlow Lite: lessons from AMID" → ⚠️ `/projects/amid` does not exist and `/services/ml-deployment` is retired; add the project or replace this topic. Tags: `mobile-ml`, `tflite`, `edge`.
+- [ ] **9.5** ⏸ *Deferred: publish after Phases 12–14; draft unpublished in `/admin/blog` meanwhile.* Publish "Continual learning for production CV: avoiding catastrophic forgetting" → links to `/projects/continual-monument-detection` (`/services/ml-deployment` is retired; no matching offer). Tags: `continual-learning`, `computer-vision`, `ewc`, `maml`.
 
 ### Cross-linking layer (after posts ship)
 
-- [ ] **9.6** Build `RelatedProjectsByTags` server component and render at bottom of `src/app/blog/[slug]/page.tsx` (mirror existing `getRelatedProjects` pattern, match on tag overlap).
-- [ ] **9.7** Add 1–2 inline links to relevant blog posts inside each project's `case_study_content` (edit `scripts/migrate-project-details.ts` then run `npm run db:migrate-details`).
-- [ ] **9.8** Add "Related Reading" widget on each `/services/[slug]` listing 2–3 blog posts that share the service's primary technology tags.
+- [x] **9.6** Build `RelatedProjectsByTags` server component and render at bottom of `src/app/blog/[slug]/page.tsx` (mirror existing `getRelatedProjects` pattern, match on tag overlap). Done 2026-10-13: `src/components/blog/RelatedProjectsByTags.tsx` ("See it in production") via `getRelatedProjectsByTags()`; fuzzy word-boundary matching in `src/lib/tag-match.ts` (ignores generic terms like Python). Verified on the existing RAG post: shows medical-qa-chatbot, context-aware-rag, whatsapp-chatbot.
+- [ ] **9.7** ⏸ *Deferred: needs 9.1–9.5 published first (only one post exists today).* Add 1–2 inline links to relevant blog posts inside each project's case-study fields (`problem` / `solution` / `results`; there is no `case_study_content` column) (edit `scripts/migrate-project-details.ts` then run `npm run db:migrate-details`).
+- [x] **9.8** Add "Related Reading" widget on each `/services/[slug]` listing 2–3 blog posts that share the service's primary technology tags (match `services.tools_technologies` against `blog_tags.name`; normalise case, since values like `Pinecone / ChromaDB / Weaviate` are compound). Done 2026-10-13: `src/components/blog/RelatedReading.tsx` via `getPostsByTerms()`, matching the service stack plus its linked case studies' tags, minimum 2 shared terms. Hidden when nothing matches (OCR page today). Case-study cards extracted to `src/components/projects/ProjectMiniCard.tsx` and reused.
 
 ### Validation
 
-- [ ] **9.9** Verify all 5 posts indexed in Google Search Console; confirm each appears in `/sitemap.xml`.
-- [ ] **9.10** Run [Rich Results Test](https://search.google.com/test/rich-results) on each post URL — `BlogPosting` + `BreadcrumbList` must validate.
+- [ ] **9.9** ⏸ *Deferred: after posts publish.* Verify all 5 posts indexed in Google Search Console; confirm each appears in `/sitemap.xml`.
+- [ ] **9.10** ⏸ *Deferred: after posts publish.* Run [Rich Results Test](https://search.google.com/test/rich-results) on each post URL — `BlogPosting` + `BreadcrumbList` must validate.
 
 ## Phase 10: Conversion & E-E-A-T 💰
 
@@ -178,7 +190,7 @@
 
 ---
 
-## Phase 12: Conversion Fixes (no redesign) 🔧
+## Phase 12: Conversion Fixes (no redesign) 🔧 🟡 CODE DONE · ⏸ items need your input
 
 > Target: Week 1, ~1–2 days. Source: [`docs/SITE_REVIEW_2026-10.md`](docs/SITE_REVIEW_2026-10.md) findings F2, F3, F5, F6, F7, F9.
 > Do these before Phase 13 so the live site stops leaking leads while the redesign is in progress.
@@ -187,43 +199,43 @@
 
 - [x] **12.1** Audit published `services` rows in Supabase; record their exact titles. (2026-10-13: only 3 rows, all published, none with a slug: "ML Developer", "Backend Developer", "Automation Engineer". The seed script defines 6 services, so 3 have no row to land in.)
 - [x] **12.2** Fix `scripts/seed-services.ts` title patterns (or rename rows) so all 6 services receive a slug; run `npm run db:seed-services`. (Script itself made runnable in Phase 8: it previously required the uninstalled `dotenv` package and read `SUPABASE_SERVICE_ROLE_KEY` instead of `SUPABASE_SERVICE_KEY`, so it never ran.) Done 2026-10-13: consolidated into 3 offers (RAG & AI Knowledge Assistants, WhatsApp AI Automation, Document & OCR Automation) with exact-title matching and case-study links; the other 3 services are kept as `archivedServices`. Retired slugs 308 to `/services`.
-- [~] **12.3** Verify every `/services/[slug]` returns 200 on production and homepage cards render as links. (2026-10-13: `/services/django-fastapi-backend` returns 200. "ML Developer" and "Automation Engineer" still have no slug.) Update: all 3 offers render locally with FAQs; production shows them only after this branch is deployed.
+- [x] **12.3** Verify every `/services/[slug]` returns 200 on production and homepage cards render as links. (2026-10-13: `/services/django-fastapi-backend` returns 200. "ML Developer" and "Automation Engineer" still have no slug.) Update: all 3 offers render locally with FAQs; production verified 2026-10-13 after PR #7: `/services`, all 3 offer pages 200, homepage cards link to them, retired slug 308s to `/services`.
 - [x] **12.4** Add `/services/[slug]` URLs to `src/app/sitemap.ts` (priority 0.7, monthly) — closes 8.2.
-- [ ] **12.5** Add an admin warning on `/admin/services` when a published service has no slug.
+- [x] **12.5** Add an admin warning on `/admin/services` when a published service has no slug. Done 2026-10-13: warning banner + slug shown under each title; the service form gained a validated **URL Slug** field (it had none, so a missing slug couldn't be fixed from the admin).
 
 ### Proof (F3)
 
 - [ ] **12.6** Request testimonials from: QuickFox lead, AutomateBoring contact, Trekpal client. Name + role + company + photo.
 - [ ] **12.7** Publish ≥ 2 testimonials via `/admin/testimonials`.
-- [ ] **12.8** Add a `source` / `context` line to each Selected Results metric, or disable the section until sourced.
+- [ ] **12.8** ⏸ *Needs you: which metrics can you source? Each already has a context line (e.g. "Medical Q/A Chatbot") but no source.* Add a `source` / `context` line to each Selected Results metric, or disable the section until sourced.
 
 ### Performance (F5)
 
-- [ ] **12.9** Remove `Lazy3DCanvas` from `Hero.tsx`; replace with a static image (screenshot or diagram of a real system).
-- [ ] **12.10** Remove `Lazy3DCanvas` from `Contact.tsx`.
-- [ ] **12.11** Replace `LazyBallCanvas` in `Tech.tsx` with a grouped text/icon list.
-- [ ] **12.12** Drop `three`, `@react-three/fiber`, `@react-three/drei`, `maath` from `package.json`; delete `public/models/**`, `public/new earth/**`, `src/components/canvas/**`.
-- [ ] **12.13** Re-run Lighthouse (mobile) — target Performance ≥ 75, TBT < 2 s. Record in `docs/SITE_REVIEW_2026-10.md`.
+- [x] **12.9** Remove `Lazy3DCanvas` from `Hero.tsx`; replace with a static image (screenshot or diagram of a real system). Canvas removed 2026-10-13; hero is now content-height. The real-system screenshot moves to the Phase 13 hero rebuild.
+- [x] **12.10** Remove `Lazy3DCanvas` from `Contact.tsx`. Form is now a single centred column.
+- [x] **12.11** Replace `LazyBallCanvas` in `Tech.tsx` with a grouped text/icon list. (Icon + name tiles; `technologies` has no category column, so grouping waits for 13.x.)
+- [x] **12.12** Drop `three`, `@react-three/fiber`, `@react-three/drei`, `maath` from `package.json`; delete `public/models/**`, `public/new earth/**`, `src/components/canvas/**`. Also removed `StarsCanvas` from the homepage, `ui/Loader.tsx`, the `maath` type shim, the `/models` cache header and the canvas-loader CSS. ~88 MB of models deleted.
+- [x] **12.13** Re-run Lighthouse (mobile) — target Performance ≥ 75, TBT < 2 s. Record in `docs/SITE_REVIEW_2026-10.md`. 2026-10-13 (local prod build, 2 runs): Performance 81–89, TBT 150–360 ms, a11y 100, 345 KiB (was 5.4 MB). Hero background moved to `next/image` + `priority` (it is the LCP element). Re-measure on production after deploy.
 
 ### Contact (F6)
 
-- [ ] **12.14** Replace `alert()` in `Contact.tsx` with inline success/error states.
-- [ ] **12.15** Add "Book a call" link (Cal.com / Calendly) to hero CTAs and contact section; track `hero_cta_click: variant='call'`.
-- [ ] **12.16** Show email address and a WhatsApp deep link in the contact section and footer.
-- [ ] **12.17** Move submission to `POST /api/contact` (Resend or SMTP) with honeypot + rate limit; remove EmailJS — closes Phase 5 deferred item.
+- [x] **12.14** Replace `alert()` in `Contact.tsx` with inline success/error states (`aria-live`, error state offers a mailto link).
+- [ ] **12.15** ⏸ *Needs you: a Cal.com / Calendly URL.* Add "Book a call" link (Cal.com / Calendly) to hero CTAs and contact section; track `hero_cta_click: variant='call'`.
+- [~] **12.16** Show email address and a WhatsApp deep link in the contact section and footer. Email shown in the contact section 2026-10-13. ⏸ WhatsApp needs your number; footer waits for Phase 13.
+- [ ] **12.17** ⏸ *Needs you: a Resend (or SMTP) account + API key in Vercel.* Move submission to `POST /api/contact` (Resend or SMTP) with honeypot + rate limit; remove EmailJS — closes Phase 5 deferred item.
 
 ### Domain / SEO (F7)
 
-- [ ] **12.18** Decide canonical host (`www` vs apex). Align Vercel redirect, `SITE_URL`, `metadataBase`, sitemap, JSON-LD, `og:url`.
+- [~] **12.18** Decide canonical host (`www` vs apex). Align Vercel redirect, `SITE_URL`, `metadataBase`, sitemap, JSON-LD, `og:url`. Decided `www` (Vercel already redirects apex → www). 2026-10-13: every hardcoded apex URL (layout, robots, project/service/blog pages) now uses `SITE_URL`; fallback is `www`; admin SEO `canonical_url` updated in DB; `.env.local` / `.env.example` updated. ⏸ **Set `NEXT_PUBLIC_SITE_URL=https://www.pandeysantosh.com.np` in Vercel** (it overrides the code default), then redeploy and resubmit the sitemap.
 - [x] **12.19** Add `alternates.canonical` to homepage `generateMetadata` in `src/app/page.tsx` — closes 8.1.
-- [ ] **12.20** Rename blog tag "Begineer" → "Beginner" (slug + sitemap).
-- [ ] **12.21** Fix CTA colour contrast (primary button) and add `aria-label` to the hero scroll-indicator link in `HeroAnimation.tsx`.
+- [x] **12.20** Rename blog tag "Begineer" → "Beginner" (slug + sitemap). DB row renamed 2026-10-13; `/blog/tag/begineer` 308s to `/blog/tag/beginner`.
+- [x] **12.21** Fix CTA colour contrast (primary button) and add `aria-label` to the hero scroll-indicator link in `HeroAnimation.tsx`. Primary buttons moved to `#7a4fd4` (white text 5.4:1, was 4.0:1) across 8 CTAs.
 
 ### Copy (F1, F9)
 
-- [ ] **12.22** Write one positioning sentence; use it in hero, `<title>`, OG description, footer, and navbar brand.
-- [ ] **12.23** Normalise "Trek Pal Nepal" naming; explain or remove "PACO payment integration".
-- [ ] **12.24** Point "Work" nav link to `/projects`; rename Experience anchor to "Experience".
+- [ ] **12.22** ⏸ *Needs you: positioning is your call.* Write one positioning sentence; use it in hero, `<title>`, OG description, footer, and navbar brand.
+- [ ] **12.23** ⏸ *Needs you: what PACO is.* Normalise "Trek Pal Nepal" naming; explain or remove "PACO payment integration".
+- [x] **12.24** Point "Work" nav link to `/projects`; rename Experience anchor to "Experience". 2026-10-13: the CMS "Work" link (→ `#work`, the Experience section) is now titled "Experience"; Navbar already auto-inserts "Projects" → `/projects`.
 
 ### Dependency security
 - [x] **12.26** `npm audit` 2026-10-13: 27 findings (1 critical, 18 high) → 7 high, all build-time. `npm audit fix` (next 16.2.3 → 16.4.0 for the critical, postcss, prosemirror-view, ws, …), `sharp` ^0.35.5 (matches next 16.4), `tsx` ^4.23.15 (patched esbuild), `overrides.postcss-selector-parser` ^7.1.6 (compiled CSS verified identical). Remaining 7 tracked in 13.25 / 13.26.

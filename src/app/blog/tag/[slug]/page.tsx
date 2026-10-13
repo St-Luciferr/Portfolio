@@ -10,10 +10,9 @@ import {
 } from '@/lib/services';
 import { PostCard } from '@/components/blog/PostCard';
 import { TagChip } from '@/components/blog/TagChip';
+import { SITE_URL } from '@/lib/site';
 
 export const revalidate = 60;
-
-const SITE_URL = 'https://pandeysantosh.com.np';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
