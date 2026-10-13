@@ -16,7 +16,6 @@ interface ContactAsideProps {
 function Orbit() {
   return (
     <div className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 opacity-70" aria-hidden="true">
-      <div className="absolute inset-16 rounded-full bg-brand/15 blur-2xl" />
       <div className="orbit-spin absolute inset-6 rounded-full border border-brand/25">
         <span className="absolute -top-1 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-brand shadow-[0_0_12px_rgb(var(--site-brand))]" />
       </div>

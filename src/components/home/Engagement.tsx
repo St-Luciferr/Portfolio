@@ -20,7 +20,6 @@ export function Engagement() {
   return (
     <Section
       id="process"
-      glow={['emerald', 'sky']}
       title="How an engagement runs"
       intro="A predictable process, whether it is a new product or an AI feature for an existing one."
     >

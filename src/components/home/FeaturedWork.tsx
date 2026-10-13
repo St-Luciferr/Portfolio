@@ -17,8 +17,6 @@ export function FeaturedWork({ projects }: { projects: Project[] }) {
   return (
     <Section
       id="work"
-      dots
-      glow={['sky', 'violet']}
       title="Selected case studies"
       intro="What was built, who it was for, and what changed."
       action={<SectionLink href="/projects">All projects</SectionLink>}

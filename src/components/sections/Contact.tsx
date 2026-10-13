@@ -128,7 +128,7 @@ const Contact = ({
 
   return (
     <section id="contact" className={`scroll-mt-20 py-20 sm:py-28 ${styles.paddingX}`}>
-    <div data-reveal className="contact-band max-w-6xl mx-auto rounded-3xl p-3 shadow-lift sm:p-6 lg:p-8">
+    <div data-reveal className="contact-band max-w-6xl mx-auto rounded-3xl p-3 shadow-soft sm:p-6 lg:p-8">
       <div className="grid grid-cols-1 gap-3 sm:gap-5 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
         <div className="rounded-2xl bg-tertiary p-6 shadow-lift sm:p-9">
         <h2 className="text-fg text-[30px] sm:text-[40px] font-semibold leading-[1.15] tracking-[-0.02em]">Start a project</h2>
@@ -237,19 +237,19 @@ const Contact = ({
       />
 
       {/* Fills the band under the panel on wide screens; same steps as "How an engagement runs" */}
-      <ol className="hidden flex-1 flex-col justify-end gap-4 px-4 pb-4 text-white lg:flex">
+      <ol className="hidden flex-1 flex-col justify-end gap-4 px-4 pb-4 text-fg dark:text-white lg:flex">
         {[
           ['You send a short brief', 'What you want to build, and where it hurts today.'],
           ['I reply within 24–48 hours', 'With questions, or a time for a quick call.'],
           ['We agree on scope first', 'A written plan and timeline before any work starts.'],
         ].map(([title, text], i) => (
           <li key={title} className="flex gap-4">
-            <span className="flex h-8 w-8 flex-none items-center justify-center rounded-full bg-white/15 text-sm font-semibold ring-1 ring-white/25">
+            <span className="flex h-8 w-8 flex-none items-center justify-center rounded-full bg-tertiary text-sm font-semibold text-brand-fg ring-1 ring-brand/25 dark:bg-white/15 dark:text-white dark:ring-white/25">
               {i + 1}
             </span>
             <div>
               <p className="font-medium">{title}</p>
-              <p className="text-sm text-white/75">{text}</p>
+              <p className="text-sm text-secondary dark:text-white/75">{text}</p>
             </div>
           </li>
         ))}
