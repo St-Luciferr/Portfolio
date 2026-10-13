@@ -9,6 +9,8 @@ import { Engagement } from '@/components/home/Engagement';
 import { Proof } from '@/components/home/Proof';
 import { AboutSection } from '@/components/home/AboutSection';
 import { Writing } from '@/components/home/Writing';
+import { StackStrip } from '@/components/home/StackStrip';
+import { RevealObserver } from '@/components/home/RevealObserver';
 import Footer from '@/components/layout/Footer';
 
 import { SITE_URL } from '@/lib/site';
@@ -177,6 +179,7 @@ export default async function Home() {
           bookingUrl={contactSettings.bookingUrl}
           availability={bioSettings.availability}
         />
+        <StackStrip technologies={technologies} />
         <Offers services={services} />
         <FeaturedWork projects={pickFeatured(projects)} />
         <Engagement />
@@ -190,7 +193,6 @@ export default async function Home() {
           bio={bioSettings}
           name="Santosh Pandey"
           role={heroSettings.role || 'Full-Stack GenAI Developer'}
-          technologies={technologies}
           experiences={experiences}
           resumeUrl={heroSettings.resumeUrl || '/cv.pdf'}
         />
@@ -205,6 +207,7 @@ export default async function Home() {
           location={bioSettings.location}
         />
       </main>
+      <RevealObserver />
       <Footer
         socialLinks={settings['socialLinks']}
         navLinks={navLinks}

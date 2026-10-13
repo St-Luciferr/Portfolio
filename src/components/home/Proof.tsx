@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { Section } from './Section';
+import { CountUp } from './CountUp';
 import type { SelectedResultMetric, Testimonial } from '@/types/frontend';
 
 interface ProofProps {
@@ -21,8 +22,8 @@ export function Proof({ testimonials, metrics, heading, subheading }: ProofProps
             <div key={metric.label} className="flex flex-col bg-tertiary p-6 sm:p-7">
               {/* dt before dd for valid markup; order-first keeps the value on top */}
               <dt className="mt-3 text-fg text-[15px] font-medium">{metric.label}</dt>
-              <dd className="order-first text-fg text-[36px] sm:text-[42px] font-semibold leading-none tracking-[-0.03em]">
-                {metric.value}
+              <dd className="order-first text-brand-fg text-[36px] sm:text-[42px] font-semibold leading-none tracking-[-0.03em]">
+                <CountUp value={metric.value} />
               </dd>
               {metric.context && <dd className="mt-1 text-[13px] leading-5 text-secondary">{metric.context}</dd>}
             </div>

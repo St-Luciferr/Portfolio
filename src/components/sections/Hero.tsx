@@ -1,6 +1,7 @@
 import { styles } from '@/lib/styles';
 import { HeroCTAs } from '@/components/sections/HeroCTAs';
 import HeroVisual from '@/components/sections/HeroVisual';
+import { Spotlight } from '@/components/home/Spotlight';
 import { HeroSettings } from '@/types/frontend';
 
 interface HeroProps {
@@ -27,6 +28,7 @@ const Hero = ({ data, bookingUrl, availability }: HeroProps) => {
         aria-hidden="true"
         className="hero-grid pointer-events-none absolute inset-0 -z-10"
       />
+      <Spotlight />
       <div
         aria-hidden="true"
         className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[520px] w-[900px] -translate-x-1/2 rounded-full bg-brand/[0.12] blur-[120px] dark:bg-brand/[0.18]"

@@ -289,6 +289,7 @@
 
 - [x] **13.27** Light + dark theme with a navbar toggle (system default, persisted, no flash); admin pinned to light. Geist typeface, token-based palette (`docs/DESIGN_SPEC.md`), alternating case-study rows, sentence-case labels, dark code panels in both themes.
 - [x] **13.28** Experience restored inside About with `react-vertical-timeline-component` (one-column-left), themed from site tokens. It was dropped in 13.x by mistake: the review meant to surface that proof (Global IME Bank OCR, etc.), not remove it.
+- [x] **13.29** Life pass: live hero demo cycling three example flows (docs Q&A, WhatsApp booking, invoice intake) with clickable tabs; pointer spotlight on the hero grid; tools marquee under the hero; one-time scroll reveals; metric count-up; per-offer accent hues; contact section on a brand gradient band. All motion off under reduced motion; content visible without JS.
 
 ### Cleanup
 

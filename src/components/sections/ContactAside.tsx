@@ -38,7 +38,7 @@ const ContactAside = ({
   location,
 }: ContactAsideProps) => {
   return (
-    <aside className="relative h-fit overflow-hidden rounded-xl border border-fg/10 bg-black-100 p-6 sm:p-9">
+    <aside className="relative h-fit overflow-hidden rounded-2xl bg-black-100 p-6 shadow-lift sm:p-9">
       <Orbit />
 
       <div className="relative">

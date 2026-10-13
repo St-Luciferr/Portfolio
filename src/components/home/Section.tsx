@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import type React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { styles } from '@/lib/styles';
 
@@ -26,7 +27,7 @@ export function Section({ id, title, intro, action, children, tone = 'plain' }: 
       }`}
     >
       <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+        <div data-reveal className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-2xl">
             <h2 className="text-fg text-[30px] sm:text-[40px] font-semibold leading-[1.15] tracking-[-0.02em]">
               {title}
@@ -35,7 +36,9 @@ export function Section({ id, title, intro, action, children, tone = 'plain' }: 
           </div>
           {action && <div className="flex-none">{action}</div>}
         </div>
-        <div className="mt-12 sm:mt-14">{children}</div>
+        <div data-reveal style={{ '--reveal-delay': '120ms' } as React.CSSProperties} className="mt-12 sm:mt-14">
+          {children}
+        </div>
       </div>
     </section>
   );

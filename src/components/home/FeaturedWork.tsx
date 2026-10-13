@@ -28,7 +28,7 @@ export function FeaturedWork({ projects }: { projects: Project[] }) {
           const outcome = project.outcomeLine || project.details.summary;
           const flip = i % 2 === 1;
           return (
-            <article key={project.id} className="grid items-center gap-8 lg:grid-cols-2 lg:gap-14">
+            <article key={project.id} data-reveal className="grid items-center gap-8 lg:grid-cols-2 lg:gap-14">
               <Link
                 href={`/projects/${project.slug}`}
                 className={`group block overflow-hidden rounded-xl border border-fg/10 bg-tertiary p-2 shadow-lift ${flip ? 'lg:order-2' : ''}`}
