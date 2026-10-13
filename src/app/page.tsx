@@ -11,6 +11,8 @@ import { AboutSection } from '@/components/home/AboutSection';
 import { Writing } from '@/components/home/Writing';
 import { StackStrip } from '@/components/home/StackStrip';
 import { RevealObserver } from '@/components/home/RevealObserver';
+import { PageArt } from '@/components/home/PageArt';
+import { BookendRidge } from '@/components/home/BookendRidge';
 import Footer from '@/components/layout/Footer';
 
 import { SITE_URL } from '@/lib/site';
@@ -181,6 +183,9 @@ export default async function Home() {
         >
           <StackStrip technologies={technologies} />
         </Hero>
+        {/* Everything below the hero walks down one terrain: contours + trail, closing ridge */}
+        <div className="relative isolate">
+        <PageArt />
         <Offers services={services} />
         <FeaturedWork projects={pickFeatured(projects)} />
         <Engagement />
@@ -207,6 +212,8 @@ export default async function Home() {
           availability={bioSettings.availability}
           location={bioSettings.location}
         />
+        <BookendRidge />
+        </div>
       </main>
       <RevealObserver />
       <Footer

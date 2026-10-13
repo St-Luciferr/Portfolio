@@ -47,6 +47,9 @@
     --ridge-near: 233 236 242;
     --ridge-snow: 255 255 255 / 0.9;
     --ridge-moon: 91 70 229 / 0.07;
+    /* Page art below the hero (PageArt.tsx) */
+    --page-contour: 91 70 229 / 0.1;
+    --page-trail: 91 70 229 / 0.42;
     color-scheme: light;
   }
 
@@ -67,6 +70,8 @@
     --ridge-near: 20 23 41;
     --ridge-snow: 237 239 245 / 0.35;
     --ridge-moon: 180 168 255 / 0.1;
+    --page-contour: 180 168 255 / 0.12;
+    --page-trail: 180 168 255 / 0.45;
     color-scheme: dark;
   }
 
@@ -300,6 +305,33 @@
   background: radial-gradient(80% 60% at 50% 0%, rgb(var(--site-brand) / 0.16), transparent 70%);
 }
 
+/* Page art: static SVGs used as masks, tinted by theme tokens. Natural
+   1440px scale, centred, so rings keep their shape at every width. */
+.page-art {
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: top center;
+  mask-position: top center;
+  -webkit-mask-size: 1440px auto;
+  mask-size: 1440px auto;
+}
+.page-contours {
+  background-color: rgb(var(--page-contour));
+  -webkit-mask-image: url('/art/page-contours.svg');
+  mask-image: url('/art/page-contours.svg');
+}
+.page-trail {
+  background-color: rgb(var(--page-trail));
+  -webkit-mask-image: url('/art/page-trail.svg');
+  mask-image: url('/art/page-trail.svg');
+}
+@media (min-width: 1600px) {
+  .page-art {
+    -webkit-mask-size: 100% auto;
+    mask-size: 100% auto;
+  }
+}
+
 /* Scroll reveal (RevealObserver.tsx). Only hides when JS is running. */
 html.js [data-reveal]:not([data-shown]) {
   opacity: 0;
@@ -338,10 +370,11 @@ html.js [data-reveal]:not([data-shown]) {
 
 /* Contact frame: soft brand -> sky -> emerald tint in both themes */
 .contact-band {
-  background: linear-gradient(135deg, rgb(var(--site-brand) / 0.12), rgb(56 189 248 / 0.10) 55%, rgb(16 185 129 / 0.08));
+  background-color: rgb(var(--site-bg));
+  background-image: linear-gradient(135deg, rgb(var(--site-brand) / 0.12), rgb(56 189 248 / 0.10) 55%, rgb(16 185 129 / 0.08));
   border: 1px solid rgb(var(--site-brand) / 0.15);
 }
 [data-theme='dark'] .contact-band {
-  background: linear-gradient(135deg, rgb(var(--site-brand) / 0.22), rgb(14 165 233 / 0.10) 55%, rgb(16 185 129 / 0.08));
+  background-image: linear-gradient(135deg, rgb(var(--site-brand) / 0.22), rgb(14 165 233 / 0.10) 55%, rgb(16 185 129 / 0.08));
   border-color: rgb(var(--site-brand) / 0.28);
 }

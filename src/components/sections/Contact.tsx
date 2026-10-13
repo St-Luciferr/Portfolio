@@ -127,7 +127,7 @@ const Contact = ({
   };
 
   return (
-    <section id="contact" className={`scroll-mt-20 pt-14 pb-20 sm:pt-20 sm:pb-28 ${styles.paddingX}`}>
+    <section id="contact" className={`scroll-mt-20 pt-14 pb-20 sm:pt-20 sm:pb-24 ${styles.paddingX}`}>
     <div data-reveal className="contact-band max-w-6xl mx-auto rounded-3xl p-3 shadow-soft sm:p-6 lg:p-8">
       <div className="grid grid-cols-1 gap-3 sm:gap-5 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
         <div className="rounded-2xl bg-tertiary p-6 shadow-lift sm:p-9">

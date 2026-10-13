@@ -45,7 +45,7 @@ export function Engagement() {
         ))}
       </ol>
 
-      <div className="mt-4 rounded-2xl border border-brand/20 bg-brand/[0.05] p-6 sm:p-7 dark:bg-brand/[0.08]">
+      <div className="mt-4 rounded-2xl border border-brand/20 bg-tertiary bg-gradient-to-r from-brand/[0.06] to-brand/[0.03] p-6 sm:p-7 dark:from-brand/[0.1] dark:to-brand/[0.05]">
         <h3 className="text-fg text-[16px] font-semibold">What you prepare</h3>
         <ul className="mt-4 grid gap-x-8 gap-y-3 sm:grid-cols-2">
           {prepare.map((item) => (
