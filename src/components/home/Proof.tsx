@@ -15,7 +15,7 @@ export function Proof({ testimonials, metrics, heading, subheading }: ProofProps
   if (testimonials.length === 0 && metrics.length === 0) return null;
 
   return (
-    <Section id="results" tone="band" title={heading || 'Results'} intro={subheading}>
+    <Section id="results" tone="band" dots glow={['amber', 'violet']} title={heading || 'Results'} intro={subheading}>
       {metrics.length > 0 && (
         <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-fg/10 bg-fg/10 lg:grid-cols-4">
           {metrics.map((metric) => (

@@ -22,7 +22,7 @@ export function AboutSection({ bio, name, role, experiences, resumeUrl }: AboutS
     .toUpperCase();
 
   return (
-    <Section id="about" title="About me">
+    <Section id="about" title="About me" glow={['sky', 'rose']}>
       <div className="grid gap-12 lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-16">
         {/* Profile column */}
         <aside className="lg:sticky lg:top-24 lg:self-start">

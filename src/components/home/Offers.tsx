@@ -22,6 +22,7 @@ export function Offers({ services }: { services: Service[] }) {
   return (
     <Section
       id="services"
+      glow={['violet', 'sky']}
       title="Products, and the AI inside them"
       intro="End-to-end builds: the web app, the backend and the AI features, delivered by one developer who owns the whole stack."
       action={<SectionLink href="/services">All services</SectionLink>}

@@ -8,6 +8,7 @@ export function Writing({ posts }: { posts: BlogPost[] }) {
   return (
     <Section
       id="writing"
+      glow={['violet', 'amber']}
       title="Notes from the build"
       intro="Practical write-ups on RAG, automation and shipping AI features."
       action={<SectionLink href="/blog">All posts</SectionLink>}
