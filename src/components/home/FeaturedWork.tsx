@@ -17,7 +17,6 @@ export function FeaturedWork({ projects }: { projects: Project[] }) {
   return (
     <Section
       id="work"
-      tone="band"
       dots
       glow={['sky', 'violet']}
       title="Selected case studies"

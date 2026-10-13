@@ -22,8 +22,6 @@ interface SectionProps {
   /** Right-aligned header slot, e.g. a "See all" link. */
   action?: ReactNode;
   children: ReactNode;
-  /** Alternate band background for rhythm between sections. */
-  tone?: 'plain' | 'band';
   /** Colour field: [top-left hue, bottom-right hue]. */
   glow?: [Hue, Hue];
   /** Fine dot texture over the band. */
@@ -34,30 +32,25 @@ interface SectionProps {
  * Homepage section shell (docs/DESIGN_SPEC.md): theme tokens, a fixed type
  * scale, a per-section colour field and a one-time scroll reveal.
  */
-export function Section({ id, title, intro, action, children, tone = 'plain', glow, dots }: SectionProps) {
+export function Section({ id, title, intro, action, children, glow, dots }: SectionProps) {
   return (
     <section
       id={id}
-      className={`relative isolate overflow-clip scroll-mt-20 py-20 sm:py-28 ${styles.paddingX} ${
-        tone === 'band' ? 'bg-black-100' : ''
-      }`}
+      // No per-section fill or clipping: glows spill past the section edges and
+      // blend with their neighbours, so the page reads as one continuous surface.
+      // Horizontal overflow is clipped once on <main> (app/page.tsx).
+      className={`relative isolate scroll-mt-20 py-20 sm:py-28 ${styles.paddingX}`}
     >
-      {tone === 'band' && (
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-gradient-to-r from-transparent via-brand/40 to-transparent"
-        />
-      )}
       {dots && <div aria-hidden="true" className="dot-pattern pointer-events-none absolute inset-0 -z-10" />}
       {glow && (
         <>
           <div
             aria-hidden="true"
-            className={`pointer-events-none absolute -left-40 -top-32 -z-10 h-[460px] w-[560px] rounded-full blur-[120px] ${HUE_CLASS[glow[0]]}`}
+            className={`pointer-events-none absolute -left-48 -top-48 -z-10 h-[620px] w-[640px] rounded-full blur-[140px] ${HUE_CLASS[glow[0]]}`}
           />
           <div
             aria-hidden="true"
-            className={`pointer-events-none absolute -bottom-40 -right-40 -z-10 h-[460px] w-[560px] rounded-full blur-[120px] ${HUE_CLASS[glow[1]]}`}
+            className={`pointer-events-none absolute -bottom-48 -right-48 -z-10 h-[620px] w-[640px] rounded-full blur-[140px] ${HUE_CLASS[glow[1]]}`}
           />
         </>
       )}

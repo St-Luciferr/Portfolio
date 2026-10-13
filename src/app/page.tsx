@@ -172,7 +172,7 @@ export default async function Home() {
           }}
         />
       )}
-      <main className="relative bg-primary">
+      <main className="relative isolate overflow-x-clip bg-primary">
         <Navbar navLinks={navLinks} bookingUrl={contactSettings.bookingUrl} />
         <Hero
           data={settings['hero']}

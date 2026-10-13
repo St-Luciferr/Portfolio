@@ -349,6 +349,7 @@ html.js [data-reveal]:not([data-shown]) {
 .dot-pattern {
   background-image: radial-gradient(rgb(var(--site-fg) / 0.09) 1px, transparent 1px);
   background-size: 22px 22px;
-  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 100%);
+  /* Fade to nothing well inside the section so no edge is visible */
+  mask-image: radial-gradient(ellipse 70% 55% at 50% 50%, #000 15%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 55% at 50% 50%, #000 15%, transparent 75%);
 }
