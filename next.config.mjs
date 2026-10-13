@@ -37,6 +37,17 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === 'production',
   },
 
+  // Retired service URLs (offers consolidated 2026-10-13, docs/SITE_REVIEW_2026-10.md R1)
+  async redirects() {
+    return [
+      {
+        source: '/services/:slug(django-fastapi-backend|ai-chatbot|ml-deployment)',
+        destination: '/services',
+        permanent: true,
+      },
+    ];
+  },
+
   // Headers for caching and performance
   async headers() {
     return [

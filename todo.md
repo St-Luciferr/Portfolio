@@ -89,20 +89,24 @@
 
 ---
 
-## Phase 8: Quick SEO Wins 🚀
+## Phase 8: Quick SEO Wins 🚀 ✅ CODE COMPLETE (deploy + 8.8 left)
 
 > Target: Week 1. See [`docs/GROWTH_PLAN.md`](docs/GROWTH_PLAN.md#phase-8--quick-seo-wins-week-1-10-hours-total) for rationale.
 
-- [ ] **8.1** Add canonical URL to homepage metadata in `src/app/page.tsx` — `alternates: { canonical: 'https://pandeysantosh.com.np' }`.
-- [ ] **8.2** Include `/services` index + every `/services/[slug]` in `src/app/sitemap.ts` (priority 0.7, monthly).
-- [ ] **8.3** Wrap `src/components/sections/Testimonials.tsx` cards with `Review` + `AggregateRating` JSON-LD; validate at [validator.schema.org](https://validator.schema.org/).
-- [ ] **8.4** Add a third hero CTA "Browse Projects" → `/projects` in `src/components/sections/HeroCTAs.tsx`; emit `hero_cta_click: variant='projects'` analytics event.
-- [ ] **8.5** Build dynamic OG images via `next/og`:
-  - [ ] `src/app/blog/[slug]/opengraph-image.tsx`
-  - [ ] `src/app/projects/[slug]/opengraph-image.tsx`
-- [ ] **8.6** Add 5–8 FAQ Q&As + `FAQPage` JSON-LD on each `/services/[slug]` page (Q&As can be static array per service or new `service_faqs` column).
-- [ ] **8.7** Record Lighthouse baseline (homepage, project detail, blog list, service detail) in `docs/GROWTH_PLAN.md` success-metrics table.
-- [ ] **8.8** Verify site ownership in Google Search Console + Bing Webmaster; submit sitemap.
+- [x] **8.1** Add canonical URL to homepage metadata in `src/app/page.tsx` — `alternates: { canonical: 'https://pandeysantosh.com.np' }`. Uses `SITE_URL` from `src/lib/site.ts`; host choice still open in 12.18.
+- [x] **8.2** Include `/services` index + every `/services/[slug]` in `src/app/sitemap.ts` (priority 0.7, monthly). New `/services` index page added. URLs appear automatically once services have slugs (12.1–12.3).
+- [~] **8.3** `Review` JSON-LD emitted from `src/app/page.tsx` for every published testimonial. `AggregateRating` intentionally **not** added: testimonials have no star score, and a made-up rating breaks Google's review-snippet policy. Validate at [validator.schema.org](https://validator.schema.org/) once ≥1 testimonial is published (12.7).
+- [x] **8.4** Add a third hero CTA "Browse Projects" → `/projects` in `src/components/sections/HeroCTAs.tsx`; emit `hero_cta_click: variant='projects'` analytics event.
+- [x] **8.5** Build dynamic OG images via `next/og` (shared renderer in `src/lib/og.tsx`):
+  - [x] `src/app/blog/[slug]/opengraph-image.tsx`
+  - [x] `src/app/projects/[slug]/opengraph-image.tsx`
+- [~] **8.6** FAQ `<details>` + `FAQPage` JSON-LD on `/services/[slug]`, stored in new `services.faqs` column. Draft Q&As (5 per service) in `scripts/seed-services.ts`.
+  - [x] Run `supabase/migrations/008_add_service_faqs.sql` in the Supabase SQL editor. (Applied 2026-10-13; column verified.)
+  - [x] Seeded via `npm run db:seed-services` (2026-10-13). Draft answers still worth a read-through in `scripts/seed-services.ts`.
+- [x] **8.7** Record Lighthouse baseline (homepage, project detail, blog list, service detail) in `docs/GROWTH_PLAN.md` success-metrics table.
+- [~] **8.8** Verify site ownership in Google Search Console + Bing Webmaster; submit sitemap.
+  - [x] Google Search Console verified (confirmed 2026-10-13). Resubmit `/sitemap.xml` after the Phase 8 deploy so the new service URLs are picked up.
+  - [ ] Bing Webmaster (deferred): set `NEXT_PUBLIC_BING_SITE_VERIFICATION` in Vercel; the meta tag is already wired in `src/app/layout.tsx`.
 
 ## Phase 9: Content Engine Launch ✍️
 
@@ -171,3 +175,116 @@
 
 - [ ] **Monthly**: Update success-metrics table in `docs/GROWTH_PLAN.md` with actuals.
 - [ ] **Quarterly**: Re-sequence remaining phases based on Search Console data.
+
+---
+
+## Phase 12: Conversion Fixes (no redesign) 🔧
+
+> Target: Week 1, ~1–2 days. Source: [`docs/SITE_REVIEW_2026-10.md`](docs/SITE_REVIEW_2026-10.md) findings F2, F3, F5, F6, F7, F9.
+> Do these before Phase 13 so the live site stops leaking leads while the redesign is in progress.
+
+### Services (F2)
+
+- [x] **12.1** Audit published `services` rows in Supabase; record their exact titles. (2026-10-13: only 3 rows, all published, none with a slug: "ML Developer", "Backend Developer", "Automation Engineer". The seed script defines 6 services, so 3 have no row to land in.)
+- [x] **12.2** Fix `scripts/seed-services.ts` title patterns (or rename rows) so all 6 services receive a slug; run `npm run db:seed-services`. (Script itself made runnable in Phase 8: it previously required the uninstalled `dotenv` package and read `SUPABASE_SERVICE_ROLE_KEY` instead of `SUPABASE_SERVICE_KEY`, so it never ran.) Done 2026-10-13: consolidated into 3 offers (RAG & AI Knowledge Assistants, WhatsApp AI Automation, Document & OCR Automation) with exact-title matching and case-study links; the other 3 services are kept as `archivedServices`. Retired slugs 308 to `/services`.
+- [~] **12.3** Verify every `/services/[slug]` returns 200 on production and homepage cards render as links. (2026-10-13: `/services/django-fastapi-backend` returns 200. "ML Developer" and "Automation Engineer" still have no slug.) Update: all 3 offers render locally with FAQs; production shows them only after this branch is deployed.
+- [x] **12.4** Add `/services/[slug]` URLs to `src/app/sitemap.ts` (priority 0.7, monthly) — closes 8.2.
+- [ ] **12.5** Add an admin warning on `/admin/services` when a published service has no slug.
+
+### Proof (F3)
+
+- [ ] **12.6** Request testimonials from: QuickFox lead, AutomateBoring contact, Trekpal client. Name + role + company + photo.
+- [ ] **12.7** Publish ≥ 2 testimonials via `/admin/testimonials`.
+- [ ] **12.8** Add a `source` / `context` line to each Selected Results metric, or disable the section until sourced.
+
+### Performance (F5)
+
+- [ ] **12.9** Remove `Lazy3DCanvas` from `Hero.tsx`; replace with a static image (screenshot or diagram of a real system).
+- [ ] **12.10** Remove `Lazy3DCanvas` from `Contact.tsx`.
+- [ ] **12.11** Replace `LazyBallCanvas` in `Tech.tsx` with a grouped text/icon list.
+- [ ] **12.12** Drop `three`, `@react-three/fiber`, `@react-three/drei`, `maath` from `package.json`; delete `public/models/**`, `public/new earth/**`, `src/components/canvas/**`.
+- [ ] **12.13** Re-run Lighthouse (mobile) — target Performance ≥ 75, TBT < 2 s. Record in `docs/SITE_REVIEW_2026-10.md`.
+
+### Contact (F6)
+
+- [ ] **12.14** Replace `alert()` in `Contact.tsx` with inline success/error states.
+- [ ] **12.15** Add "Book a call" link (Cal.com / Calendly) to hero CTAs and contact section; track `hero_cta_click: variant='call'`.
+- [ ] **12.16** Show email address and a WhatsApp deep link in the contact section and footer.
+- [ ] **12.17** Move submission to `POST /api/contact` (Resend or SMTP) with honeypot + rate limit; remove EmailJS — closes Phase 5 deferred item.
+
+### Domain / SEO (F7)
+
+- [ ] **12.18** Decide canonical host (`www` vs apex). Align Vercel redirect, `SITE_URL`, `metadataBase`, sitemap, JSON-LD, `og:url`.
+- [x] **12.19** Add `alternates.canonical` to homepage `generateMetadata` in `src/app/page.tsx` — closes 8.1.
+- [ ] **12.20** Rename blog tag "Begineer" → "Beginner" (slug + sitemap).
+- [ ] **12.21** Fix CTA colour contrast (primary button) and add `aria-label` to the hero scroll-indicator link in `HeroAnimation.tsx`.
+
+### Copy (F1, F9)
+
+- [ ] **12.22** Write one positioning sentence; use it in hero, `<title>`, OG description, footer, and navbar brand.
+- [ ] **12.23** Normalise "Trek Pal Nepal" naming; explain or remove "PACO payment integration".
+- [ ] **12.24** Point "Work" nav link to `/projects`; rename Experience anchor to "Experience".
+
+### Dependency security
+- [x] **12.26** `npm audit` 2026-10-13: 27 findings (1 critical, 18 high) → 7 high, all build-time. `npm audit fix` (next 16.2.3 → 16.4.0 for the critical, postcss, prosemirror-view, ws, …), `sharp` ^0.35.5 (matches next 16.4), `tsx` ^4.23.15 (patched esbuild), `overrides.postcss-selector-parser` ^7.1.6 (compiled CSS verified identical). Remaining 7 tracked in 13.25 / 13.26.
+
+### Cache freshness
+- [x] **12.25** On-demand revalidation for service and project admin writes via `src/lib/api/revalidate.ts` (homepage, index pages, every detail page by route pattern, share images, sitemap). 60 s time-based fallback on `/services/[slug]` and `/projects/[slug]` for seed scripts and SQL edits. Done 2026-10-13.
+
+## Phase 13: Public-Layer Redesign 🎨
+
+> Target: Weeks 2–4, ~2–3 weeks. Source: `docs/SITE_REVIEW_2026-10.md` R1, R3, R7.
+> Keep untouched: Supabase schema, admin dashboard, blog pipeline, `/api/admin/**`, analytics, JSON-LD helpers.
+
+### Design & content prep
+
+- [ ] **13.1** Write a one-page design spec: positioning sentence, 3 offers, 3 featured case studies, trust strip names, voice.
+- [ ] **13.2** Collect real screenshots / redacted diagrams for the 3 featured case studies (Quick CCA, Trek Pal, one RAG system).
+- [ ] **13.3** Define a reduced design system: one accent colour, type scale, spacing, card style; no glow/tilt/cursor effects.
+- [ ] **13.4** Decide on dark-only vs light/dark; document in `src/app/globals.css` tokens.
+
+### Data model changes
+
+- [ ] **13.5** Migration `009_project_grouping.sql`: add `category` (`client` | `research`) and `is_featured` to `projects`; `client_name`, `outcome_line`, `screenshot_url` to `project_details`.
+- [ ] **13.6** Migration `010_service_offers.sql`: add `audience`, `timeline`, `engagement_model` to `services` (`faqs` already added in 008); consolidate to 3 published offers.
+- [ ] **13.7** Migration `011_site_proof.sql`: `trust_logos` site setting (name, logo URL, link) for the hero trust strip.
+- [ ] **13.8** Extend admin forms (`ProjectForm`, `ServiceForm`, settings) for the new fields.
+
+### Homepage rebuild (`src/app/page.tsx` + `src/components/sections/**`)
+
+- [ ] **13.9** Navbar: full name, Services / Work / Writing / About, "Book a call" button.
+- [ ] **13.10** Hero: outcome headline, audience line, 2 CTAs (Book a call / See case studies), trust strip.
+- [ ] **13.11** Offers section: 3 cards → `/services/[slug]`.
+- [ ] **13.12** Selected work: 3 featured case studies with screenshot, client/context, one-line result.
+- [ ] **13.13** "How an engagement runs": 4 steps + "what you prepare".
+- [ ] **13.14** Proof: testimonials + sourced metrics (single section).
+- [ ] **13.15** About: short bio, photo, location/timezone, availability status.
+- [ ] **13.16** Writing: latest 3 posts.
+- [ ] **13.17** Contact: form + booking + email + WhatsApp.
+- [ ] **13.18** Remove `CustomCursor`, `Stars`, `SectionWrapper` tilt/stagger effects; keep `framer-motion` only for subtle fade-ins honouring `prefers-reduced-motion`.
+
+### Sub-pages
+
+- [ ] **13.19** `/services/[slug]`: add audience, timeline, engagement model (FAQ + `FAQPage` JSON-LD done in 8.6).
+- [ ] **13.20** `/projects`: split into "Client work" and "Research & experiments"; restore project images.
+- [ ] **13.21** `/projects/[slug]`: add screenshot/diagram block, client/context line, rewrite Outcome bullets as delivered results.
+- [x] **13.22** Dynamic OG images for projects + posts via `next/og` (done in 8.5).
+
+### Cleanup
+
+- [ ] **13.23** Remove `react-parallax-tilt`, `react-vertical-timeline-component`, unused icons, `public/Face.jsx`, `public/rag.png`.
+- [ ] **13.24** Delete `src/lib/motion.ts` variants no longer used.
+- [ ] **13.25** Migrate Tailwind CSS 3 → 4 during the redesign (CSS is being rewritten anyway). Clears the last 7 `npm audit` findings: all trace to one `braces` DoS advisory (no patched version) via Tailwind 3's `chokidar` / `fast-glob` / `micromatch`. Build-time only; not reachable from the live site.
+- [ ] **13.26** Restore linting: `next lint` was removed in Next 16, so `npm run lint` fails and no ESLint config exists. Add `eslint.config.mjs` (flat config with `eslint-config-next`) and change the script to `eslint .`. Note `eslint-config-next` carries the same `braces` advisory until upstream drops `fast-glob`.
+
+## Phase 14: Verify & Hand Off ✅
+
+> Target: Week 5, ~2 days.
+
+- [ ] **14.1** Lighthouse mobile + desktop on `/`, `/services/[slug]`, `/projects/[slug]`, `/blog`. Target: Performance ≥ 90, TBT < 500 ms, no contrast/link-name failures.
+- [ ] **14.2** Validate JSON-LD on all page types at validator.schema.org and Rich Results Test.
+- [ ] **14.3** Confirm sitemap contains services; resubmit in Google Search Console + Bing.
+- [ ] **14.4** Test the contact funnel end-to-end: form, booking link, email, WhatsApp.
+- [ ] **14.5** Five-second test with 3 people outside tech: "What does this person sell, and for whom?"
+- [ ] **14.6** Update success-criteria table in `docs/SITE_REVIEW_2026-10.md` with actuals.
+- [ ] **14.7** Resume `GROWTH_PLAN.md` Phase 9 (content engine).

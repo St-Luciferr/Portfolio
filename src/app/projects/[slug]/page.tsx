@@ -14,6 +14,9 @@ import {
 } from '@/lib/services';
 import { getProjectDetailContent } from '@/lib/project-details';
 
+// Fallback refresh for edits that bypass the admin API (seed scripts, SQL editor).
+export const revalidate = 60;
+
 interface ProjectPageProps {
   params: Promise<{ slug: string }>;
 }
@@ -57,14 +60,7 @@ export async function generateMetadata({
       title: `${title} | Santosh Pandey`,
       description,
       siteName: 'Santosh Pandey Portfolio',
-      images: [
-        {
-          url: project.imageUrl,
-          width: 1200,
-          height: 630,
-          alt: `${project.name} project preview`,
-        },
-      ],
+      // og:image comes from ./opengraph-image.tsx (branded, per-project card).
       authors: ['Santosh Pandey'],
       tags: project.tags.map(tag => tag.name),
     },
@@ -74,7 +70,7 @@ export async function generateMetadata({
       creator: '@Su_n_toss',
       title,
       description,
-      images: [project.imageUrl],
+      // No twitter:image: X falls back to the generated og:image.
     },
     robots: {
       index: true,

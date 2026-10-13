@@ -79,6 +79,11 @@ export interface ServiceProcessStep {
   description: string;
 }
 
+export interface ServiceFAQ {
+  question: string;
+  answer: string;
+}
+
 export interface Service {
   id: string;
   title: string;
@@ -91,6 +96,7 @@ export interface Service {
   toolsTechnologies: string[];
   deliverables: string[];
   pricingModel: string | null;
+  faqs: ServiceFAQ[];
 }
 
 // ============================================

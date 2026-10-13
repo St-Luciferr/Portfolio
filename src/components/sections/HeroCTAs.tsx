@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { FaFileDownload } from 'react-icons/fa';
 import { track } from '@/lib/analytics';
 
@@ -32,6 +33,14 @@ export function HeroCTAs({ ctaText, ctaUrl, resumeUrl }: HeroCTAsProps) {
           />
         </svg>
       </a>
+
+      <Link
+        href="/projects"
+        onClick={() => track('hero_cta_click', { variant: 'projects' })}
+        className="border border-[#915eff]/60 hover:border-[#915eff] hover:bg-[#915eff]/10 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 flex items-center gap-2"
+      >
+        Browse Projects
+      </Link>
 
       <a
         href={resumeUrl}

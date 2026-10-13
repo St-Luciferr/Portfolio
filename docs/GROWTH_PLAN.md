@@ -3,6 +3,7 @@
 > **Created**: 2026-05-29
 > **Status**: Active — task tracking lives in [`../todo.md`](../todo.md) Phases 8–11.
 > **Predecessor**: SEO + client-acquisition work in `todo.md` Phases 1–7 (infrastructure complete).
+> **Blocker (2026-10-13)**: Conversion audit in [`SITE_REVIEW_2026-10.md`](SITE_REVIEW_2026-10.md) found service pages 404 in production, no published proof, and mobile TBT of 16 s. Complete `todo.md` Phases 12–14 before resuming Phase 9.
 > **Goal**: Move from publication-ready infrastructure to actually ranking and converting.
 
 ## Why this plan exists
@@ -21,7 +22,23 @@ This plan turns the infrastructure into measurable traffic and qualified leads o
 | Inbound contact-form submits / mo | <1 | 2–4 | 5–10 |
 | Avg. session pages-per-session | ~1.4 | 1.8 | 2.2+ |
 | Lighthouse SEO score | 100 | 100 | 100 |
-| Lighthouse Performance | (verify) | ≥90 | ≥95 |
+| Lighthouse Performance (home, mobile) | 53 (2026-10-13) | ≥90 | ≥95 |
+
+### Lighthouse baseline (task 8.7, recorded 2026-10-13)
+
+Lighthouse 12 against production (`https://www.pandeysantosh.com.np`). Scores are Performance / Accessibility / Best Practices / SEO.
+
+| Page | Form factor | Scores | LCP | TBT | CLS | Weight |
+| ---- | ----------- | ------ | --- | --- | --- | ------ |
+| `/` | Desktop | 59 / 92 / 96 / 100 | 1.1 s | 2,460 ms | 0 | 5.4 MB |
+| `/` | Mobile | 53 / 92 / 96 / 100 | 3.0 s | 16,360 ms | 0 | 5.3 MB |
+| `/projects/medical-qa-chatbot` | Desktop | 100 / 96 / 96 / 100 | 0.5 s | 10 ms | 0 | 612 KB |
+| `/projects/medical-qa-chatbot` | Mobile | 89 / 96 / 96 / 100 | 2.8 s | 260 ms | 0 | 601 KB |
+| `/blog` | Desktop | 100 / 98 / 96 / 100 | 0.5 s | 10 ms | 0 | 696 KB |
+| `/blog` | Mobile | 89 / 98 / 96 / 100 | 2.6 s | 270 ms | 0 | 671 KB |
+| `/services/[slug]` | — | not measurable: every service URL returns 404 in production (no slugs seeded) | | | | |
+
+**Regression identified**: the homepage is the only page below 89. The difference is the two 3D models (~4.6 MB of GLB plus WebGL main-thread work). No CLS issues anywhere. Fix tracked in `todo.md` 12.9–12.13.
 
 Track via Vercel Analytics + Google Search Console. Add Search Console verification meta tag if not already configured.
 

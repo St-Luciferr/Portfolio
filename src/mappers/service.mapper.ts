@@ -23,6 +23,10 @@ export function mapService(dbService: DBService): Service {
     toolsTechnologies: dbService.tools_technologies || [],
     deliverables: dbService.deliverables || [],
     pricingModel: dbService.pricing_model || null,
+    // Drop malformed rows so the page and FAQPage JSON-LD never emit empty Q&As.
+    faqs: (dbService.faqs || []).filter(
+      (faq) => faq?.question?.trim() && faq?.answer?.trim()
+    ),
   };
 }
 

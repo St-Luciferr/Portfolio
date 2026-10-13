@@ -7,7 +7,7 @@ import {
   handleApiError,
 } from '@/lib/api/responses';
 import { serviceSchema } from '@/lib/validations';
-import { revalidatePath } from 'next/cache';
+import { revalidateServicePages } from '@/lib/api/revalidate';
 
 /**
  * GET /api/admin/services
@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
 
     if (error) throw error;
 
-    revalidatePath('/');
+    revalidateServicePages();
 
     return successResponse(data, 201);
   } catch (error) {

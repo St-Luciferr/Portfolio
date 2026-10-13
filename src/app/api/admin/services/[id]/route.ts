@@ -8,7 +8,7 @@ import {
   handleApiError,
 } from '@/lib/api/responses';
 import { updateServiceSchema } from '@/lib/validations';
-import { revalidatePath } from 'next/cache';
+import { revalidateServicePages } from '@/lib/api/revalidate';
 
 interface RouteParams {
   params: Promise<{ id: string }>;
@@ -69,7 +69,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
 
     if (error) throw error;
 
-    revalidatePath('/');
+    revalidateServicePages();
 
     return successResponse(data);
   } catch (error) {
@@ -94,7 +94,7 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
 
     if (error) throw error;
 
-    revalidatePath('/');
+    revalidateServicePages();
 
     return successResponse({ message: 'Service deleted successfully' });
   } catch (error) {

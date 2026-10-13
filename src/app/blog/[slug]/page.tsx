@@ -40,16 +40,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const canonical = post.seo.canonicalUrl || `${SITE_URL}/blog/${post.slug}`;
   const tagNames = post.tags.map((t) => t.name);
   const keywords = Array.from(new Set([...tagNames, ...post.seo.keywords]));
-  const images = post.coverImageUrl
-    ? [
-        {
-          url: post.coverImageUrl,
-          width: 1200,
-          height: 630,
-          alt: post.coverImageAlt || post.title,
-        },
-      ]
-    : [];
 
   return {
     title,
@@ -63,7 +53,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title,
       description,
       siteName: 'Santosh Pandey Portfolio',
-      images,
+      // og:image comes from ./opengraph-image.tsx (branded, per-post card).
       publishedTime: post.publishedAt || undefined,
       modifiedTime: post.updatedAt,
       authors: ['Santosh Pandey'],
@@ -75,7 +65,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       creator: '@Su_n_toss',
       title,
       description,
-      images: post.coverImageUrl ? [post.coverImageUrl] : undefined,
+      // No twitter:image: X falls back to the generated og:image.
     },
     robots: {
       index: true,

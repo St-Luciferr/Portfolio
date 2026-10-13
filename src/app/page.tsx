@@ -12,6 +12,7 @@ import Testimonials from '@/components/sections/Testimonials';
 import Contact from '@/components/sections/Contact';
 import Footer from '@/components/layout/Footer';
 
+import { SITE_URL } from '@/lib/site';
 import {
   getPublishedProjects,
   getPublishedExperiences,
@@ -39,7 +40,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const title = seoSettings.title || 'Santosh Pandey | ML Engineer & Full Stack Developer';
   const description = seoSettings.description || 'Machine Learning Engineer passionate about Generative AI, NLP, and intelligent automation.';
   const keywords = seoSettings.keywords || [];
-  const canonicalUrl = seoSettings.canonicalUrl || 'https://pandeysantosh.com.np';
+  const canonicalUrl = seoSettings.canonicalUrl || SITE_URL;
   const ogImage = seoSettings.ogImage || '/og-image.png';
 
   return {
@@ -50,6 +51,9 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     description,
     keywords,
+    alternates: {
+      canonical: canonicalUrl,
+    },
     authors: [{ name: heroSettings.name || 'Santosh Pandey' }],
     creator: heroSettings.name || 'Santosh Pandey',
     openGraph: {
@@ -116,7 +120,7 @@ export default async function Home() {
     '@type': 'Person',
     name: heroSettings.name || 'Santosh Pandey',
     jobTitle: heroSettings.role || 'Machine Learning Engineer',
-    url: seoSettings.canonicalUrl || 'https://pandeysantosh.com.np',
+    url: seoSettings.canonicalUrl || SITE_URL,
     sameAs: [
       socialSettings.github,
       socialSettings.linkedin,
@@ -126,12 +130,49 @@ export default async function Home() {
     description: bioSettings.paragraphs?.[0] || '',
   };
 
+  // Testimonials as schema.org Review entries about the Person.
+  // No `reviewRating` / `AggregateRating`: testimonials carry no star score, and
+  // inventing one would be a fabricated rating (and violates Google's review
+  // snippet policy for self-serving reviews).
+  const reviewsJsonLd =
+    testimonials.length > 0
+      ? {
+          '@context': 'https://schema.org',
+          '@graph': testimonials.map((t) => ({
+            '@type': 'Review',
+            reviewBody: t.testimonial,
+            author: {
+              '@type': 'Person',
+              name: t.name,
+              ...(t.designation && { jobTitle: t.designation }),
+              ...(t.company && {
+                worksFor: { '@type': 'Organization', name: t.company },
+              }),
+            },
+            itemReviewed: {
+              '@type': 'Person',
+              name: jsonLd.name,
+              url: jsonLd.url,
+            },
+          })),
+        }
+      : null;
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      {reviewsJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            // Escape `<` so testimonial text can never close the script tag.
+            __html: JSON.stringify(reviewsJsonLd).replace(/</g, '\\u003c'),
+          }}
+        />
+      )}
       <main className="relative z-0 bg-primary">
         <div
           className="bg-cover bg-no-repeat bg-center"

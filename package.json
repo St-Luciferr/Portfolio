@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "db:seed": "node --env-file=.env.local -r tsx/cjs scripts/seed-database.ts",
+    "db:seed-services": "node --env-file=.env.local -r tsx/cjs scripts/seed-services.ts",
     "db:migrate-details": "node --env-file=.env.local -r tsx/cjs scripts/migrate-project-details.ts",
     "db:migration-guide": "node -r tsx/cjs scripts/run-migration.ts"
   },

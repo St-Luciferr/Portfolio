@@ -129,6 +129,7 @@ export interface DBService {
   tools_technologies: string[] | null;
   deliverables: string[] | null;
   pricing_model: string | null;
+  faqs?: Array<{ question: string; answer: string }> | null;
 }
 
 export interface DBTestimonial {
