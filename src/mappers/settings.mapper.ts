@@ -28,12 +28,17 @@ export function mapSiteSettings(dbSettings: Record<string, any>): SiteSettings {
     ctaURL: dbSettings.hero?.cta_url || '/contact',
     backgroundImageUrl: dbSettings.hero?.background_image_url,
     resumeUrl: dbSettings.hero?.resume_url || '/resume.pdf',
+    headline: dbSettings.hero?.headline || undefined,
+    audience: dbSettings.hero?.audience || undefined,
   };
 
   const bio: BioSettings = {
     paragraphs: Array.isArray(dbSettings.bio?.paragraphs)
       ? dbSettings.bio.paragraphs
       : ['No bio available'],
+    location: dbSettings.bio?.location || undefined,
+    availability: dbSettings.bio?.availability || undefined,
+    photoUrl: dbSettings.bio?.photo_url || undefined,
   };
 
   const seo: SEOSettings = {
@@ -47,6 +52,8 @@ export function mapSiteSettings(dbSettings: Record<string, any>): SiteSettings {
 
   const contact: ContactSettings = {
     email: dbSettings.contact?.email || 'contact@example.com',
+    bookingUrl: dbSettings.contact?.booking_url || undefined,
+    whatsapp: dbSettings.contact?.whatsapp || undefined,
   };
 
   const socialLinks: SocialLinks = {

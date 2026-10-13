@@ -1,120 +1,76 @@
-'use client';
-
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
-import Tilt from 'react-parallax-tilt';
+import { ArrowUpRight } from 'lucide-react';
 
 import Navbar from '@/components/layout/Navbar';
 import { getProjectDetailContent } from '@/lib/project-details';
 import type { Project, NavLink } from '@/types/frontend';
 
-interface ProjectCardProps {
-  project: Project;
-  index: number;
-}
-
-function ProjectCard({ project, index }: ProjectCardProps) {
-  const [readMore, setReadMore] = useState(false);
+function ProjectCard({ project }: { project: Project }) {
   const content = getProjectDetailContent(project);
-  const maxDescriptionLength = 140;
-
-  const truncatedDescription =
-    content.summary.length > maxDescriptionLength
-      ? content.summary.slice(0, maxDescriptionLength) + '...'
-      : content.summary;
-
-  const linkUrl = project.isDemo && project.demoUrl ? project.demoUrl : project.sourceCodeLink;
+  const context = project.clientName || content.eyebrow;
+  const outcome = project.outcomeLine || content.summary;
+  const externalUrl = project.isDemo && project.demoUrl ? project.demoUrl : project.sourceCodeLink;
 
   return (
-    <article className="sm:w-[360px] w-full">
-      <Tilt className="bg-tertiary p-5 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out flex flex-col h-full border border-white/5">
-        <Link
-          href={`/projects/${project.slug}`}
-          className="group block"
-          aria-label={`View ${project.name} case study`}
-        >
-          <div className="relative w-full h-48 rounded-2xl overflow-hidden flex-shrink-0">
-            <Image
-              src={project.imageUrl}
-              alt={`${project.name} project preview`}
-              fill
-              sizes="(max-width: 640px) 100vw, 360px"
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
-            />
+    <article className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-tertiary/60 transition-colors hover:border-[#915eff]/60">
+      <Link href={`/projects/${project.slug}`} className="relative block aspect-[16/10] overflow-hidden bg-black-100">
+        <Image
+          src={project.screenshotUrl || project.imageUrl}
+          alt={`${project.name} preview`}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
+          className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+        />
+      </Link>
 
-            <div className="absolute inset-0 flex justify-end items-start p-3">
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  window.open(linkUrl, '_blank');
-                }}
-                className="black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer hover:bg-gray-800/70 transition-colors duration-200"
-                title={project.isDemo ? 'View Demo' : 'View Source Code'}
-                aria-label={project.isDemo ? `View ${project.name} demo` : `View ${project.name} source code`}
-              >
-                <Image
-                  src={project.isDemo ? '/images/web.png' : '/images/github.png'}
-                  alt={project.isDemo ? 'demo' : 'github'}
-                  width={20}
-                  height={20}
-                  className="object-contain"
-                />
-              </button>
-            </div>
-          </div>
-        </Link>
-
-        <div className="mt-5 flex flex-col flex-grow">
-          <p className="text-secondary text-xs uppercase tracking-wider">
-            {content.eyebrow}
-          </p>
-
-          <Link href={`/projects/${project.slug}`} className="group">
-            <h2 className="mt-2 text-white text-xl font-bold group-hover:text-[#915eff] transition-colors line-clamp-1">
-              {project.name}
-            </h2>
+      <div className="flex flex-1 flex-col p-6">
+        {context && <p className="text-xs uppercase tracking-wider text-[#cbb5ff] line-clamp-1">{context}</p>}
+        <h3 className="mt-2 text-white text-xl font-bold">
+          <Link href={`/projects/${project.slug}`} className="hover:text-[#cbb5ff] transition-colors">
+            {project.name}
           </Link>
+        </h3>
+        <p className="mt-3 text-sm leading-6 text-secondary line-clamp-3">{outcome}</p>
 
-          <p className="mt-3 text-secondary text-sm leading-relaxed">
-            {readMore ? content.summary : truncatedDescription}
-            {content.summary.length > maxDescriptionLength && (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setReadMore(!readMore);
-                }}
-                className="ml-2 text-[#915eff] hover:underline focus:outline-none"
-              >
-                {readMore ? 'Read less' : 'Read more'}
-              </button>
-            )}
-          </p>
-
-          <div className="mt-auto pt-4">
-            <div className="flex flex-wrap gap-2">
-              {project.tags.slice(0, 4).map((tag) => (
-                <span
-                  key={tag.id}
-                  className={`text-xs ${tag.color} bg-gray-800/30 px-2.5 py-1 rounded-full select-none`}
-                >
-                  {tag.name}
-                </span>
-              ))}
-            </div>
-
-            <Link
-              href={`/projects/${project.slug}`}
-              className="mt-4 inline-flex text-sm font-semibold text-[#915eff] hover:text-white transition-colors"
-            >
-              View case study →
-            </Link>
-          </div>
+        <div className="mt-4 flex flex-wrap gap-2">
+          {project.tags.slice(0, 4).map((tag) => (
+            <span key={tag.id} className="rounded-md bg-black-100 px-2 py-1 text-[11px] text-secondary">
+              {tag.name}
+            </span>
+          ))}
         </div>
-      </Tilt>
+
+        <div className="mt-auto flex items-center justify-between pt-5 text-sm">
+          <Link
+            href={`/projects/${project.slug}`}
+            className="font-semibold text-[#cbb5ff] hover:text-white transition-colors"
+          >
+            Read the case study →
+          </Link>
+          {externalUrl && (
+            <a
+              href={externalUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-secondary hover:text-white transition-colors"
+            >
+              {project.isDemo ? 'Demo' : 'Source'} <ArrowUpRight className="h-3.5 w-3.5" />
+            </a>
+          )}
+        </div>
+      </div>
     </article>
+  );
+}
+
+function ProjectGrid({ projects }: { projects: Project[] }) {
+  return (
+    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {projects.map((project) => (
+        <ProjectCard key={project.id} project={project} />
+      ))}
+    </div>
   );
 }
 
@@ -123,38 +79,47 @@ interface ProjectsClientProps {
   navLinks: NavLink[];
 }
 
+// Server-rendered list. Splits into client / research groups once any project
+// has a category (migration 009); until then everything shows as one grid.
 export default function ProjectsClient({ projects, navLinks }: ProjectsClientProps) {
+  const isGrouped = projects.some((p) => p.category);
+  const groups = isGrouped
+    ? [
+        { title: 'Client work', items: projects.filter((p) => p.category === 'client') },
+        { title: 'Research & experiments', items: projects.filter((p) => p.category === 'research') },
+        { title: 'More projects', items: projects.filter((p) => !p.category) },
+      ].filter((g) => g.items.length > 0)
+    : [{ title: null, items: projects }];
+
   return (
     <main className="min-h-screen bg-primary">
       <Navbar navLinks={navLinks} />
 
       <section className="pt-32 pb-20 sm:px-16 px-6">
         <div className="max-w-7xl mx-auto">
-          <p className="text-secondary uppercase tracking-wider text-sm sm:text-base">
-            Case studies
-          </p>
+          <p className="text-secondary uppercase tracking-wider text-sm sm:text-base">Case studies</p>
           <div className="mt-4 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <h1 className="text-white font-black text-[38px] sm:text-[60px] leading-tight">
-                Projects
-              </h1>
+              <h1 className="text-white font-black text-[38px] sm:text-[56px] leading-tight">Work</h1>
               <p className="mt-4 max-w-3xl text-secondary text-[17px] leading-8">
-                A collection of AI, RAG, automation, backend, mobile, and
-                full-stack work with notes on the problem, implementation,
-                architecture, and results.
+                Full-stack products, AI assistants and automation, each with notes on the problem, the
+                implementation and the result.
               </p>
             </div>
             <Link
               href="/#contact"
               className="w-fit rounded-md bg-[#7a4fd4] px-5 py-3 text-white font-semibold hover:bg-[#6a3fc4] transition-colors"
             >
-              Discuss a Project
+              Discuss a project
             </Link>
           </div>
 
-          <div className="mt-14 flex flex-wrap items-center justify-center gap-7">
-            {projects.map((project, index) => (
-              <ProjectCard key={project.id} project={project} index={index} />
+          <div className="mt-14 space-y-16">
+            {groups.map((group) => (
+              <div key={group.title ?? 'all'}>
+                {group.title && <h2 className="mb-6 text-white text-2xl font-bold">{group.title}</h2>}
+                <ProjectGrid projects={group.items} />
+              </div>
             ))}
           </div>
         </div>

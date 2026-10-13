@@ -3,19 +3,19 @@ import Image from 'next/image';
 
 import Navbar from '@/components/layout/Navbar';
 import Hero from '@/components/sections/Hero';
-import About from '@/components/sections/About';
-import SelectedResults from '@/components/sections/SelectedResults';
-import Experience from '@/components/sections/Experience';
-import Tech from '@/components/sections/Tech';
-import Works from '@/components/sections/Works';
-import Testimonials from '@/components/sections/Testimonials';
 import Contact from '@/components/sections/Contact';
+import { Offers } from '@/components/home/Offers';
+import { FeaturedWork, pickFeatured } from '@/components/home/FeaturedWork';
+import { Engagement } from '@/components/home/Engagement';
+import { Proof } from '@/components/home/Proof';
+import { AboutSection } from '@/components/home/AboutSection';
+import { Writing } from '@/components/home/Writing';
 import Footer from '@/components/layout/Footer';
 
 import { SITE_URL } from '@/lib/site';
 import {
   getPublishedProjects,
-  getPublishedExperiences,
+  getPublishedPosts,
   getPublishedTechnologies,
   getPublishedServices,
   getPublishedNavLinks,
@@ -92,10 +92,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Home() {
   // Fetch all data in parallel for better performance
-  const [projects, experiences, technologies, services, navLinks, settings, testimonials, selectedResults] =
+  const [projects, posts, technologies, services, navLinks, settings, testimonials, selectedResults] =
     await Promise.all([
       getPublishedProjects(),
-      getPublishedExperiences(),
+      getPublishedPosts(),
       getPublishedTechnologies(),
       getPublishedServices(),
       getPublishedNavLinks(),
@@ -109,6 +109,7 @@ export default async function Home() {
   const seoSettings = settings['seo'] || {};
   const socialSettings = settings['socialLinks'] || {};
   const bioSettings = settings['bio'] || {};
+  const contactSettings = settings['contact'] || {};
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -182,31 +183,38 @@ export default async function Home() {
               className="-z-10 object-cover object-center"
             />
           )}
-          <Navbar navLinks={navLinks} />
-          <Hero data={settings['hero']} />
+          <Navbar navLinks={navLinks} bookingUrl={contactSettings.bookingUrl} />
+          <Hero data={settings['hero']} bookingUrl={contactSettings.bookingUrl} />
         </div>
-        <About data={settings['bio']} services={services} />
-        {selectedResults?.isEnabled && (
-          <SelectedResults
-            heading={selectedResults.heading}
-            subheading={selectedResults.subheading}
-            metrics={selectedResults.metrics}
-          />
-        )}
-        <Experience experiences={experiences} />
-        <Tech technologies={technologies} />
-        <Works projects={projects} />
-        <Testimonials testimonials={testimonials} />
+        <Offers services={services} />
+        <FeaturedWork projects={pickFeatured(projects)} />
+        <Engagement />
+        <Proof
+          testimonials={testimonials}
+          metrics={selectedResults?.isEnabled ? selectedResults.metrics : []}
+          heading={selectedResults?.heading}
+          subheading={selectedResults?.subheading}
+        />
+        <AboutSection
+          bio={bioSettings}
+          name={heroSettings.name || 'Santosh Pandey'}
+          technologies={technologies}
+          resumeUrl={heroSettings.resumeUrl || '/cv.pdf'}
+        />
+        <Writing posts={posts} />
         <Contact
           data={settings['contact']}
           services={services.flatMap((s) => (s.slug ? [{ title: s.title, slug: s.slug }] : []))}
           socialLinks={settings['socialLinks']}
+          bookingUrl={contactSettings.bookingUrl}
+          whatsapp={contactSettings.whatsapp}
+          availability={bioSettings.availability}
+          location={bioSettings.location}
         />
       </main>
       <Footer
         socialLinks={settings['socialLinks']}
         navLinks={navLinks}
-        name={heroSettings.name}
       />
     </>
   );

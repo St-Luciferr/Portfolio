@@ -55,6 +55,11 @@ export function mapProject(
     isDemo: dbProject.is_demo,
     tags,
     details,
+    category: dbProject.category ?? null,
+    isFeatured: dbProject.is_featured ?? false,
+    clientName: dbProject.client_name?.trim() || null,
+    outcomeLine: dbProject.outcome_line?.trim() || null,
+    screenshotUrl: dbProject.screenshot_url?.trim() || null,
   };
 }
 

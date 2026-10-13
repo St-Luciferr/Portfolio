@@ -246,51 +246,51 @@
 
 - [x] **12.25** On-demand revalidation for service and project admin writes via `src/lib/api/revalidate.ts` (homepage, index pages, every detail page by route pattern, share images, sitemap). 60 s time-based fallback on `/services/[slug]` and `/projects/[slug]` for seed scripts and SQL edits. Done 2026-10-13.
 
-## Phase 13: Public-Layer Redesign 🎨
+## Phase 13: Public-Layer Redesign 🎨 🟡 BUILT (2026-10-13) · ⏸ content inputs + migrations 009/010
 
 > Target: Weeks 2–4, ~2–3 weeks. Source: `docs/SITE_REVIEW_2026-10.md` R1, R3, R7.
 > Keep untouched: Supabase schema, admin dashboard, blog pipeline, `/api/admin/**`, analytics, JSON-LD helpers.
 
 ### Design & content prep
 
-- [ ] **13.1** Write a one-page design spec: positioning sentence, 3 offers, 3 featured case studies, trust strip names, voice.
-- [ ] **13.2** Collect real screenshots / redacted diagrams for the 3 featured case studies (Quick CCA, Trek Pal, one RAG system).
-- [ ] **13.3** Define a reduced design system: one accent colour, type scale, spacing, card style; no glow/tilt/cursor effects.
-- [ ] **13.4** Decide on dark-only vs light/dark; document in `src/app/globals.css` tokens.
+- [x] **13.1** Write a one-page design spec: positioning sentence, 3 offers, 3 featured case studies, trust strip names, voice. → `docs/DESIGN_SPEC.md`. Positioning: full-stack developer who also builds AI assistants (not AI-only), per your direction; headline editable in admin.
+- [ ] **13.2** ⏸ *Needs you.* Collect real screenshots / redacted diagrams for the 3 featured case studies (Quick CCA, Trek Pal, one RAG system). Featured set chosen 2026-10-13: Context-aware RAG, WhatsApp chatbot, Trek Pal Nepal. Upload via the new *Case-study screenshot* field; the WhatsApp card is only a logo today.
+- [x] **13.3** Define a reduced design system: one accent colour, type scale, spacing, card style; no glow/tilt/cursor effects.
+- [x] **13.4** Decide on dark-only vs light/dark; document in `src/app/globals.css` tokens. Dark only; tokens in `docs/DESIGN_SPEC.md`, pointer comment in `globals.css`.
 
 ### Data model changes
 
-- [ ] **13.5** Migration `009_project_grouping.sql`: add `category` (`client` | `research`) and `is_featured` to `projects`; `client_name`, `outcome_line`, `screenshot_url` to `project_details`.
-- [ ] **13.6** Migration `010_service_offers.sql`: add `audience`, `timeline`, `engagement_model` to `services` (`faqs` already added in 008); consolidate to 3 published offers.
-- [ ] **13.7** Migration `011_site_proof.sql`: `trust_logos` site setting (name, logo URL, link) for the hero trust strip.
-- [ ] **13.8** Extend admin forms (`ProjectForm`, `ServiceForm`, settings) for the new fields.
+- [~] **13.5** Migration `009_project_grouping.sql`: add `category` (`client` | `research`) and `is_featured` to `projects`; `client_name`, `outcome_line`, `screenshot_url` to `project_details`. Written (columns go on `projects`; there is no `project_details` table). ⏸ Run it in the Supabase SQL editor, then set `is_featured` + `category`.
+- [~] **13.6** Migration `010_service_offers.sql`: add `audience`, `timeline`, `engagement_model` to `services` (`faqs` already added in 008); consolidate to 3 published offers. Written; offers already consolidated in 12.2. ⏸ Run it, then fill audience/timeline/engagement in `/admin/services`.
+- [ ] **13.7** ⏸ *Deferred: no client logos to show yet.* Migration `011_site_proof.sql`: `trust_logos` site setting (name, logo URL, link) for the hero trust strip.
+- [x] **13.8** Extend admin forms (`ProjectForm`, `ServiceForm`, settings) for the new fields. Project: category, featured, client/context, outcome line, screenshot. Service: audience, timeline, engagement model. Hero: headline, audience line. Bio: location, availability, photo. Contact: booking URL, WhatsApp.
 
 ### Homepage rebuild (`src/app/page.tsx` + `src/components/sections/**`)
 
-- [ ] **13.9** Navbar: full name, Services / Work / Writing / About, "Book a call" button.
-- [ ] **13.10** Hero: outcome headline, audience line, 2 CTAs (Book a call / See case studies), trust strip.
-- [ ] **13.11** Offers section: 3 cards → `/services/[slug]`.
-- [ ] **13.12** Selected work: 3 featured case studies with screenshot, client/context, one-line result.
-- [ ] **13.13** "How an engagement runs": 4 steps + "what you prepare".
-- [ ] **13.14** Proof: testimonials + sourced metrics (single section).
-- [ ] **13.15** About: short bio, photo, location/timezone, availability status.
-- [ ] **13.16** Writing: latest 3 posts.
-- [ ] **13.17** Contact: form + booking + email + WhatsApp.
-- [ ] **13.18** Remove `CustomCursor`, `Stars`, `SectionWrapper` tilt/stagger effects; keep `framer-motion` only for subtle fade-ins honouring `prefers-reduced-motion`.
+- [x] **13.9** Navbar: full name, Services / Work / Writing / About, "Book a call" button. 2026-10-13: Booking slot shows "Book a call" once `contact.booking_url` is set; otherwise "Start a project". CMS nav rows updated to Services / Work / Writing / About.
+- [x] **13.10** Hero: outcome headline, audience line, 2 CTAs (Book a call / See case studies), trust strip. 2026-10-13: Trust strip waits for 13.7.
+- [x] **13.11** Offers section: 3 cards → `/services/[slug]`. 2026-10-13: Plus a static Full-Stack Web & APIs card.
+- [x] **13.12** Selected work: 3 featured case studies with screenshot, client/context, one-line result. 2026-10-13: Uses `is_featured`; falls back to the first 3 projects until flagged.
+- [x] **13.13** "How an engagement runs": 4 steps + "what you prepare". 2026-10-13: Copy is a draft; review in `src/components/home/Engagement.tsx`.
+- [x] **13.14** Proof: testimonials + sourced metrics (single section). 2026-10-13: Hidden while there are no testimonials and metrics are disabled.
+- [x] **13.15** About: short bio, photo, location/timezone, availability status. 2026-10-13: Photo, location and availability show once set in admin → Bio; initials monogram meanwhile.
+- [x] **13.16** Writing: latest 3 posts.
+- [x] **13.17** Contact: form + booking + email + WhatsApp. 2026-10-13: Booking + WhatsApp appear once set in admin → Contact.
+- [x] **13.18** Remove `CustomCursor`, `Stars`, `SectionWrapper` tilt/stagger effects; keep `framer-motion` only for subtle fade-ins honouring `prefers-reduced-motion`. 2026-10-13: Removed CustomCursor, SectionWrapper and `framer-motion` entirely (no fade-ins needed).
 
 ### Sub-pages
 
-- [ ] **13.19** `/services/[slug]`: add audience, timeline, engagement model (FAQ + `FAQPage` JSON-LD done in 8.6).
-- [ ] **13.20** `/projects`: split into "Client work" and "Research & experiments"; restore project images.
-- [ ] **13.21** `/projects/[slug]`: add screenshot/diagram block, client/context line, rewrite Outcome bullets as delivered results.
+- [x] **13.19** `/services/[slug]`: add audience, timeline, engagement model (FAQ + `FAQPage` JSON-LD done in 8.6).
+- [x] **13.20** `/projects`: split into "Client work" and "Research & experiments"; restore project images. Server-rendered; groups appear once any project has a category.
+- [~] **13.21** `/projects/[slug]`: add screenshot/diagram block, client/context line, rewrite Outcome bullets as delivered results. Screenshot + client line + outcome callout built; ⏸ rewriting the bullets is content work.
 - [x] **13.22** Dynamic OG images for projects + posts via `next/og` (done in 8.5).
 
 ### Cleanup
 
-- [ ] **13.23** Remove `react-parallax-tilt`, `react-vertical-timeline-component`, unused icons, `public/Face.jsx`, `public/rag.png`.
-- [ ] **13.24** Delete `src/lib/motion.ts` variants no longer used.
-- [ ] **13.25** Migrate Tailwind CSS 3 → 4 during the redesign (CSS is being rewritten anyway). Clears the last 7 `npm audit` findings: all trace to one `braces` DoS advisory (no patched version) via Tailwind 3's `chokidar` / `fast-glob` / `micromatch`. Build-time only; not reachable from the live site.
-- [ ] **13.26** Restore linting: `next lint` was removed in Next 16, so `npm run lint` fails and no ESLint config exists. Add `eslint.config.mjs` (flat config with `eslint-config-next`) and change the script to `eslint .`. Note `eslint-config-next` carries the same `braces` advisory until upstream drops `fast-glob`.
+- [x] **13.23** Remove `react-parallax-tilt`, `react-vertical-timeline-component`, unused icons, `public/Face.jsx`, `public/rag.png`.
+- [x] **13.24** Delete `src/lib/motion.ts` variants no longer used. Whole file removed (no users left). Also removed unused `public/images/{backend,creator,github,mobile,web}.png`.
+- [ ] **13.25** ⏸ *Deferred to its own PR (your call 2026-10-13).* Migrate Tailwind CSS 3 → 4 during the redesign (CSS is being rewritten anyway). Clears the last 7 `npm audit` findings: all trace to one `braces` DoS advisory (no patched version) via Tailwind 3's `chokidar` / `fast-glob` / `micromatch`. Build-time only; not reachable from the live site.
+- [x] **13.26** Restore linting: `next lint` was removed in Next 16, so `npm run lint` fails and no ESLint config exists. Add `eslint.config.mjs` (flat config with `eslint-config-next`) and change the script to `eslint .`. Note `eslint-config-next` carries the same `braces` advisory until upstream drops `fast-glob`. Done 2026-10-13: `npm run lint` passes (0 errors). React Compiler rules `immutability` / `set-state-in-effect` set to warn for the admin fetch-on-mount pattern; the `typescript` preset is off until ~60 `any`s are typed.
 
 ## Phase 14: Verify & Hand Off ✅
 

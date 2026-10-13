@@ -197,7 +197,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             <header className="mt-10 grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
               <div>
                 <p className="text-secondary uppercase tracking-wider text-sm sm:text-base">
-                  {content.eyebrow}
+                  {project.clientName || content.eyebrow}
                 </p>
                 <h1 className="mt-4 text-white font-black text-[34px] sm:text-[52px] leading-tight">
                   {project.name}
@@ -205,6 +205,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 <p className="mt-6 text-secondary text-[17px] leading-8 max-w-3xl">
                   {content.summary}
                 </p>
+
+                {project.outcomeLine && (
+                  <p className="mt-5 flex gap-3 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm leading-6 text-emerald-100">
+                    <span className="font-semibold text-emerald-300">Outcome</span>
+                    {project.outcomeLine}
+                  </p>
+                )}
 
                 {/* Technology tags */}
                 <div className="mt-7 flex flex-wrap gap-2" role="list" aria-label="Technologies used">
@@ -230,7 +237,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
               <figure className="relative aspect-[16/10] overflow-hidden rounded-lg border border-white/10">
                 <Image
-                  src={project.imageUrl}
+                  src={project.screenshotUrl || project.imageUrl}
                   alt={`${project.name} project preview showing the main interface`}
                   fill
                   priority

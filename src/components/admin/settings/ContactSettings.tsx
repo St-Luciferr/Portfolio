@@ -96,7 +96,7 @@ export function ContactSettings() {
       <CardHeader>
         <CardTitle>Contact Information</CardTitle>
         <CardDescription>
-          Update your contact email address
+          Email, booking link and WhatsApp shown on the site
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -117,6 +117,26 @@ export function ContactSettings() {
             <p className="text-sm text-gray-500">
               This email will be displayed in your contact section
             </p>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="booking_url">Booking link</Label>
+            <Input id="booking_url" {...register('booking_url')} placeholder="https://cal.com/your-name/intro" />
+            <p className="text-sm text-gray-500">
+              Cal.com or Calendly. Adds &quot;Book a call&quot; buttons to the nav, hero and contact section.
+            </p>
+            {errors.booking_url && (
+              <p className="text-sm text-red-500">{errors.booking_url.message as string}</p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="whatsapp">WhatsApp number</Label>
+            <Input id="whatsapp" {...register('whatsapp')} placeholder="9779800000000" />
+            <p className="text-sm text-gray-500">Digits only, with country code. Adds a WhatsApp link to the contact section.</p>
+            {errors.whatsapp && (
+              <p className="text-sm text-red-500">{errors.whatsapp.message as string}</p>
+            )}
           </div>
 
           <div className="flex justify-end pt-4 border-t">

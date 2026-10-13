@@ -1,18 +1,16 @@
 import Link from 'next/link';
-import { ArrowUpRight, Mail } from 'lucide-react';
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { ArrowUpRight, CalendarDays, Mail, MapPin } from 'lucide-react';
+import { FaGithub, FaLinkedin, FaWhatsapp } from 'react-icons/fa';
 
 interface ContactAsideProps {
   email: string;
   services: { title: string; slug: string }[];
   socialLinks?: { github?: string; linkedin?: string };
+  bookingUrl?: string;
+  whatsapp?: string;
+  availability?: string;
+  location?: string;
 }
-
-const steps = [
-  { title: 'Send a short brief', text: 'What you want to build, and where it hurts today.' },
-  { title: 'I reply within 24–48 hours', text: 'With questions, or a time for a quick call.' },
-  { title: 'Agree on scope first', text: 'A clear plan and timeline before any work starts.' },
-];
 
 /** Decorative orbit: CSS-only stand-in for the old 3D globe. */
 function Orbit() {
@@ -30,31 +28,72 @@ function Orbit() {
   );
 }
 
-const ContactAside = ({ email, services, socialLinks }: ContactAsideProps) => {
+const ContactAside = ({
+  email,
+  services,
+  socialLinks,
+  bookingUrl,
+  whatsapp,
+  availability,
+  location,
+}: ContactAsideProps) => {
   return (
-    <aside className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-tertiary via-black-100 to-primary p-8">
+    <aside className="relative h-fit overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-tertiary via-black-100 to-primary p-8">
       <Orbit />
 
       <div className="relative">
-        <p className="text-secondary uppercase tracking-wider text-sm">How it works</p>
-        <h3 className="mt-2 text-white text-2xl font-bold">What happens next</h3>
+        <p className="text-secondary uppercase tracking-wider text-sm">Other ways to reach me</p>
+        <h3 className="mt-2 text-white text-2xl font-bold">Prefer to talk first?</h3>
+        <p className="mt-3 text-sm leading-6 text-secondary">
+          I usually reply within 24–48 hours. Not sure what you need yet? Send a rough idea and we&apos;ll figure out the scope together.
+        </p>
 
-        <ol className="mt-6 space-y-5">
-          {steps.map((step, i) => (
-            <li key={step.title} className="flex gap-4">
-              <span className="flex h-8 w-8 flex-none items-center justify-center rounded-full border border-[#915eff]/50 bg-[#915eff]/10 text-sm font-bold text-[#cbb5ff]">
-                {i + 1}
+        {(availability || location) && (
+          <div className="mt-5 flex flex-wrap gap-3 text-sm">
+            {availability && (
+              <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-emerald-200">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                {availability}
               </span>
-              <div>
-                <p className="font-semibold text-white">{step.title}</p>
-                <p className="mt-0.5 text-sm text-secondary">{step.text}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
+            )}
+            {location && (
+              <span className="inline-flex items-center gap-1.5 text-secondary">
+                <MapPin className="h-4 w-4" />
+                {location}
+              </span>
+            )}
+          </div>
+        )}
+
+        {(bookingUrl || whatsapp) && (
+          <div className="mt-6 flex flex-wrap gap-3">
+            {bookingUrl && (
+              <a
+                href={bookingUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg bg-[#7a4fd4] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#6a3fc4]"
+              >
+                <CalendarDays className="h-4 w-4" />
+                Book a call
+              </a>
+            )}
+            {whatsapp && (
+              <a
+                href={`https://wa.me/${whatsapp}`}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-4 py-2.5 text-sm text-white transition-colors hover:border-emerald-400/60"
+              >
+                <FaWhatsapp className="h-4 w-4 text-emerald-400" />
+                WhatsApp
+              </a>
+            )}
+          </div>
+        )}
 
         {services.length > 0 && (
-          <div className="mt-10">
+          <div className="mt-8">
             <p className="text-secondary uppercase tracking-wider text-sm">I can help with</p>
             <ul className="mt-4 space-y-2">
               {services.map((service) => (

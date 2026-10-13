@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Poppins } from 'next/font/google';
 import { AnalyticsProvider } from '@/components/analytics/AnalyticsProvider';
-import CustomCursor from '@/components/ui/CustomCursor';
 import { SITE_URL } from '@/lib/site';
 import './globals.css';
 
@@ -105,7 +104,6 @@ export default function RootLayout({
       </head>
       <body className="font-poppins bg-primary antialiased">
         {children}
-        <CustomCursor />
         <AnalyticsProvider />
       </body>
     </html>

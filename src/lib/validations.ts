@@ -14,6 +14,15 @@ export const projectArrayItemSchema = z.object({
   value: z.string().min(1).max(1000),
 });
 
+/** Optional free text: '' is stored as null, undefined leaves the column untouched. */
+function optionalText(max: number) {
+  return z
+    .string()
+    .max(max, 'Too long')
+    .optional()
+    .transform((v) => (v === undefined ? undefined : v.trim() || null));
+}
+
 export const projectSchema = z.object({
   slug: z
     .string()
@@ -41,6 +50,18 @@ export const projectSchema = z.object({
   architecture: z.array(projectArrayItemSchema).default([]).transform(arr => arr.map(item => item.value)),
   results: z.array(projectArrayItemSchema).default([]).transform(arr => arr.map(item => item.value)),
   stack: z.array(projectArrayItemSchema).default([]).transform(arr => arr.map(item => item.value)),
+  // Homepage grouping (migration 009). '' from the form is stored as null.
+  category: z
+    .enum(['client', 'research', ''])
+    .optional()
+    .transform((v) => (v === '' ? null : v)),
+  is_featured: z.boolean().optional(),
+  client_name: optionalText(200),
+  outcome_line: optionalText(300),
+  screenshot_url: z
+    .union([z.literal(''), z.string().url('Invalid screenshot URL')])
+    .optional()
+    .transform((v) => (v === '' ? null : v)),
 });
 
 export const updateProjectSchema = projectSchema.partial().extend({
@@ -105,6 +126,10 @@ export const serviceSchema = z.object({
     .transform((v) => (v === '' ? null : v)),
   is_published: z.boolean().default(true),
   display_order: z.number().int().min(0),
+  // Offer details (migration 010)
+  audience: optionalText(300),
+  timeline: optionalText(200),
+  engagement_model: optionalText(300),
 });
 
 export const updateServiceSchema = serviceSchema.partial().extend({
@@ -144,6 +169,8 @@ export const heroSettingsSchema = z.object({
   cta_text: z.string().min(1, 'CTA text is required').max(50, 'CTA text too long'),
   cta_url: z.string().min(1, 'CTA URL is required'),
   background_image_url: z.string().url('Invalid background image URL').optional(),
+  headline: z.string().max(200, 'Headline too long').optional(),
+  audience: z.string().max(300, 'Audience line too long').optional(),
   resume_url: z
     .string()
     .min(1, 'Resume URL is required')
@@ -157,6 +184,9 @@ export const bioSettingsSchema = z.object({
   paragraphs: z
     .array(z.string().min(10, 'Paragraph must be at least 10 characters').max(2000, 'Paragraph too long'))
     .min(1, 'At least one paragraph is required'),
+  location: z.string().max(100, 'Location too long').optional(),
+  availability: z.string().max(150, 'Availability too long').optional(),
+  photo_url: z.union([z.literal(''), z.string().url('Invalid photo URL')]).optional(),
 });
 
 export const seoSettingsSchema = z.object({
@@ -164,10 +194,16 @@ export const seoSettingsSchema = z.object({
   description: z.string().min(10, 'Description must be at least 10 characters').max(500, 'Description too long'),
   keywords: z.array(z.string().min(1).max(50)).min(1, 'At least one keyword is required'),
   og_image: z.string().url('Invalid OG image URL'),
+  canonical_url: z.string().url('Invalid canonical URL').optional(),
 });
 
 export const contactSettingsSchema = z.object({
   email: z.string().email('Invalid email address'),
+  booking_url: z.union([z.literal(''), z.string().url('Invalid booking URL')]).optional(),
+  whatsapp: z
+    .string()
+    .regex(/^\d{0,15}$/, 'Digits only, with country code (e.g. 9779800000000)')
+    .optional(),
 });
 
 export const socialLinksSchema = z.object({

@@ -7,7 +7,7 @@ export type AnalyticsEvent =
     }
   | {
       name: 'hero_cta_click';
-      props: { variant: 'primary' | 'projects' | 'resume' };
+      props: { variant: 'primary' | 'call' | 'projects' | 'resume' };
     }
   | { name: 'resume_download'; props: { source: 'hero' | 'other' } }
   | {

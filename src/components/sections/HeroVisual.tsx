@@ -1,9 +1,35 @@
 import { FileText, Search, Sparkles } from 'lucide-react';
 
+/** Static code card behind the chat: the full-stack half of the pitch. */
+function CodeCard() {
+  const line = (indent: number, parts: [string, string][]) => (
+    <div style={{ paddingLeft: indent * 14 }}>
+      {parts.map(([cls, text], i) => (
+        <span key={i} className={cls}>
+          {text}
+        </span>
+      ))}
+    </div>
+  );
+  return (
+    <div className="absolute -left-16 -top-20 hidden w-[280px] -rotate-6 opacity-90 rounded-xl border border-white/10 bg-black-100/90 p-4 font-mono text-[11px] leading-5 text-secondary shadow-xl sm:block">
+      <div className="mb-2 flex items-center gap-2 text-[10px] uppercase tracking-wider text-secondary/70">
+        <span className="h-1.5 w-1.5 rounded-full bg-[#4f8cff]" />
+        api/assistant.py
+      </div>
+      {line(0, [['text-[#c792ea]', '@app.post'], ['', '("/ask")']])}
+      {line(0, [['text-[#c792ea]', 'async def '], ['text-[#82aaff]', 'ask'], ['', '(q: Question):']])}
+      {line(1, [['', 'docs = '], ['text-[#82aaff]', 'retrieve'], ['', '(q.text, k=5)']])}
+      {line(1, [['', 'answer = '], ['text-[#82aaff]', 'llm'], ['', '(q.text, docs)']])}
+      {line(1, [['text-[#c792ea]', 'return '], ['', '{answer, sources}']])}
+    </div>
+  );
+}
+
 /**
- * Illustrative assistant window for the hero: shows what the main offer
- * (RAG knowledge assistants) does, in HTML/CSS only. Replaces the 3D desk
- * model (docs/SITE_REVIEW_2026-10.md F5) at near-zero runtime cost.
+ * Illustrative product window for the hero: an API behind an AI assistant,
+ * i.e. full-stack + AI, in HTML/CSS only. Replaces the 3D desk model
+ * (docs/SITE_REVIEW_2026-10.md F5) at near-zero runtime cost.
  */
 const HeroVisual = () => {
   return (
@@ -11,7 +37,9 @@ const HeroVisual = () => {
       {/* Ambient glow */}
       <div className="glow-pulse absolute -inset-10 -z-10 rounded-full bg-[radial-gradient(closest-side,rgba(145,94,255,0.35),transparent)] blur-2xl" />
 
-      <div className="float-slow rounded-2xl border border-white/10 bg-tertiary/80 shadow-2xl shadow-[#915eff]/10 backdrop-blur-md">
+      <CodeCard />
+
+      <div className="float-slow relative rounded-2xl border border-white/10 bg-tertiary/80 shadow-2xl shadow-[#915eff]/10 backdrop-blur-md">
         {/* Window chrome */}
         <div className="flex items-center gap-2 border-b border-white/10 px-4 py-3">
           <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
@@ -75,11 +103,11 @@ const HeroVisual = () => {
 
       {/* Pipeline caption */}
       <div className="rise-in mt-5 flex items-center justify-center gap-2 text-[11px] uppercase tracking-wider text-secondary" style={{ animationDelay: '2.2s' }}>
-        <span>Your docs</span>
-        <span className="text-[#915eff]">→</span>
-        <span>Retrieval</span>
-        <span className="text-[#915eff]">→</span>
-        <span>Cited answer</span>
+        <span>Web app</span>
+        <span className="text-[#915eff]">·</span>
+        <span>API</span>
+        <span className="text-[#915eff]">·</span>
+        <span>AI assistant</span>
       </div>
     </div>
   );

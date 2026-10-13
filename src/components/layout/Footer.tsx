@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 
 import { styles } from '@/lib/styles';
@@ -50,13 +49,7 @@ const Footer = ({ socialLinks, navLinks, name = 'Santosh Pandey' }: FooterProps)
       <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-[#804dee] to-transparent opacity-50" />
 
       <div className={`${styles.paddingX} max-w-7xl mx-auto py-14`}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12"
-        >
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12">
           {/* Brand */}
           <div className="flex flex-col gap-4">
             <Link
@@ -66,7 +59,7 @@ const Footer = ({ socialLinks, navLinks, name = 'Santosh Pandey' }: FooterProps)
               {name}
             </Link>
             <p className="text-secondary text-sm leading-relaxed max-w-xs">
-              ML Engineer &amp; Full Stack Developer. I build intelligent systems and genuinely enjoy talking about AI, open source, and ideas worth exploring.
+              Full-stack developer building web apps, APIs and the AI assistants inside them, for startups and growing teams.
             </p>
           </div>
 
@@ -114,7 +107,7 @@ const Footer = ({ socialLinks, navLinks, name = 'Santosh Pandey' }: FooterProps)
               </div>
             )}
           </div>
-        </motion.div>
+        </div>
 
         {/* Bottom bar */}
         <div className="mt-12 pt-6 border-t border-white/[0.07] flex flex-col sm:flex-row justify-between items-center gap-3">

@@ -161,6 +161,23 @@ export default async function ServicePage({ params }: ServicePageProps) {
               </p>
             )}
 
+            {(service.audience || service.timeline || service.engagementModel) && (
+              <dl className="mt-8 grid max-w-4xl gap-4 sm:grid-cols-3">
+                {[
+                  ['Who it’s for', service.audience],
+                  ['Typical timeline', service.timeline],
+                  ['Engagement', service.engagementModel],
+                ]
+                  .filter(([, value]) => value)
+                  .map(([label, value]) => (
+                    <div key={label} className="rounded-lg border border-white/10 bg-tertiary/60 px-4 py-3">
+                      <dt className="text-xs uppercase tracking-wider text-secondary">{label}</dt>
+                      <dd className="mt-1 text-sm text-white">{value}</dd>
+                    </div>
+                  ))}
+              </dl>
+            )}
+
             <div className="mt-8 flex flex-wrap gap-4">
               <Link
                 href="/#contact"

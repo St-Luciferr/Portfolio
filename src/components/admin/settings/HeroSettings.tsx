@@ -106,6 +106,27 @@ export function HeroSettings() {
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-2">
+            <Label htmlFor="headline">Positioning headline</Label>
+            <Input
+              id="headline"
+              {...register('headline')}
+              placeholder="Full-stack products, with AI built in."
+            />
+            <p className="text-sm text-gray-500">
+              The large hero headline. Leave blank to use the built-in default.
+            </p>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="audience">Audience line</Label>
+            <Input
+              id="audience"
+              {...register('audience')}
+              placeholder="For startups and growing teams that need..."
+            />
+          </div>
+
+          <div className="space-y-2">
             <Label htmlFor="heading">
               Heading <span className="text-red-500">*</span>
             </Label>

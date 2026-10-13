@@ -72,7 +72,7 @@ export default async function DashboardOverview() {
       <div>
         <h1 className="text-3xl font-bold text-gray-900">Dashboard Overview</h1>
         <p className="text-gray-600 mt-2">
-          Welcome to your portfolio CMS. Here's what's happening.
+          Welcome to your portfolio CMS. Here&apos;s what&apos;s happening.
         </p>
       </div>
 

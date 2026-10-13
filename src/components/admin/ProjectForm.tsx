@@ -63,6 +63,12 @@ export function ProjectForm({ project, onSuccess, onCancel }: ProjectFormProps) 
       // Project details
       eyebrow: project?.eyebrow || '',
       summary: project?.summary || '',
+      // Homepage grouping (migration 009)
+      category: project?.category || '',
+      is_featured: project?.is_featured ?? false,
+      client_name: project?.client_name || '',
+      outcome_line: project?.outcome_line || '',
+      screenshot_url: project?.screenshot_url || '',
       problem: project?.problem?.map(p => ({ value: p })) || [],
       solution: project?.solution?.map(s => ({ value: s })) || [],
       features: project?.features?.map(f => ({ value: f })) || [],
@@ -343,6 +349,62 @@ export function ProjectForm({ project, onSuccess, onCancel }: ProjectFormProps) 
         <p className="text-sm text-gray-500">
           Detailed summary for the case study page (1-2 sentences)
         </p>
+      </div>
+
+      {/* Homepage & grouping (migration 009) */}
+      <div className="space-y-4 rounded-lg border p-4">
+        <div>
+          <p className="font-medium">Homepage &amp; grouping</p>
+          <p className="text-sm text-gray-500">
+            Featured projects appear in &quot;Selected work&quot; on the homepage; category splits the /projects page.
+          </p>
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="space-y-2">
+            <Label htmlFor="category">Category</Label>
+            <select
+              id="category"
+              {...register('category')}
+              className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm"
+            >
+              <option value="">Not set</option>
+              <option value="client">Client work</option>
+              <option value="research">Research &amp; experiments</option>
+            </select>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="client_name">Client / context</Label>
+            <Input id="client_name" {...register('client_name')} placeholder="e.g. Trek Pal Nepal (client)" />
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="outcome_line">Outcome line</Label>
+          <Input
+            id="outcome_line"
+            {...register('outcome_line')}
+            placeholder="One delivered result, e.g. Cut support lookups from 15 min to 10 s"
+          />
+          <p className="text-sm text-gray-500">Shown on the homepage card. Falls back to the summary.</p>
+        </div>
+
+        <ImageUpload
+          bucket="projects"
+          currentImage={watch('screenshot_url')}
+          onUpload={(url) => setValue('screenshot_url', url)}
+          label="Case-study screenshot (optional)"
+        />
+
+        <div className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            id="is_featured"
+            {...register('is_featured')}
+            className="w-4 h-4 rounded border-gray-300"
+          />
+          <Label htmlFor="is_featured">Feature on the homepage</Label>
+        </div>
       </div>
 
       {/* Problem */}
