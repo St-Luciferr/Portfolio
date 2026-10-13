@@ -13,6 +13,7 @@ import {
 } from '@/lib/services';
 import { ProjectMiniCard } from '@/components/projects/ProjectMiniCard';
 import { RelatedReading } from '@/components/blog/RelatedReading';
+import { SITE_URL } from '@/lib/site';
 
 // Refresh CMS edits (titles, FAQs, linked case studies) without a redeploy.
 export const revalidate = 60;
@@ -39,12 +40,12 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
     title,
     description,
     alternates: {
-      canonical: `https://pandeysantosh.com.np/services/${slug}`,
+      canonical: `${SITE_URL}/services/${slug}`,
     },
     openGraph: {
       title: `${title} | Santosh Pandey`,
       description,
-      url: `https://pandeysantosh.com.np/services/${slug}`,
+      url: `${SITE_URL}/services/${slug}`,
       type: 'website',
     },
   };
@@ -90,7 +91,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
     2
   );
 
-  const canonicalUrl = `https://pandeysantosh.com.np/services/${slug}`;
+  const canonicalUrl = `${SITE_URL}/services/${slug}`;
   const authorName = (settings as any)['hero']?.name || 'Santosh Pandey';
 
   const jsonLd = {
@@ -101,7 +102,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
     provider: {
       '@type': 'Person',
       name: authorName,
-      url: 'https://pandeysantosh.com.np',
+      url: SITE_URL,
     },
     url: canonicalUrl,
     areaServed: 'Worldwide',
@@ -163,7 +164,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
             <div className="mt-8 flex flex-wrap gap-4">
               <Link
                 href="/#contact"
-                className="rounded-md bg-[#915eff] px-6 py-3 text-white font-semibold hover:bg-[#7a4fd4] transition-colors"
+                className="rounded-md bg-[#7a4fd4] px-6 py-3 text-white font-semibold hover:bg-[#6a3fc4] transition-colors"
               >
                 Get a Quote
               </Link>
@@ -276,7 +277,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
                 </p>
                 <Link
                   href="/#contact"
-                  className="mt-5 inline-flex rounded-md bg-[#915eff] px-4 py-3 text-white font-semibold hover:bg-[#7a4fd4] transition-colors text-sm"
+                  className="mt-5 inline-flex rounded-md bg-[#7a4fd4] px-4 py-3 text-white font-semibold hover:bg-[#6a3fc4] transition-colors text-sm"
                 >
                   Start a Conversation
                 </Link>

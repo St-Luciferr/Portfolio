@@ -45,21 +45,18 @@ const nextConfig = {
         destination: '/services',
         permanent: true,
       },
+      // Misspelled blog tag renamed 2026-10-13 (todo 12.20)
+      {
+        source: '/blog/tag/begineer',
+        destination: '/blog/tag/beginner',
+        permanent: true,
+      },
     ];
   },
 
   // Headers for caching and performance
   async headers() {
     return [
-      {
-        source: '/models/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
       {
         source: '/images/:path*',
         headers: [

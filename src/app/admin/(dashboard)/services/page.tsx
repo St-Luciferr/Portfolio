@@ -18,7 +18,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Pencil, Trash2 } from 'lucide-react';
+import { Plus, Pencil, Trash2, AlertTriangle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { ServiceForm } from '@/components/admin/ServiceForm';
 import type { DBService } from '@/lib/types';
@@ -100,6 +100,10 @@ export default function ServicesPage() {
     fetchServices();
   };
 
+  // A published service without a slug shows on the homepage but has no
+  // /services/[slug] page, so its card can't link anywhere (SITE_REVIEW F2).
+  const missingSlug = services.filter((s) => s.is_published && !s.slug);
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-96">
@@ -122,6 +126,24 @@ export default function ServicesPage() {
           Add Service
         </Button>
       </div>
+
+      {missingSlug.length > 0 && (
+        <div
+          role="alert"
+          className="flex gap-3 rounded-lg border border-amber-300 bg-amber-50 p-4 text-amber-900"
+        >
+          <AlertTriangle className="mt-0.5 h-5 w-5 flex-none" />
+          <div className="text-sm">
+            <p className="font-semibold">
+              {missingSlug.length === 1 ? '1 published service has' : `${missingSlug.length} published services have`} no slug
+            </p>
+            <p className="mt-1">
+              These have no detail page and are left out of the sitemap:{' '}
+              {missingSlug.map((s) => s.title).join(', ')}. Edit each one and set a slug.
+            </p>
+          </div>
+        </div>
+      )}
 
       {services.length === 0 ? (
         <div className="text-center py-12 bg-white rounded-lg border">
@@ -156,7 +178,12 @@ export default function ServicesPage() {
                       />
                     </div>
                   </TableCell>
-                  <TableCell className="font-medium">{service.title}</TableCell>
+                  <TableCell className="font-medium">
+                    {service.title}
+                    <span className="block text-xs font-normal text-gray-500">
+                      {service.slug ? `/services/${service.slug}` : 'No slug'}
+                    </span>
+                  </TableCell>
                   <TableCell>
                     <Badge
                       variant={service.is_published ? 'default' : 'secondary'}

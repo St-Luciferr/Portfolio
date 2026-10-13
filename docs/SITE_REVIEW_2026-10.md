@@ -190,3 +190,19 @@ A redesign raises conversion of existing traffic (est. 20–30 visits/mo). It do
 | Homepage canonical present | No | Yes | Yes |
 | Hero names an outcome + audience | No | Partial | Yes |
 | Featured case studies with real screenshot | 0 | 0 | 3 |
+
+### Phase 12 measurement (2026-10-13)
+
+Homepage, Lighthouse 12 mobile, local production build (`next start`), two runs. The baseline above was measured against production, so treat the comparison as indicative until re-measured on the live site after deploy.
+
+| Metric | Baseline | After Phase 12 | Target | Met |
+| ------ | -------- | -------------- | ------ | --- |
+| Performance | 53 | 81–89 | ≥ 75 | ✅ |
+| Total Blocking Time | 16.4 s | 150–360 ms | < 2 s | ✅ |
+| Largest Contentful Paint | 3.0 s | 3.5–3.7 s | — | LCP is now the hero background image (`next/image`, priority) |
+| Accessibility | 92 | 100 | — | ✅ |
+| Page weight | 5,450 KiB | 345 KiB | — | −94 % |
+| Live service pages | 0 | 3 offers | 6 → 3 offers | ✅ |
+| Homepage canonical present | No | Yes (`www`) | Yes | ✅ |
+| Contact paths | 1 | 2 (form, email) | 4 | ⏸ call link and WhatsApp need input |
+| Published testimonials | 0 | 0 | 2 | ⏸ needs outreach |

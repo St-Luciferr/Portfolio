@@ -33,6 +33,7 @@ export function ServiceForm({ service, onSuccess, onCancel }: ServiceFormProps) 
     defaultValues: {
       title: service?.title || '',
       icon_url: service?.icon_url || '',
+      slug: service?.slug || '',
       is_published: service?.is_published ?? true,
       display_order: service?.display_order ?? 0,
     },
@@ -91,6 +92,17 @@ export function ServiceForm({ service, onSuccess, onCancel }: ServiceFormProps) 
         />
         {errors.title && (
           <p className="text-sm text-red-500">{errors.title.message}</p>
+        )}
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="slug">URL Slug</Label>
+        <Input id="slug" {...register('slug')} placeholder="rag-systems" />
+        <p className="text-xs text-gray-500">
+          Page address: /services/{watch('slug') || '…'}. Without a slug the service has no detail page.
+        </p>
+        {errors.slug && (
+          <p className="text-sm text-red-500">{errors.slug.message as string}</p>
         )}
       </div>
 

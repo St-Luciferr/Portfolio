@@ -92,6 +92,17 @@ export const updateTechnologySchema = technologySchema.partial().extend({
 export const serviceSchema = z.object({
   title: z.string().min(1, 'Service title is required').max(200, 'Title too long'),
   icon_url: z.string().url('Invalid icon URL'),
+  // '' clears the slug (null); undefined leaves it untouched on partial updates.
+  slug: z
+    .union([
+      z.literal(''),
+      z
+        .string()
+        .max(100, 'Slug too long')
+        .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'Use lowercase letters, numbers and hyphens'),
+    ])
+    .optional()
+    .transform((v) => (v === '' ? null : v)),
   is_published: z.boolean().default(true),
   display_order: z.number().int().min(0),
 });

@@ -190,7 +190,7 @@
 
 ---
 
-## Phase 12: Conversion Fixes (no redesign) 🔧
+## Phase 12: Conversion Fixes (no redesign) 🔧 🟡 CODE DONE · ⏸ items need your input
 
 > Target: Week 1, ~1–2 days. Source: [`docs/SITE_REVIEW_2026-10.md`](docs/SITE_REVIEW_2026-10.md) findings F2, F3, F5, F6, F7, F9.
 > Do these before Phase 13 so the live site stops leaking leads while the redesign is in progress.
@@ -201,41 +201,41 @@
 - [x] **12.2** Fix `scripts/seed-services.ts` title patterns (or rename rows) so all 6 services receive a slug; run `npm run db:seed-services`. (Script itself made runnable in Phase 8: it previously required the uninstalled `dotenv` package and read `SUPABASE_SERVICE_ROLE_KEY` instead of `SUPABASE_SERVICE_KEY`, so it never ran.) Done 2026-10-13: consolidated into 3 offers (RAG & AI Knowledge Assistants, WhatsApp AI Automation, Document & OCR Automation) with exact-title matching and case-study links; the other 3 services are kept as `archivedServices`. Retired slugs 308 to `/services`.
 - [x] **12.3** Verify every `/services/[slug]` returns 200 on production and homepage cards render as links. (2026-10-13: `/services/django-fastapi-backend` returns 200. "ML Developer" and "Automation Engineer" still have no slug.) Update: all 3 offers render locally with FAQs; production verified 2026-10-13 after PR #7: `/services`, all 3 offer pages 200, homepage cards link to them, retired slug 308s to `/services`.
 - [x] **12.4** Add `/services/[slug]` URLs to `src/app/sitemap.ts` (priority 0.7, monthly) — closes 8.2.
-- [ ] **12.5** Add an admin warning on `/admin/services` when a published service has no slug.
+- [x] **12.5** Add an admin warning on `/admin/services` when a published service has no slug. Done 2026-10-13: warning banner + slug shown under each title; the service form gained a validated **URL Slug** field (it had none, so a missing slug couldn't be fixed from the admin).
 
 ### Proof (F3)
 
 - [ ] **12.6** Request testimonials from: QuickFox lead, AutomateBoring contact, Trekpal client. Name + role + company + photo.
 - [ ] **12.7** Publish ≥ 2 testimonials via `/admin/testimonials`.
-- [ ] **12.8** Add a `source` / `context` line to each Selected Results metric, or disable the section until sourced.
+- [ ] **12.8** ⏸ *Needs you: which metrics can you source? Each already has a context line (e.g. "Medical Q/A Chatbot") but no source.* Add a `source` / `context` line to each Selected Results metric, or disable the section until sourced.
 
 ### Performance (F5)
 
-- [ ] **12.9** Remove `Lazy3DCanvas` from `Hero.tsx`; replace with a static image (screenshot or diagram of a real system).
-- [ ] **12.10** Remove `Lazy3DCanvas` from `Contact.tsx`.
-- [ ] **12.11** Replace `LazyBallCanvas` in `Tech.tsx` with a grouped text/icon list.
-- [ ] **12.12** Drop `three`, `@react-three/fiber`, `@react-three/drei`, `maath` from `package.json`; delete `public/models/**`, `public/new earth/**`, `src/components/canvas/**`.
-- [ ] **12.13** Re-run Lighthouse (mobile) — target Performance ≥ 75, TBT < 2 s. Record in `docs/SITE_REVIEW_2026-10.md`.
+- [x] **12.9** Remove `Lazy3DCanvas` from `Hero.tsx`; replace with a static image (screenshot or diagram of a real system). Canvas removed 2026-10-13; hero is now content-height. The real-system screenshot moves to the Phase 13 hero rebuild.
+- [x] **12.10** Remove `Lazy3DCanvas` from `Contact.tsx`. Form is now a single centred column.
+- [x] **12.11** Replace `LazyBallCanvas` in `Tech.tsx` with a grouped text/icon list. (Icon + name tiles; `technologies` has no category column, so grouping waits for 13.x.)
+- [x] **12.12** Drop `three`, `@react-three/fiber`, `@react-three/drei`, `maath` from `package.json`; delete `public/models/**`, `public/new earth/**`, `src/components/canvas/**`. Also removed `StarsCanvas` from the homepage, `ui/Loader.tsx`, the `maath` type shim, the `/models` cache header and the canvas-loader CSS. ~88 MB of models deleted.
+- [x] **12.13** Re-run Lighthouse (mobile) — target Performance ≥ 75, TBT < 2 s. Record in `docs/SITE_REVIEW_2026-10.md`. 2026-10-13 (local prod build, 2 runs): Performance 81–89, TBT 150–360 ms, a11y 100, 345 KiB (was 5.4 MB). Hero background moved to `next/image` + `priority` (it is the LCP element). Re-measure on production after deploy.
 
 ### Contact (F6)
 
-- [ ] **12.14** Replace `alert()` in `Contact.tsx` with inline success/error states.
-- [ ] **12.15** Add "Book a call" link (Cal.com / Calendly) to hero CTAs and contact section; track `hero_cta_click: variant='call'`.
-- [ ] **12.16** Show email address and a WhatsApp deep link in the contact section and footer.
-- [ ] **12.17** Move submission to `POST /api/contact` (Resend or SMTP) with honeypot + rate limit; remove EmailJS — closes Phase 5 deferred item.
+- [x] **12.14** Replace `alert()` in `Contact.tsx` with inline success/error states (`aria-live`, error state offers a mailto link).
+- [ ] **12.15** ⏸ *Needs you: a Cal.com / Calendly URL.* Add "Book a call" link (Cal.com / Calendly) to hero CTAs and contact section; track `hero_cta_click: variant='call'`.
+- [~] **12.16** Show email address and a WhatsApp deep link in the contact section and footer. Email shown in the contact section 2026-10-13. ⏸ WhatsApp needs your number; footer waits for Phase 13.
+- [ ] **12.17** ⏸ *Needs you: a Resend (or SMTP) account + API key in Vercel.* Move submission to `POST /api/contact` (Resend or SMTP) with honeypot + rate limit; remove EmailJS — closes Phase 5 deferred item.
 
 ### Domain / SEO (F7)
 
-- [ ] **12.18** Decide canonical host (`www` vs apex). Align Vercel redirect, `SITE_URL`, `metadataBase`, sitemap, JSON-LD, `og:url`.
+- [~] **12.18** Decide canonical host (`www` vs apex). Align Vercel redirect, `SITE_URL`, `metadataBase`, sitemap, JSON-LD, `og:url`. Decided `www` (Vercel already redirects apex → www). 2026-10-13: every hardcoded apex URL (layout, robots, project/service/blog pages) now uses `SITE_URL`; fallback is `www`; admin SEO `canonical_url` updated in DB; `.env.local` / `.env.example` updated. ⏸ **Set `NEXT_PUBLIC_SITE_URL=https://www.pandeysantosh.com.np` in Vercel** (it overrides the code default), then redeploy and resubmit the sitemap.
 - [x] **12.19** Add `alternates.canonical` to homepage `generateMetadata` in `src/app/page.tsx` — closes 8.1.
-- [ ] **12.20** Rename blog tag "Begineer" → "Beginner" (slug + sitemap).
-- [ ] **12.21** Fix CTA colour contrast (primary button) and add `aria-label` to the hero scroll-indicator link in `HeroAnimation.tsx`.
+- [x] **12.20** Rename blog tag "Begineer" → "Beginner" (slug + sitemap). DB row renamed 2026-10-13; `/blog/tag/begineer` 308s to `/blog/tag/beginner`.
+- [x] **12.21** Fix CTA colour contrast (primary button) and add `aria-label` to the hero scroll-indicator link in `HeroAnimation.tsx`. Primary buttons moved to `#7a4fd4` (white text 5.4:1, was 4.0:1) across 8 CTAs.
 
 ### Copy (F1, F9)
 
-- [ ] **12.22** Write one positioning sentence; use it in hero, `<title>`, OG description, footer, and navbar brand.
-- [ ] **12.23** Normalise "Trek Pal Nepal" naming; explain or remove "PACO payment integration".
-- [ ] **12.24** Point "Work" nav link to `/projects`; rename Experience anchor to "Experience".
+- [ ] **12.22** ⏸ *Needs you: positioning is your call.* Write one positioning sentence; use it in hero, `<title>`, OG description, footer, and navbar brand.
+- [ ] **12.23** ⏸ *Needs you: what PACO is.* Normalise "Trek Pal Nepal" naming; explain or remove "PACO payment integration".
+- [x] **12.24** Point "Work" nav link to `/projects`; rename Experience anchor to "Experience". 2026-10-13: the CMS "Work" link (→ `#work`, the Experience section) is now titled "Experience"; Navbar already auto-inserts "Projects" → `/projects`.
 
 ### Dependency security
 - [x] **12.26** `npm audit` 2026-10-13: 27 findings (1 critical, 18 high) → 7 high, all build-time. `npm audit fix` (next 16.2.3 → 16.4.0 for the critical, postcss, prosemirror-view, ws, …), `sharp` ^0.35.5 (matches next 16.4), `tsx` ^4.23.15 (patched esbuild), `overrides.postcss-selector-parser` ^7.1.6 (compiled CSS verified identical). Remaining 7 tracked in 13.25 / 13.26.

@@ -4,6 +4,7 @@ import {
   getPublishedNavLinks,
   getPublishedProjects,
 } from '@/lib/services';
+import { SITE_URL } from '@/lib/site';
 
 const ProjectsClient = dynamic(() => import('./ProjectsClient'), {
   ssr: true,
@@ -16,11 +17,11 @@ export const metadata: Metadata = {
   description:
     'AI, machine learning, automation, backend, and full-stack projects by Santosh Pandey.',
   alternates: {
-    canonical: 'https://pandeysantosh.com.np/projects',
+    canonical: `${SITE_URL}/projects`,
   },
   openGraph: {
     type: 'website',
-    url: 'https://pandeysantosh.com.np/projects',
+    url: `${SITE_URL}/projects`,
     title: 'Projects | Santosh Pandey',
     description:
       'Explore AI, RAG, automation, backend, and full-stack case studies by Santosh Pandey.',
@@ -37,11 +38,11 @@ export default async function ProjectsPage() {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     name: 'Projects',
-    url: 'https://pandeysantosh.com.np/projects',
+    url: `${SITE_URL}/projects`,
     hasPart: projects.map((project) => ({
       '@type': 'CreativeWork',
       name: project.name,
-      url: `https://pandeysantosh.com.np/projects/${project.slug}`,
+      url: `${SITE_URL}/projects/${project.slug}`,
       description: project.description,
     })),
   };

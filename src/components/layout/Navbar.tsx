@@ -14,7 +14,7 @@ interface NavbarProps {
 
 const fallbackNavLinks: Pick<NavLink, 'linkId' | 'title'>[] = [
   { linkId: 'about', title: 'About' },
-  { linkId: 'work', title: 'Work' },
+  { linkId: 'work', title: 'Experience' },
   { linkId: '/projects', title: 'Projects' },
   { linkId: 'contact', title: 'Contact' },
 ];

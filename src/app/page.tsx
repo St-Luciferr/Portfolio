@@ -1,5 +1,5 @@
-import dynamic from 'next/dynamic';
 import type { Metadata } from 'next';
+import Image from 'next/image';
 
 import Navbar from '@/components/layout/Navbar';
 import Hero from '@/components/sections/Hero';
@@ -24,8 +24,6 @@ import {
   getSelectedResultsSettings,
 } from '@/lib/services';
 
-// Dynamic import for Stars canvas (background - client component)
-const StarsCanvas = dynamic(() => import('@/components/canvas/Stars'));
 
 // Enable ISR - revalidate every 60 seconds
 export const revalidate = 60;
@@ -111,9 +109,6 @@ export default async function Home() {
   const seoSettings = settings['seo'] || {};
   const socialSettings = settings['socialLinks'] || {};
   const bioSettings = settings['bio'] || {};
-  const backgroundImage = heroSettings.backgroundImageUrl
-    ? { backgroundImage: `url(${heroSettings.backgroundImageUrl})` }
-    : undefined;
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -174,10 +169,19 @@ export default async function Home() {
         />
       )}
       <main className="relative z-0 bg-primary">
-        <div
-          className="bg-cover bg-no-repeat bg-center"
-          style={backgroundImage}
-        >
+        {/* Hero background is the mobile LCP element: next/image + priority gets it
+            preloaded and resized instead of waiting on CSS + hydration. */}
+        <div className="relative isolate">
+          {heroSettings.backgroundImageUrl && (
+            <Image
+              src={heroSettings.backgroundImageUrl}
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              className="-z-10 object-cover object-center"
+            />
+          )}
           <Navbar navLinks={navLinks} />
           <Hero data={settings['hero']} />
         </div>
@@ -193,10 +197,7 @@ export default async function Home() {
         <Tech technologies={technologies} />
         <Works projects={projects} />
         <Testimonials testimonials={testimonials} />
-        <div className="relative z-0">
-          <Contact data={settings['contact']} />
-          <StarsCanvas />
-        </div>
+        <Contact data={settings['contact']} />
       </main>
       <Footer
         socialLinks={settings['socialLinks']}

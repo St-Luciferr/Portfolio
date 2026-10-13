@@ -16,7 +16,7 @@ export function HeroCTAs({ ctaText, ctaUrl, resumeUrl }: HeroCTAsProps) {
       <a
         href={ctaUrl}
         onClick={() => track('hero_cta_click', { variant: 'primary' })}
-        className="bg-[#915eff] hover:bg-[#7a4fd4] text-white font-semibold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
+        className="bg-[#7a4fd4] hover:bg-[#6a3fc4] text-white font-semibold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
       >
         {ctaText}
         <svg
