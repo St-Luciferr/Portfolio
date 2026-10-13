@@ -6,7 +6,7 @@ import {
   unauthorizedResponse,
   handleApiError,
 } from '@/lib/api/responses';
-import { revalidatePath } from 'next/cache';
+import { revalidateServicePages } from '@/lib/api/revalidate';
 import { z } from 'zod';
 
 interface RouteParams {
@@ -69,7 +69,7 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
 
     if (error) throw error;
 
-    revalidatePath('/');
+    revalidateServicePages();
 
     return successResponse(data, 201);
   } catch (error) {
@@ -105,7 +105,7 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
 
     if (error) throw error;
 
-    revalidatePath('/');
+    revalidateServicePages();
 
     return successResponse({ message: 'Project unlinked from service' });
   } catch (error) {

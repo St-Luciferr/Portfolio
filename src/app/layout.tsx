@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Poppins } from 'next/font/google';
 import { AnalyticsProvider } from '@/components/analytics/AnalyticsProvider';
+import CustomCursor from '@/components/ui/CustomCursor';
 import './globals.css';
 
 const poppins = Poppins({
@@ -72,11 +73,15 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION && {
-    verification: {
+  // Search Console (Google) and Bing Webmaster Tools ownership meta tags.
+  verification: {
+    ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION && {
       google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
-    },
-  }),
+    }),
+    ...(process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION && {
+      other: { 'msvalidate.01': process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION },
+    }),
+  },
 };
 
 export const viewport: Viewport = {
@@ -99,6 +104,7 @@ export default function RootLayout({
       </head>
       <body className="font-poppins bg-primary antialiased">
         {children}
+        <CustomCursor />
         <AnalyticsProvider />
       </body>
     </html>

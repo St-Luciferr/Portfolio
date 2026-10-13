@@ -107,10 +107,9 @@ async function uploadAsset(publicPath: string, storagePath = publicPath.replace(
 
 async function buildSeedData() {
   const [
-    creatorIcon,
-    backendIcon,
-    mobileIcon,
-    webIcon,
+    ragIcon,
+    chatAutomationIcon,
+    documentOcrIcon,
     pythonIcon,
     mongodbIcon,
     reactIcon,
@@ -134,10 +133,9 @@ async function buildSeedData() {
     resumeUrl,
     testimonialImage,
   ] = await Promise.all([
-    uploadAsset('/images/creator.png', 'services/creator.png'),
-    uploadAsset('/images/backend.png', 'services/backend.png'),
-    uploadAsset('/images/mobile.png', 'services/mobile.png'),
-    uploadAsset('/images/web.png', 'services/web.png'),
+    uploadAsset('/images/services/rag-assistants.png', 'services/rag-assistants.png'),
+    uploadAsset('/images/services/chat-automation.png', 'services/chat-automation.png'),
+    uploadAsset('/images/services/document-ocr.png', 'services/document-ocr.png'),
     uploadAsset('/images/tech/python.webp', 'technologies/python.webp'),
     uploadAsset('/images/tech/mongodb.svg', 'technologies/mongodb.svg'),
     uploadAsset('/images/tech/reactjs.png', 'technologies/reactjs.png'),
@@ -226,10 +224,11 @@ async function buildSeedData() {
       { link_id: 'contact', title: 'Contact', display_order: 3, is_published: true },
     ],
     services: [
-      { title: 'ML Developer', icon_url: creatorIcon, display_order: 0 },
-      { title: 'Backend Developer', icon_url: backendIcon, display_order: 1 },
-      { title: 'Mobile Application Developer', icon_url: mobileIcon, display_order: 2 },
-      { title: 'Automation Engineer', icon_url: webIcon, display_order: 3 },
+      // Three client-facing offers (docs/SITE_REVIEW_2026-10.md R1). Rich content,
+      // slugs, FAQs and case-study links are applied by `npm run db:seed-services`.
+      { title: 'RAG & AI Knowledge Assistants', icon_url: ragIcon, display_order: 0 },
+      { title: 'WhatsApp AI Automation', icon_url: chatAutomationIcon, display_order: 1 },
+      { title: 'Document & OCR Automation', icon_url: documentOcrIcon, display_order: 2 },
     ],
     technologies: [
       { name: 'Python', icon_url: pythonIcon, display_order: 0 },

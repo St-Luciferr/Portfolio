@@ -7,7 +7,7 @@ import {
   handleApiError,
 } from '@/lib/api/responses';
 import { reorderSchema } from '@/lib/validations';
-import { revalidatePath } from 'next/cache';
+import { revalidateProjectPages } from '@/lib/api/revalidate';
 
 /**
  * PUT /api/admin/projects/reorder
@@ -36,8 +36,7 @@ export async function PUT(request: NextRequest) {
     await Promise.all(updates);
 
     // Revalidate pages
-    revalidatePath('/');
-    revalidatePath('/projects');
+    revalidateProjectPages();
 
     return successResponse({ message: 'Projects reordered successfully' });
   } catch (error) {

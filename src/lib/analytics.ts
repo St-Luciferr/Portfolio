@@ -5,7 +5,10 @@ export type AnalyticsEvent =
       name: 'contact_submit';
       props: { status: 'success' | 'error'; hasSubject: boolean };
     }
-  | { name: 'hero_cta_click'; props: { variant: 'primary' | 'resume' } }
+  | {
+      name: 'hero_cta_click';
+      props: { variant: 'primary' | 'projects' | 'resume' };
+    }
   | { name: 'resume_download'; props: { source: 'hero' | 'other' } }
   | {
       name: 'project_demo_click';

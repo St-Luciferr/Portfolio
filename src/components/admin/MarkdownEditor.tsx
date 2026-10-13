@@ -36,7 +36,7 @@ export function MarkdownEditor({
   rows = 18,
 }: MarkdownEditorProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [showPreview, setShowPreview] = useState(true);
+  const [showPreview, setShowPreview] = useState(false);
 
   const applyWrap = (wrap: Wrap) => {
     const el = textareaRef.current;

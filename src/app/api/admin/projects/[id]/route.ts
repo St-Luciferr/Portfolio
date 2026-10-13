@@ -8,7 +8,7 @@ import {
   handleApiError,
 } from '@/lib/api/responses';
 import { updateProjectSchema } from '@/lib/validations';
-import { revalidatePath } from 'next/cache';
+import { revalidateProjectPages } from '@/lib/api/revalidate';
 
 interface RouteParams {
   params: Promise<{
@@ -105,10 +105,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
       .eq('id', id)
       .single();
 
-    // Revalidate pages
-    revalidatePath('/');
-    revalidatePath('/projects');
-    revalidatePath(`/projects/${completeProject?.slug}`);
+    revalidateProjectPages();
 
     return successResponse(completeProject);
   } catch (error) {
@@ -130,24 +127,12 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
     const { id } = await params;
     const supabase = await createClient();
 
-    // Get project slug for revalidation
-    const { data: project } = await supabase
-      .from('projects')
-      .select('slug')
-      .eq('id', id)
-      .single();
-
     // Delete project (tags will be deleted automatically via CASCADE)
     const { error } = await supabase.from('projects').delete().eq('id', id);
 
     if (error) throw error;
 
-    // Revalidate pages
-    revalidatePath('/');
-    revalidatePath('/projects');
-    if (project?.slug) {
-      revalidatePath(`/projects/${project.slug}`);
-    }
+    revalidateProjectPages();
 
     return successResponse({ message: 'Project deleted successfully' });
   } catch (error) {

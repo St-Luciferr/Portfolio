@@ -7,7 +7,7 @@ import {
   handleApiError,
 } from '@/lib/api/responses';
 import { projectSchema } from '@/lib/validations';
-import { revalidatePath } from 'next/cache';
+import { revalidateProjectPages } from '@/lib/api/revalidate';
 
 /**
  * GET /api/admin/projects
@@ -86,9 +86,7 @@ export async function POST(request: NextRequest) {
       .eq('id', project.id)
       .single();
 
-    // Revalidate pages
-    revalidatePath('/');
-    revalidatePath('/projects');
+    revalidateProjectPages();
 
     return successResponse(completeProject, 201);
   } catch (error) {

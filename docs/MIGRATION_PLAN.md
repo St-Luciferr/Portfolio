@@ -1,5 +1,14 @@
 # React to Next.js 14+ Migration Plan
 
+> **Status (2026-05-29): ✅ COMPLETE.** The Vite → Next.js migration described
+> below has shipped. The codebase now runs on Next.js 16, App Router,
+> TypeScript, Tailwind, deployed on Vercel. Active work has moved to the
+> SEO + client-acquisition roadmap tracked in [`../todo.md`](../todo.md) and
+> documented in `PHASE1_COMPLETE.md`, `PHASE2_COMPLETE.md`,
+> `PHASE3_COMPLETE.md`, and `PHASES_1-2-3_COMPLETE.md`. See the
+> **Current Status** section at the bottom of this file for a verified
+> implementation snapshot.
+
 ## Overview
 
 This document outlines the comprehensive migration plan for converting the current Vite/React portfolio website to Next.js 14+ with App Router, TypeScript, and modern best practices.
@@ -106,92 +115,57 @@ This document outlines the comprehensive migration plan for converting the curre
 - [x] Create `docs/MIGRATION_PLAN.md`
 - [x] Create `docs/ARCHITECTURE.md`
 
-### Phase 1: Project Setup
+### Phase 1: Project Setup ✅ COMPLETE
 
-- [ ] Initialize Next.js 14+ project with TypeScript and Tailwind
-  
-  ```bash
-  npx create-next-app@latest portfolio-nextjs --typescript --tailwind --eslint --app --src-dir=false --import-alias="@/*"
-  ```
+- [x] Initialize Next.js 14+ project with TypeScript and Tailwind
+      (now on Next.js 16, React 19 — see `package.json`)
+- [x] Install dependencies (Three.js, R3F, framer-motion, EmailJS, etc.)
+- [x] Configure `tailwind.config.ts` with custom theme
+- [x] Migrate global CSS (gradients, animations) — `src/app/globals.css`
+- [x] Set up folder structure (`src/app`, `src/components`, `src/lib`)
 
-- [ ] Install dependencies
+### Phase 2: Core Infrastructure ✅ COMPLETE
 
-  ```bash
-  npm install three @react-three/fiber @react-three/drei framer-motion maath \
-              react-vertical-timeline-component react-parallax-tilt react-icons \
-              @emailjs/browser
-  npm install -D @types/three
-  ```
+- [x] Create `lib/types.ts` with TypeScript interfaces
+- [x] Migrate `lib/constants.ts` with typed data
+- [x] Migrate `lib/motion.ts` animation variants
+- [x] Migrate `lib/styles.ts` Tailwind utilities
+- [x] Create root `app/layout.tsx` with next/font, metadata, JSON-LD, viewport
+- [x] Configure `next.config.mjs` for Three.js
+- [x] Set up environment variables (`.env.example` committed)
 
-- [ ] Configure tailwind.config.ts with custom theme
-- [ ] Migrate global CSS (gradients, animations, hash-span)
-- [ ] Set up folder structure
+### Phase 3: Asset Migration & Optimization ✅ COMPLETE
 
-### Phase 2: Core Infrastructure
+- [x] Apply Draco compression to GLTF models
+- [x] Organize images into `public/images/` structure
+- [x] Create mobile fallback images for 3D scenes
+- [x] Create OG image (1200x630) — `public/og-image.png` + `.webp`
+- [x] Update all asset import paths
 
-- [ ] Create `lib/types.ts` with TypeScript interfaces
-- [ ] Migrate `lib/constants.ts` with typed data
-- [ ] Migrate `lib/motion.ts` animation variants
-- [ ] Migrate `lib/styles.ts` Tailwind utilities
-- [ ] Create root `app/layout.tsx` with:
-  - next/font Poppins configuration
-  - Comprehensive metadata (OG, Twitter)
-  - JSON-LD structured data
-  - Viewport settings
-- [ ] Configure `next.config.ts` for Three.js
-- [ ] Set up environment variables
+### Phase 4: Component Migration ✅ COMPLETE
 
-### Phase 3: Asset Migration & Optimization
+- [x] Migrate Navbar — `src/components/layout/Navbar.tsx`
+- [x] Migrate SectionWrapper HOC — `src/components/hoc/SectionWrapper.tsx`
+- [x] Migrate Canvas components (`'use client'`, dynamic, mobile fallbacks)
+- [x] Loader + MobileFallback in `src/components/ui/`
+- [x] Migrate all sections (Hero, About, Experience, Tech, Works, Contact)
+- [x] StarsCanvas background
 
-- [ ] Apply Draco compression to GLTF models
+### Phase 5: Routing & SEO ✅ COMPLETE
 
-  ```bash
-  npx gltf-pipeline -i desktop_pc/scene.gltf -o desktop_pc/scene.gltf -d
-  npx gltf-pipeline -i planet/scene.gltf -o planet/scene.gltf -d
-  ```
+- [x] Main `app/page.tsx` with all sections
+- [x] `app/projects/[slug]/page.tsx` with `generateStaticParams()` and per-page metadata
+- [x] `app/robots.ts` and `app/sitemap.ts`
+- [x] JSON-LD structured data (Person on root, SoftwareApplication/CreativeWork + BreadcrumbList on project pages)
 
-- [ ] Organize images into public/images/ structure
-- [ ] Create mobile fallback images for 3D scenes
-- [ ] Create OG image (1200x630) for social sharing
-- [ ] Update all asset import paths
+### Phase 6: Testing & Deployment ✅ COMPLETE
 
-### Phase 4: Component Migration
-
-- [ ] Migrate Navbar (`'use client'`, next/link)
-- [ ] Migrate SectionWrapper HOC (`'use client'`)
-- [ ] Migrate Canvas components:
-  - Add `'use client'` directive
-  - Update GLTF paths to `/models/`
-  - Add mobile detection for fallbacks
-- [ ] Create Loader and MobileFallback components
-- [ ] Migrate Hero section (server wrapper + dynamic 3D)
-- [ ] Migrate About section with ServiceCards
-- [ ] Migrate Experience section (timeline)
-- [ ] Migrate Tech section with BallCanvas
-- [ ] Migrate Works section with ProjectCards
-- [ ] Migrate Contact section (form + EarthCanvas)
-- [ ] Migrate StarsCanvas background
-
-### Phase 5: Routing & SEO
-
-- [ ] Create main `app/page.tsx` with all sections
-- [ ] Create `app/projects/[slug]/page.tsx` for individual projects
-- [ ] Implement `generateStaticParams()` for project pages
-- [ ] Implement per-page metadata for project pages
-- [ ] Create `app/robots.ts`
-- [ ] Create `app/sitemap.ts`
-- [ ] Add JSON-LD structured data
-
-### Phase 6: Testing & Deployment
-
-- [ ] Test all sections render correctly
-- [ ] Test 3D components and mobile fallbacks
-- [ ] Test hash navigation and project pages
-- [ ] Test contact form with EmailJS
-- [ ] Run Lighthouse audit (target: 90+ scores)
-- [ ] Build and verify: `npm run build`
-- [ ] Deploy to Vercel
-- [ ] Configure custom domain (pandeysantosh.com.np)
+- [x] Sections render correctly
+- [x] 3D components and mobile fallbacks verified
+- [x] Hash navigation and project pages working
+- [x] Contact form with EmailJS (validation added — no hardcoded fallbacks)
+- [x] Deployed to Vercel with Web Analytics + Speed Insights
+- [x] Custom domain configured (`pandeysantosh.com.np`)
 
 ---
 
@@ -289,13 +263,13 @@ const ComputersCanvas = dynamic(
 ### SEO Checklist
 
 - [x] Title and description meta tags
-- [ ] Open Graph tags (og:title, og:description, og:image)
-- [ ] Twitter Card tags
-- [ ] JSON-LD structured data (Person schema)
-- [ ] Dynamic sitemap.xml
-- [ ] Dynamic robots.txt
-- [ ] Canonical URLs
-- [ ] Alt text for all images
+- [x] Open Graph tags (og:title, og:description, og:image)
+- [x] Twitter Card tags
+- [x] JSON-LD structured data (Person on root; SoftwareApplication/CreativeWork + BreadcrumbList on `/projects/[slug]`; BlogPosting on `/blog/[slug]`)
+- [x] Dynamic sitemap.xml (includes projects + blog posts + tag pages)
+- [x] Dynamic robots.txt
+- [x] Canonical URLs (per project, per post)
+- [x] Alt text for all images
 
 ---
 
@@ -334,3 +308,48 @@ This migration is organized into phases but without strict time estimates. Progr
 2. Component migration (most work)
 3. SEO implementation
 4. Testing and deployment
+
+---
+
+## Current Status (verified 2026-05-29)
+
+The Next.js migration above is complete and live. Post-migration work has
+followed the SEO + client-acquisition plan in [`../todo.md`](../todo.md).
+Implementation has been verified by reading the source — not just the
+phase-complete docs.
+
+### Post-migration phases (from `todo.md`)
+
+| Phase | Scope | Status | Key evidence |
+| ----- | ----- | ------ | ------------ |
+| 1 — Quick Wins | Hero CTAs, role/tagline, security, OG image | ✅ Complete | `src/components/sections/Hero.tsx`, `HeroSettings.tsx`, `Contact.tsx`, `layout.tsx` |
+| 2 — Project SEO | Canonical, OG, JSON-LD, breadcrumbs | ✅ Complete | `src/app/projects/[slug]/page.tsx` (metadata + JSON-LD blocks) |
+| 3 — Case Studies | 6× expanded case studies + related projects | ✅ Complete | `getRelatedProjects()` in service layer; Related Projects UI at `projects/[slug]/page.tsx:334-367` |
+| 4 — Services & Conversion | Service pages, Selected Results, Testimonials | ✅ Complete | `src/app/services/`, `SelectedResults.tsx`, `Testimonials.tsx`; migrations 005, 006 |
+| 5 — Contact & Lead Qual | Subject field, response-time, footer | ✅ Complete (scoped) | `Contact.tsx`, `src/components/layout/Footer.tsx` |
+| 6 — Content Hub (Blog) | `/blog` infra: list, post, tag, admin CRUD, JSON-LD, sitemap | ✅ Infra complete | `src/app/blog/*`, `src/app/api/admin/posts/*`, migration 007, `src/lib/markdown.ts` |
+| 7 — Analytics | Vercel Analytics + custom events | ✅ Complete | `AnalyticsProvider.tsx` (excludes `/admin` via `beforeSend`); `HeroCTAs.tsx`, `ProjectCTAs.tsx`, `Contact.tsx` |
+
+### Database state
+
+Migrations in `supabase/migrations/`:
+
+- `001_initial_schema.sql` — base schema
+- `002_add_project_details.sql` — case-study fields
+- `003_standardize_hero_fields.sql` — `tagline` rename + CTA fields
+- `004_add_related_projects.sql` — `project_relations` table
+- `005_enhance_services.sql` — richer services schema
+- `006_add_selected_results.sql` — homepage proof section
+- `007_add_blog.sql` — `blog_posts` + `blog_tags` with RLS
+
+### What's still genuinely open
+
+- **Phase 3 (optional)**: Screenshots / architecture diagrams for case studies — pending real assets.
+- **Phase 5 (deferred)**: Calendly / booking link; server-side contact submission with spam protection. Revisit if inbound volume grows.
+- **Phase 6 — content authoring**: 5 articles drafted in `todo.md` are still to be written via `/admin/blog`. Infra is ready and waiting.
+
+### Source-of-truth note
+
+Going forward, treat **[`../todo.md`](../todo.md)** as the live tracker for
+remaining portfolio work. This file (`MIGRATION_PLAN.md`) is now historical
+reference for the framework migration only — do not add new phases here.

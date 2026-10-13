@@ -12,6 +12,9 @@ import {
   getServiceProjects,
 } from '@/lib/services';
 
+// Refresh CMS edits (titles, FAQs, linked case studies) without a redeploy.
+export const revalidate = 60;
+
 interface ServicePageProps {
   params: Promise<{ slug: string }>;
 }
@@ -27,7 +30,7 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
 
   if (!service) return { title: 'Service Not Found' };
 
-  const title = `${service.title} Services`;
+  const title = service.title;
   const description = service.summary || `Professional ${service.title} service by Santosh Pandey`;
 
   return {
@@ -95,12 +98,34 @@ export default async function ServicePage({ params }: ServicePageProps) {
     ...(service.pricingModel && { priceSpecification: { priceType: service.pricingModel } }),
   };
 
+  // FAQPage must mirror the visible Q&As exactly (Google requires the content to be on-page).
+  const faqJsonLd =
+    service.faqs.length > 0
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: service.faqs.map((faq) => ({
+            '@type': 'Question',
+            name: faq.question,
+            acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+          })),
+        }
+      : null;
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(faqJsonLd).replace(/</g, '\\u003c'),
+          }}
+        />
+      )}
       <main className="min-h-screen bg-primary">
         <Navbar navLinks={navLinks} />
 
@@ -110,7 +135,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
             <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-3 text-sm text-secondary">
               <Link href="/" className="hover:text-white transition-colors">Home</Link>
               <span aria-hidden="true">/</span>
-              <Link href="/#about" className="hover:text-white transition-colors">Services</Link>
+              <Link href="/services" className="hover:text-white transition-colors">Services</Link>
               <span aria-hidden="true">/</span>
               <span className="text-white" aria-current="page">{service.title}</span>
             </nav>
@@ -133,7 +158,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
                 Get a Quote
               </Link>
               <Link
-                href="/#about"
+                href="/services"
                 className="rounded-md border border-white/20 px-6 py-3 text-white font-semibold hover:border-white transition-colors"
               >
                 View All Services
@@ -189,6 +214,29 @@ export default async function ServicePage({ params }: ServicePageProps) {
                   <SectionLabel>Deliverables</SectionLabel>
                   <h2 className="mt-3 text-white text-3xl font-bold">What You Receive</h2>
                   <BulletList items={service.deliverables} />
+                </article>
+              )}
+
+              {service.faqs.length > 0 && (
+                <article>
+                  <SectionLabel>FAQ</SectionLabel>
+                  <h2 className="mt-3 text-white text-3xl font-bold">Common Questions</h2>
+                  <div className="mt-6 divide-y divide-white/10 rounded-lg border border-white/10 bg-tertiary">
+                    {service.faqs.map((faq) => (
+                      <details key={faq.question} className="group px-6 py-5">
+                        <summary className="flex cursor-pointer list-none items-start justify-between gap-4 text-white font-semibold [&::-webkit-details-marker]:hidden">
+                          <span>{faq.question}</span>
+                          <span
+                            aria-hidden="true"
+                            className="mt-0.5 text-[#915eff] transition-transform duration-200 group-open:rotate-45"
+                          >
+                            +
+                          </span>
+                        </summary>
+                        <p className="mt-3 text-secondary leading-7">{faq.answer}</p>
+                      </details>
+                    ))}
+                  </div>
                 </article>
               )}
             </div>
