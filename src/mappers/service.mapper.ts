@@ -27,6 +27,9 @@ export function mapService(dbService: DBService): Service {
     faqs: (dbService.faqs || []).filter(
       (faq) => faq?.question?.trim() && faq?.answer?.trim()
     ),
+    audience: dbService.audience?.trim() || null,
+    timeline: dbService.timeline?.trim() || null,
+    engagementModel: dbService.engagement_model?.trim() || null,
   };
 }
 

@@ -39,6 +39,11 @@ export interface Project {
   tags: ProjectTag[];
   // Detail fields for case study page
   details: ProjectDetail;
+  category: 'client' | 'research' | null;
+  isFeatured: boolean;
+  clientName: string | null;
+  outcomeLine: string | null;
+  screenshotUrl: string | null;
 }
 
 // ============================================
@@ -97,6 +102,9 @@ export interface Service {
   deliverables: string[];
   pricingModel: string | null;
   faqs: ServiceFAQ[];
+  audience: string | null;
+  timeline: string | null;
+  engagementModel: string | null;
 }
 
 // ============================================
@@ -184,10 +192,17 @@ export interface HeroSettings {
   ctaURL?: string;
   backgroundImageUrl?: string;
   resumeUrl: string;
+  /** Positioning headline; falls back to a built-in default when unset. */
+  headline?: string;
+  /** One line on who you work with. */
+  audience?: string;
 }
 
 export interface BioSettings {
   paragraphs: string[];
+  location?: string;
+  availability?: string;
+  photoUrl?: string;
 }
 
 export interface SEOSettings {
@@ -200,6 +215,10 @@ export interface SEOSettings {
 
 export interface ContactSettings {
   email: string;
+  /** Cal.com / Calendly link; the "Book a call" buttons appear only when set. */
+  bookingUrl?: string;
+  /** WhatsApp number in international format, digits only (e.g. 9779800000000). */
+  whatsapp?: string;
 }
 
 export interface SocialLinks {

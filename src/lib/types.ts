@@ -69,6 +69,12 @@ export interface DBProject {
   architecture: string[];
   results: string[];
   stack: string[];
+  // Homepage grouping (migration 009); absent until it runs
+  category?: 'client' | 'research' | null;
+  is_featured?: boolean;
+  client_name?: string | null;
+  outcome_line?: string | null;
+  screenshot_url?: string | null;
   created_at: string;
   updated_at: string;
   project_tags?: DBProjectTag[];
@@ -130,6 +136,10 @@ export interface DBService {
   deliverables: string[] | null;
   pricing_model: string | null;
   faqs?: Array<{ question: string; answer: string }> | null;
+  // Offer details (migration 010); absent until it runs
+  audience?: string | null;
+  timeline?: string | null;
+  engagement_model?: string | null;
 }
 
 export interface DBTestimonial {

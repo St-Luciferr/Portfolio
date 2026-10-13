@@ -1,14 +1,11 @@
 import type { Metadata } from 'next';
-import dynamic from 'next/dynamic';
 import {
   getPublishedNavLinks,
   getPublishedProjects,
 } from '@/lib/services';
 import { SITE_URL } from '@/lib/site';
 
-const ProjectsClient = dynamic(() => import('./ProjectsClient'), {
-  ssr: true,
-});
+import ProjectsClient from './ProjectsClient';
 
 export const revalidate = 60;
 

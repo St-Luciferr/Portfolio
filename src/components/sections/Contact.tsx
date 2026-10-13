@@ -1,13 +1,11 @@
 'use client';
 
 import { useRef, useState, FormEvent, ChangeEvent } from 'react';
-import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
 
 import { styles } from '@/lib/styles';
-import SectionWrapper from '@/components/hoc/SectionWrapper';
-import { slideIn } from '@/lib/motion';
 import { track } from '@/lib/analytics';
+import ContactAside from '@/components/sections/ContactAside';
 
 interface FormState {
   name: string;
@@ -26,9 +24,23 @@ interface ContactProps {
     name?: string;
     email?: string;
   };
+  services?: { title: string; slug: string }[];
+  socialLinks?: { github?: string; linkedin?: string };
+  bookingUrl?: string;
+  whatsapp?: string;
+  availability?: string;
+  location?: string;
 }
 
-const Contact = ({ data }: ContactProps) => {
+const Contact = ({
+  data,
+  services = [],
+  socialLinks,
+  bookingUrl,
+  whatsapp,
+  availability,
+  location,
+}: ContactProps) => {
   const formRef = useRef<HTMLFormElement>(null);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<SubmitStatus>({ kind: 'idle' });
@@ -112,22 +124,14 @@ const Contact = ({ data }: ContactProps) => {
   };
 
   return (
-    <div className="max-w-screen-2xl mx-auto">
-      <div className="xl:mt-12 overflow-hidden">
-        <motion.div
-          variants={slideIn('left', 'tween', 0.2, 1)}
-          className="max-w-3xl mx-auto bg-black-100 p-8 rounded-2xl"
-        >
+    <section id="contact" className={`scroll-mt-24 py-20 sm:py-24 ${styles.paddingX}`}>
+    <div className="max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 gap-10 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
+        <div className="bg-black-100 p-8 rounded-2xl">
         <p className={styles.sectionSubText}>Get In Touch</p>
-        <h3 className={styles.sectionHeadText}>Contact.</h3>
+        <h2 className="mt-3 text-white font-black text-[32px] sm:text-[44px] leading-tight">Start a project.</h2>
         <p className="text-secondary text-sm mt-2">
-          Have a project idea, want to collaborate, or just want to say hi? I&apos;d love to hear from you.
-        </p>
-        <p className="text-secondary text-sm mt-2">
-          Prefer email?{' '}
-          <a href={`mailto:${toEmail}`} className="text-white underline underline-offset-4 hover:text-[#b48cff]">
-            {toEmail}
-          </a>
+          Tell me what you want to build or fix. A few sentences is enough to start.
         </p>
 
         <form
@@ -192,7 +196,7 @@ const Contact = ({ data }: ContactProps) => {
             <button
               type="submit"
               disabled={loading}
-              className="bg-tertiary py-3 px-8 outline-none w-fit text-white font-bold shadow-md shadow-primary rounded-xl hover:bg-tertiary/80 transition-colors disabled:opacity-50"
+              className="bg-[#7a4fd4] py-3 px-8 outline-none w-fit text-white font-bold rounded-lg hover:bg-[#6a3fc4] transition-colors disabled:opacity-50"
             >
               {loading ? 'Sending...' : 'Send'}
             </button>
@@ -217,10 +221,21 @@ const Contact = ({ data }: ContactProps) => {
             </div>
           </div>
         </form>
-      </motion.div>
+      </div>
+
+      <ContactAside
+        email={toEmail}
+        services={services}
+        socialLinks={socialLinks}
+        bookingUrl={bookingUrl}
+        whatsapp={whatsapp}
+        availability={availability}
+        location={location}
+      />
       </div>
     </div>
+    </section>
   );
 };
 
-export default SectionWrapper(Contact, 'contact');
+export default Contact;

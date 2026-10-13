@@ -206,3 +206,5 @@ Homepage, Lighthouse 12 mobile, local production build (`next start`), two runs.
 | Homepage canonical present | No | Yes (`www`) | Yes | ✅ |
 | Contact paths | 1 | 2 (form, email) | 4 | ⏸ call link and WhatsApp need input |
 | Published testimonials | 0 | 0 | 2 | ⏸ needs outreach |
+
+Production re-measure after PR #8 (1 run, live `www`): Performance 74, TBT 660 ms, LCP 3.1 s, Accessibility 100, 356 KiB.

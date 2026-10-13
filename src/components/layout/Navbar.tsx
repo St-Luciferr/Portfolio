@@ -10,123 +10,108 @@ import type { NavLink } from '@/types/frontend';
 
 interface NavbarProps {
   navLinks?: NavLink[];
+  /** Booking link from contact settings; the CTA falls back to the contact form. */
+  bookingUrl?: string;
 }
 
+// Used when the CMS has no nav links. Order follows docs/SITE_REVIEW_2026-10.md R7.
 const fallbackNavLinks: Pick<NavLink, 'linkId' | 'title'>[] = [
+  { linkId: '/services', title: 'Services' },
+  { linkId: '/projects', title: 'Work' },
+  { linkId: '/blog', title: 'Writing' },
   { linkId: 'about', title: 'About' },
-  { linkId: 'work', title: 'Experience' },
-  { linkId: '/projects', title: 'Projects' },
-  { linkId: 'contact', title: 'Contact' },
 ];
 
-const Navbar = ({ navLinks = [] }: NavbarProps) => {
-  const [active, setActive] = useState('');
+const Navbar = ({ navLinks = [], bookingUrl }: NavbarProps) => {
   const [toggle, setToggle] = useState(false);
   const pathname = usePathname();
-  const cmsLinks = navLinks.length > 0 ? navLinks : fallbackNavLinks;
-  const withProjects = cmsLinks.some(
-    (link) => link.linkId === '/projects' || link.linkId === 'projects'
-  )
-    ? cmsLinks
-    : [
-        ...cmsLinks.slice(0, 2),
-        { id: 'generated-projects', linkId: '/projects', title: 'Projects' },
-        ...cmsLinks.slice(2),
-      ];
-  const links = withProjects.some(
-    (link) => link.linkId === '/blog' || link.linkId === 'blog'
-  )
-    ? withProjects
-    : [
-        ...withProjects.slice(0, withProjects.length - 1),
-        { id: 'generated-blog', linkId: '/blog', title: 'Blog' },
-        ...withProjects.slice(withProjects.length - 1),
-      ];
+
+  // Contact is rendered as the CTA button, so drop it from the text links.
+  const links = (navLinks.length > 0 ? navLinks : fallbackNavLinks).filter(
+    (link) => link.linkId !== 'contact'
+  );
 
   const getHref = (linkId: string) => {
-    if (linkId === 'projects') {
-      return '/projects';
-    }
-
-    if (linkId.startsWith('/')) {
-      return linkId;
-    }
-
+    if (linkId.startsWith('/')) return linkId;
     return pathname === '/' ? `#${linkId}` : `/#${linkId}`;
   };
 
+  const isActive = (linkId: string) =>
+    linkId.startsWith('/') && linkId !== '/' && pathname.startsWith(linkId);
+
+  const cta = bookingUrl
+    ? { href: bookingUrl, label: 'Book a call', external: true }
+    : { href: pathname === '/' ? '#contact' : '/#contact', label: 'Start a project', external: false };
+
   return (
-    <nav
-      className={`${styles.paddingX} w-full flex items-center py-5 fixed top-0 z-20 bg-primary`}
-    >
+    <nav className={`${styles.paddingX} w-full flex items-center py-4 fixed top-0 z-20 bg-primary/90 backdrop-blur-md border-b border-white/5`}>
       <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
-        <Link
-          href="/"
-          className="flex items-center gap-2"
-          onClick={() => {
-            setActive('');
-            window.scrollTo(0, 0);
-          }}
-        >
-          <Image
-            src="/images/logo.svg"
-            alt="logo"
-            width={36}
-            height={36}
-            className="object-contain"
-          />
-          <p className="text-white text-[18px] font-bold cursor-pointer flex pt-2">
-            Santosh&nbsp;
-            <span className="sm:block hidden">| Portfolio</span>
-          </p>
+        <Link href="/" className="flex items-center gap-2" onClick={() => setToggle(false)}>
+          <Image src="/images/logo.svg" alt="" width={32} height={32} className="object-contain" />
+          <span className="text-white text-[17px] font-bold">Santosh Pandey</span>
         </Link>
 
-        {/* Desktop Navigation */}
-        <ul className="list-none hidden sm:flex flex-row gap-10">
-          {links.map((link) => (
-            <li
-              key={link.linkId}
-              className={`${
-                active === link.title ? 'text-white' : 'text-secondary'
-              } hover:text-white text-[18px] font-medium cursor-pointer`}
-              onClick={() => setActive(link.title)}
-            >
-              <Link href={getHref(link.linkId)}>{link.title}</Link>
-            </li>
-          ))}
-        </ul>
+        {/* Desktop navigation */}
+        <div className="hidden md:flex items-center gap-8">
+          <ul className="list-none flex flex-row gap-8">
+            {links.map((link) => (
+              <li key={link.linkId}>
+                <Link
+                  href={getHref(link.linkId)}
+                  className={`${isActive(link.linkId) ? 'text-white' : 'text-secondary'} hover:text-white text-[15px] font-medium transition-colors`}
+                >
+                  {link.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <a
+            href={cta.href}
+            {...(cta.external && { target: '_blank', rel: 'noreferrer' })}
+            className="rounded-lg bg-[#7a4fd4] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#6a3fc4]"
+          >
+            {cta.label}
+          </a>
+        </div>
 
-        {/* Mobile Navigation */}
-        <div className="sm:hidden flex flex-1 justify-end items-center">
-          <Image
-            src={toggle ? '/images/close.svg' : '/images/menu.svg'}
-            alt="menu"
-            width={28}
-            height={28}
-            className="object-contain cursor-pointer"
+        {/* Mobile navigation */}
+        <div className="md:hidden flex flex-1 justify-end items-center">
+          <button
+            type="button"
+            aria-label={toggle ? 'Close menu' : 'Open menu'}
+            aria-expanded={toggle}
             onClick={() => setToggle(!toggle)}
-          />
+          >
+            <Image
+              src={toggle ? '/images/close.svg' : '/images/menu.svg'}
+              alt=""
+              width={26}
+              height={26}
+              className="object-contain"
+            />
+          </button>
 
           <div
-            className={`${
-              !toggle ? 'hidden' : 'flex'
-            } p-6 black-gradient absolute top-20 right-0 mx-4 my-2 min-w-[140px] z-10 rounded-xl`}
+            className={`${toggle ? 'flex' : 'hidden'} p-6 black-gradient absolute top-16 right-0 mx-4 my-2 min-w-[180px] z-10 rounded-xl border border-white/10`}
           >
-            <ul className="list-none flex justify-end items-start flex-col gap-4">
+            <ul className="list-none flex items-start flex-col gap-4 w-full">
               {links.map((link) => (
-                <li
-                  key={link.linkId}
-                  className={`${
-                    active === link.title ? 'text-white' : 'text-secondary'
-                  } font-poppins font-medium cursor-pointer text-[16px]`}
-                  onClick={() => {
-                    setToggle(false);
-                    setActive(link.title);
-                  }}
-                >
-                  <Link href={getHref(link.linkId)}>{link.title}</Link>
+                <li key={link.linkId} className="text-secondary hover:text-white font-medium text-[16px]">
+                  <Link href={getHref(link.linkId)} onClick={() => setToggle(false)}>
+                    {link.title}
+                  </Link>
                 </li>
               ))}
+              <li className="w-full pt-2 border-t border-white/10">
+                <a
+                  href={cta.href}
+                  {...(cta.external && { target: '_blank', rel: 'noreferrer' })}
+                  onClick={() => setToggle(false)}
+                  className="block rounded-lg bg-[#7a4fd4] px-4 py-2 text-center text-sm font-semibold text-white"
+                >
+                  {cta.label}
+                </a>
+              </li>
             </ul>
           </div>
         </div>

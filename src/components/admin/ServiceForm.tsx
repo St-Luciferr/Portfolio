@@ -34,6 +34,9 @@ export function ServiceForm({ service, onSuccess, onCancel }: ServiceFormProps) 
       title: service?.title || '',
       icon_url: service?.icon_url || '',
       slug: service?.slug || '',
+      audience: service?.audience || '',
+      timeline: service?.timeline || '',
+      engagement_model: service?.engagement_model || '',
       is_published: service?.is_published ?? true,
       display_order: service?.display_order ?? 0,
     },
@@ -104,6 +107,25 @@ export function ServiceForm({ service, onSuccess, onCancel }: ServiceFormProps) 
         {errors.slug && (
           <p className="text-sm text-red-500">{errors.slug.message as string}</p>
         )}
+      </div>
+
+      <div className="space-y-4 rounded-lg border p-4">
+        <p className="font-medium">Offer details</p>
+        <div className="space-y-2">
+          <Label htmlFor="audience">Who it&apos;s for</Label>
+          <Input id="audience" {...register('audience')} placeholder="e.g. Teams with large internal knowledge bases" />
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="space-y-2">
+            <Label htmlFor="timeline">Typical timeline</Label>
+            <Input id="timeline" {...register('timeline')} placeholder="e.g. 3–6 weeks" />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="engagement_model">Engagement model</Label>
+            <Input id="engagement_model" {...register('engagement_model')} placeholder="e.g. Fixed-scope project" />
+          </div>
+        </div>
+        <p className="text-xs text-gray-500">Shown on the service page and homepage offer card. Leave blank to hide.</p>
       </div>
 
       <ImageUpload

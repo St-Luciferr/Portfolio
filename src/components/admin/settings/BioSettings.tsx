@@ -5,6 +5,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { bioSettingsSchema } from '@/lib/validations';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { ImageUpload } from '@/components/admin/ImageUpload';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -163,6 +165,25 @@ export function BioSettings() {
             <Plus className="w-4 h-4 mr-2" />
             Add Paragraph
           </Button>
+
+          <div className="grid gap-4 sm:grid-cols-2 pt-4 border-t">
+            <div className="space-y-2">
+              <Label htmlFor="location">Location / timezone</Label>
+              <Input id="location" {...register('location')} placeholder="Kathmandu, Nepal · UTC+5:45" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="availability">Availability</Label>
+              <Input id="availability" {...register('availability')} placeholder="Taking new projects from November" />
+              <p className="text-xs text-gray-500">Leave blank to hide the availability badge.</p>
+            </div>
+          </div>
+
+          <ImageUpload
+            bucket="profile"
+            currentImage={watch('photo_url')}
+            onUpload={(url) => setValue('photo_url', url)}
+            label="Profile photo (optional)"
+          />
 
           <div className="flex justify-end pt-4 border-t">
             <Button type="submit" disabled={loading}>
