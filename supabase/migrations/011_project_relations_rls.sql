@@ -22,5 +22,6 @@ CREATE POLICY "Public read relations between published projects" ON project_rela
   );
 
 -- Same rule as projects / project_tags / service_projects (001, 005).
+-- (SELECT auth.role()) is evaluated once per query, not per row (see 012).
 CREATE POLICY "Admin full access project relations" ON project_relations
-  FOR ALL USING (auth.role() = 'authenticated');
+  FOR ALL USING ((SELECT auth.role()) = 'authenticated');
