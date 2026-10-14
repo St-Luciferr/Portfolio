@@ -109,6 +109,17 @@ export default async function ServicePage({ params }: ServicePageProps) {
     ...(service.pricingModel && { priceSpecification: { priceType: service.pricingModel } }),
   };
 
+  // Mirrors the visible breadcrumb nav (Home / Services / this service).
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+      { '@type': 'ListItem', position: 2, name: 'Services', item: `${SITE_URL}/services` },
+      { '@type': 'ListItem', position: 3, name: service.title, item: canonicalUrl },
+    ],
+  };
+
   // FAQPage must mirror the visible Q&As exactly (Google requires the content to be on-page).
   const faqJsonLd =
     service.faqs.length > 0
@@ -128,6 +139,10 @@ export default async function ServicePage({ params }: ServicePageProps) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, '\\u003c') }}
       />
       {faqJsonLd && (
         <script

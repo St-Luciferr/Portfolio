@@ -1,3 +1,5 @@
+// Uses the service key: a build error if this is ever imported into client code.
+import 'server-only';
 import { createClient } from '@supabase/supabase-js';
 
 export function createAdminClient() {
