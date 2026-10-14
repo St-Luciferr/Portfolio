@@ -6,7 +6,9 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/api/', '/_next/'],
+      // /_next/ holds the CSS/JS every visitor downloads; Google needs it to
+      // render pages, and robots.txt is not an access control anyway.
+      disallow: ['/api/'],
     },
     sitemap: `${SITE_URL}/sitemap.xml`,
   };
